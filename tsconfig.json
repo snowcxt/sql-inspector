@@ -21,8 +21,10 @@
         "!./node_modules/**/*"
     ],
     "files": [
+        "./client/DefinitelyTyped/react-addons.d.ts",
+        "./client/DefinitelyTyped/react.d.ts",
+        "./client/TreeNode.ts",
         "./client/index.ts",
-        "./client/react.d.ts",
         "./client/timer.ts",
         "./server/database.ts"
     ]

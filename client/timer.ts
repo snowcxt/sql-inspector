@@ -1,45 +1,43 @@
-/// <reference path="react.d.ts" />
+/// <reference path="DefinitelyTyped/react.d.ts" />
 /// <reference path="../node_modules/typed-react/typed-react.d.ts" />
 
 import React = require("react");
 import TypedReact = require("typed-react");
 
+export interface TimerProps {
+    tickInterval: number;
+}
 
-    export interface TimerProps {
-        tickInterval: number;
+interface TimerState {
+    ticksElapsed: number;
+}
+
+class Timer extends TypedReact.Component<TimerProps, TimerState> {
+    private interval: number;
+
+    getInitialState() {
+        return {
+            ticksElapsed: 0
+        };
     }
 
-    interface TimerState {
-        ticksElapsed: number;
+    tick() {
+        this.setState({
+            ticksElapsed: this.state.ticksElapsed + 1
+        });
     }
 
-    class Timer extends TypedReact.Component<TimerProps, TimerState> {
-        private interval: number;
-
-        getInitialState() {
-            return {
-                ticksElapsed: 0
-            };
-        }
-
-        tick() {
-            this.setState({
-                ticksElapsed: this.state.ticksElapsed + 1
-            });
-        }
-
-        componentDidMount() {
-            this.interval = setInterval(this.tick, this.props.tickInterval);
-        }
-
-        componentWillUnmount() {
-            clearInterval(this.interval);
-        }
-
-        render() {
-            return React.DOM.div(null, "Ticks Elapsed: ", this.state.ticksElapsed);
-        }
+    componentDidMount() {
+        this.interval = setInterval(this.tick, this.props.tickInterval);
     }
 
-    export var timer = TypedReact.createClass(Timer);
-    // React.render(React.createElement(timer, null), document.getElementById("container"));
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+
+    render() {
+        return React.DOM.div(null, "Ticks Elapsed: ", this.state.ticksElapsed);
+    }
+}
+
+export var timer = TypedReact.createClass(Timer);
