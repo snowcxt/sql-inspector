@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hello World!</title>
+    </head>
+    <body>
+        <h1>Hello World!</h1>
+        <p>
+            electron-packager ./ sql-inspector --platform=darwin --arch=all --version=0.30.2
+            <button name="button" onclick="" type="button">fdgdfg</button>
+        </p>
+        We are using io.js
+        <script>
+document.write(process.version)
+        </script>
+        and Electron
+        <script>
+document.write(process.versions['electron'])
+        </script>.
+
+        <script src="../server/db.js"></script>
+        <script type="text/javascript">
+db.query('select count(1) number from list_productions', function(err, recordset) {
+    if (err)
+        return console.log(err);
+
+    console.dir(recordset);
+    alert(recordset[0].number);
+});
+        </script>
+    </body>
+</html>

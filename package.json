@@ -1,5 +1,11 @@
 {
-  "name": "Sql-Inspector",
+  "name": "sql-inspector",
   "version": "0.1.0",
-  "main": "main.js"
+  "main": "main.js",
+  "dependencies": {
+    "mssql": "^2.1.6"
+  },
+  "devDependencies": {
+    "electron-packager": "^5.0.1"
+  }
 }
