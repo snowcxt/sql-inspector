@@ -1,4 +1,8 @@
 /// <reference path="DefinitelyTyped/react.d.ts" />
+declare var global: any;
+declare var require: any;
+global.jQuery = require('jquery');
+require('bootstrap');
 
 import React = require("react");
 import Timer = require("./timer");

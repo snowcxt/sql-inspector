@@ -26,6 +26,7 @@
         "./client/TreeNode.ts",
         "./client/index.ts",
         "./client/timer.ts",
-        "./server/database.ts"
+        "./server/database.ts",
+        "./client/n.tsx"
     ]
 }
