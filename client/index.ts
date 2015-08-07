@@ -1,4 +1,3 @@
-/// <reference path="DefinitelyTyped/react.d.ts" />
 declare var global: any;
 declare var require: any;
 global.jQuery = require('jquery');
@@ -32,7 +31,7 @@ var tree = {
     ]
 };
 
-React.render(React.createElement(Tree.TreeNode2, { node: tree }), document.getElementById("tree"));
+React.render(React.createElement(Tree.TreeNode, { node: tree }), document.getElementById("tree"));
 
 
 db.query('select count(1) number from list_productions', function(err, recordset) {

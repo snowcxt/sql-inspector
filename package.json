@@ -8,8 +8,5 @@
     "mssql": "^2.1.6",
     "react": "^0.13.3",
     "typed-react": "^3.4.1"
-  },
-  "devDependencies": {
-    "electron-packager": "^5.0.1"
   }
 }
