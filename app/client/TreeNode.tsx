@@ -1,28 +1,24 @@
-/// <reference path="../typings/react/react.d.ts"/>
-/// <reference path="../node_modules/typed-react/typed-react.d.ts" />
-
 import React = require("react");
 import Addons = require("react/addons");
 import TypedReact = require("typed-react");
 
-export var TreeNode = React.createClass<any, {
+class TreeNode extends TypedReact.Component<{ node: ITreeNode }, {
     visible: boolean;
-}>({
-    getInitialState: function() {
+}>{
+    getInitialState() {
         return {
             visible: true
         };
-    },
-
-    render: function() {
+    }
+    render() {
         var childNodes;
         var classObj;
 
-        if (this.props.node.childNodes != null) {
-            childNodes = this.props.node.childNodes.map(function(node, index) {
+        if (this.props.node.nodes != null) {
+            childNodes = this.props.node.nodes.map(function(node, index) {
                 return (
                     <li key={index}>
-                        <TreeNode node={node}></TreeNode>
+                        <Node node={node}></Node>
                     </li>
                 );
             });
@@ -38,17 +34,24 @@ export var TreeNode = React.createClass<any, {
         if (!this.state.visible) {
             style = { display: "none" };
         }
+        if (this.props.node.log) {
+            return (
+                <div>
+                    <h5 onClick={() => {
+                        this.setState({ visible: !this.state.visible });
+                    } } className={Addons.addons.classSet(classObj) }>
+                        { this.props.node.log.object_name }
+                    </h5>
 
-        return (
-            <div>
-                <h5 onClick={() => {
-                    this.setState({ visible: !this.state.visible });
-                }} className={Addons.addons.classSet(classObj)}>
-                    {this.props.node.title}
-                </h5>
-                <p>{this.props.node.title2}</p>
-                <ul style={style}>{childNodes}</ul>
-            </div>
-        );
+                    <ul style={style}>{childNodes}</ul>
+                </div>
+            );
+        } else {
+            return (<ul style={style}>{childNodes}</ul>);
+        }
+
     }
-});
+}
+
+var Node = TypedReact.createClass(TreeNode);
+export = Node;

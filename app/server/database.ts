@@ -1,7 +1,7 @@
-declare var require:any;
-
 var sql = require('mssql');
+interface IDbConfig {
 
+}
 var config = {
     user: 'admin',
     password: 'password',
@@ -13,12 +13,12 @@ var config = {
     }
 }
 
-export var query = function (query, cb) {
-    var connection = new sql.Connection(config, function (err) {
+export var exec = function(dbName: string, statement: string, cb: (err, recordset?) => void) {
+    var connection = new sql.Connection(config, function(err) {
         if (err) return cb(err);
 
         var request = new sql.Request(connection); // or: var request = connection.request();
-        request.query(query, function (err, recordset) {
+        request.query(statement, function(err, recordset) {
             if (err) return cb(err);
 
             cb(null, recordset);

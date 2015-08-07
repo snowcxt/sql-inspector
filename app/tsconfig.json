@@ -21,12 +21,17 @@
         "!./node_modules/**/*"
     ],
     "files": [
-        "./client/index.ts",
         "./client/timer.ts",
+        "./client/tree-builder.ts",
+        "./global.d.ts",
+        "./server/DbLogs.ts",
         "./server/database.ts",
+        "./typings/async.d.ts",
+        "./typings/lodash.d.ts",
         "./typings/react/react-addons.d.ts",
         "./typings/react/react.d.ts",
         "./typings/tsd.d.ts",
-        "./client/TreeNode.tsx"
+        "./client/TreeNode.tsx",
+        "./client/index.tsx"
     ]
 }

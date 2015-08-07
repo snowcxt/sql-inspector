@@ -1,7 +1,6 @@
 {
   "name": "sql-inspector",
   "version": "0.1.0",
-  "main": "main.js",
   "scripts": {
     "dev": "electron ./app",
 

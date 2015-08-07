@@ -3,10 +3,15 @@
   "version": "0.1.0",
   "main": "main.js",
   "dependencies": {
+    "async": "^1.4.0",
     "bootstrap": "^3.3.5",
+    "delete": "^0.2.1",
+    "glob": "^5.0.14",
     "jquery": "^2.1.4",
+    "lodash": "^3.10.1",
     "mssql": "^2.1.6",
     "react": "^0.13.3",
+    "react-file-input": "^0.2.4",
     "typed-react": "^3.4.1"
   }
 }
