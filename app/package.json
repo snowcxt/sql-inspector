@@ -1,0 +1,12 @@
+{
+  "name": "sql-inspector",
+  "version": "0.1.0",
+  "main": "main.js",
+  "dependencies": {
+    "bootstrap": "^3.3.5",
+    "jquery": "^2.1.4",
+    "mssql": "^2.1.6",
+    "react": "^0.13.3",
+    "typed-react": "^3.4.1"
+  }
+}

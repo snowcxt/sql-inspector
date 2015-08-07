@@ -18,6 +18,8 @@
     "filesGlob": [
         "./**/*.ts",
         "./**/*.tsx",
+        "!./SqlInspector-win32-ia32/**/*",
+        "!./SqlInspector-win32-x64/**/*",
         "!./node_modules/**/*"
     ],
     "files": [

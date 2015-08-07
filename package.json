@@ -2,6 +2,21 @@
   "name": "sql-inspector",
   "version": "0.1.0",
   "main": "main.js",
+  "scripts": {
+    "dev": "electron ./app",
+
+    "clean": "rm -rf ./dist",
+    "clean:osx": "rm -rf ./dist/osx",
+    "clean:win": "rm -rf ./dist/win",
+
+    "build": "npm run clean && npm run build:osx && npm run build:win",
+    "build:osx": "npm run clean:osx && electron-packager ./app \"sql-inspector\" --out=dist/osx --platform=darwin --arch=x64 --version=0.30.2 --icon=assets/osx/loopline.icns",
+    "build:win": "electron-packager ./app \"Sql Inspector\" --out=dist/win --platform=win32 --arch=ia32 --version=0.30.2 --icon=assets/win/icon.ico",
+
+    "pack": "npm run pack:osx && npm run pack:win",
+    "pack:osx": "npm run build:osx && electron-builder \"dist/osx/sql-inspector.app\" --platform=osx --out=\"dist/osx\" --config=config.json",
+    "pack:win": "npm run build:win && electron-builder \"dist/win/Sql Inspector-win32-ia32\" --platform=win --out=\"dist/win\" --config=config.json"
+  },
   "dependencies": {
     "bootstrap": "^3.3.5",
     "jquery": "^2.1.4",
