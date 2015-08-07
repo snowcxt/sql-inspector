@@ -1,0 +1,48 @@
+.tree-nodes {
+    display: block;
+    position: relative;
+    list-style: none
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+.tree-root > ol {
+    margin-left: 0;
+}
+.hide-toggle {
+    display: none;
+}
+.angular-ui-tree-nodes .angular-ui-tree-nodes {
+    padding-left: 40px;
+}
+.tree-node {
+    margin-bottom: 10px;
+}
+.CodeMirror {
+    height: auto;
+}
+.sql-editor .CodeMirror-scroll {
+    min-height: 100px;
+}
+.sql-editor .CodeMirror {
+    border: 1px solid #ddd;
+}
+#fadeTableModel .CodeMirror {
+    border: 1px solid #ddd;
+}
