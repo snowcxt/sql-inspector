@@ -1,6 +1,9 @@
 import React = require("react");
 import Addons = require("react/addons");
 import TypedReact = require("typed-react");
+var Codemirror = require('react-codemirror');
+require('codemirror/mode/sql/sql');
+var CodeMirror = require("codemirror")
 
 class TreeNode extends TypedReact.Component<{ node: ITreeNode }, {
     visible: boolean;
@@ -9,9 +12,24 @@ class TreeNode extends TypedReact.Component<{ node: ITreeNode }, {
     getInitialState() {
         return {
             visible: true,
-            showDetails: false
+            showDetails: true
         };
     }
+
+    componentDidMount () {
+        var mirror:any = this.refs["codemirror"];
+        if(mirror){
+            CodeMirror.fromTextArea(mirror.getDOMNode(), {
+                viewportMargin: 0,
+                readOnly: true,
+                mode: 'text/x-mssql'
+            });
+        }
+    		// this.codeMirror.on('change', this.codemirrorValueChanged);
+    		// this.codeMirror.on('focus', this.focusChanged.bind(this, true));
+    		// this.codeMirror.on('blur', this.focusChanged.bind(this, false));
+    		// this._currentCodemirrorValue = this.props.value;
+	}
 
     toggle(){
         this.setState({ visible: !this.state.visible, showDetails: this.state.showDetails });
@@ -82,6 +100,7 @@ class TreeNode extends TypedReact.Component<{ node: ITreeNode }, {
         if(!this.state.showDetails){
             detailsStyle = { display: "none" };
         }
+
         if (this.props.node.log) {
             return (
                 <div>
@@ -104,9 +123,7 @@ class TreeNode extends TypedReact.Component<{ node: ITreeNode }, {
                             </a>
                         </div>
                         <div className="panel-body" style={detailsStyle}>
-                            {/* <ui-codemirror ui-codemirror-opts="sqlStatementOptions" ng-model="node.log.statement"></ui-codemirror>*/ }
-                            { node.log.statement }
-                            <button className="btn btn-default btn-xs pull-right" ng-if="node.log.action_id.trim() === 'SL'" ng-click="showFakeTableModel(node.log)">fake table</button>
+                            <textarea ref="codemirror" value={node.log.statement}></textarea>
                         </div>
                     </div>
                     <ul className="tree-nodes" style={style}>{childNodes}</ul>

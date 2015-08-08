@@ -4,6 +4,7 @@
 <head>
     <title>sql inspector</title>
     <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../node_modules/codemirror/lib/codemirror.css" rel="stylesheet" />
     <link href="css/main.css" rel="stylesheet" />
 </head>
 
@@ -11,7 +12,7 @@
     <h1>sql inspector</h1>
     <div id="container"></div>
     <div id="file"></div>
-    <div id="tree"></div>
+    <div id="tree" class="well"></div>
     <div id="example"></div>
     <p>
         tsd install react react-jsx --save --resolve
@@ -28,6 +29,7 @@
     <script>
         document.write(process.versions['electron'])
     </script>.
+
 
 
     <script src="index.js"></script>

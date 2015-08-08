@@ -2,22 +2,19 @@ global.jQuery = require('jquery');
 require('bootstrap');
 
 import React = require("react");
-import Timer = require("./timer");
 import Tree = require("./TreeNode");
 import db = require("../server/database");
 import treeBuilder = require("./tree-builder");
 var FileInput = require('react-file-input');
 
-React.render(React.createElement(Timer.timer, null), document.getElementById("container"));
-
 var Form = React.createClass<any, any>({
     render: function() {
         return (
             <form>
-                <FileInput name="myImage"
+                <FileInput name="json"
                 accept=".json"
                 placeholder="My Image"
-                className="inputClass"
+                className="btn btn-file btn-primary"
                 onChange={(e) => {
                     // console.log(file, 'selected!');
                     var element = e.target;
