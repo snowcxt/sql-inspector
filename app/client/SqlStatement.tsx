@@ -1,4 +1,3 @@
-import $ = require("jquery");
 import React = require("react");
 import TypedReact = require("typed-react");
 
@@ -36,20 +35,6 @@ class SqlStatement extends TypedReact.Component<any, any>{
         }
     }
 
-    parseAdditionalInfo(information) {
-        if (information) {
-            var doc = $.parseXML(information),
-                frame = $("frame", doc);
-            return {
-                nestLevel: Number(frame.attr("nest_level")),
-                objectName: frame.attr("object_name")
-            };
-        }
-        return {
-            nestLevel: 0,
-            objectName: ""
-        };
-    }
     runStatement() {
         var statment = this.editor.getDoc().getValue();
         async.series([
@@ -61,9 +46,6 @@ class SqlStatement extends TypedReact.Component<any, any>{
             },
             (callback) => {
                 DbLogs.getNewLogs((err, logs: any[]) => {
-                    logs.forEach(log => {
-                        log.info = this.parseAdditionalInfo(log.additional_information);
-                    });
                     var node = treeBuilder.build(logs);
 
                     if (err) return callback(err, null);

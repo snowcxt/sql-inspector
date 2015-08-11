@@ -1,3 +1,5 @@
+import $ = require("jquery");
+
 function createTreeNode(index: number, log: ILog, failToGetParent: boolean, parent: ITreeNode): ITreeNode {
     var node: ITreeNode = {
         index: index,
@@ -9,7 +11,6 @@ function createTreeNode(index: number, log: ILog, failToGetParent: boolean, pare
 
     return node;
 }
-
 
 function getParent(log: ILog, currentParent: ITreeNode): ITreeNode {
     if (currentParent.index === -1) return null;
@@ -27,8 +28,22 @@ function getParent(log: ILog, currentParent: ITreeNode): ITreeNode {
     return getParent(log, currentParent.parent);
 }
 
-export function build(logs: ILog[]): ITreeNode {
+function parseAdditionalInfo(information) {
+    if (information) {
+        var doc = $.parseXML(information),
+            frame = $("frame", doc);
+        return {
+            nestLevel: Number(frame.attr("nest_level")),
+            objectName: frame.attr("object_name")
+        };
+    }
+    return {
+        nestLevel: 0,
+        objectName: ""
+    };
+}
 
+export function build(logs: ILog[]): ITreeNode {
     var root: ITreeNode = {
         index: -1,
         log: null,
@@ -39,6 +54,8 @@ export function build(logs: ILog[]): ITreeNode {
         currentNode: ITreeNode = null;
 
     logs.forEach((log, index) => {
+        log.info = parseAdditionalInfo(log.additional_information);
+
         if (currentNode) {
             if (log.info.objectName) {
                 var parent: ITreeNode = getParent(log, currentNode);
