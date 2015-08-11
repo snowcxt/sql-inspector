@@ -12,7 +12,6 @@
     "lodash": "^3.10.1",
     "mssql": "^2.1.6",
     "react": "^0.13.3",
-    "react-file-input": "^0.2.4",
-    "typed-react": "^3.4.1"
+    "react-file-input": "^0.2.4"
   }
 }

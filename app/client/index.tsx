@@ -3,8 +3,8 @@ require('bootstrap');
 
 import React = require("react");
 import Tree = require("./TreeNode");
-import db = require("../server/database");
 import treeBuilder = require("./tree-builder");
+import SqlStatement = require("./SqlStatement");
 var FileInput = require('react-file-input');
 
 var Form = React.createClass<any, any>({
@@ -33,14 +33,6 @@ var Form = React.createClass<any, any>({
     },
 });
 
-React.render(React.createElement(Form), document.getElementById("file"));
+React.render(React.createElement(Form), document.getElementById("upload"));
 
-// React.render(React.createElement(Tree, { node: tree }), document.getElementById("tree"));
-
-db.exec('longford', 'select count(1) number from list_productions', function(err, recordset) {
-    if (err)
-        return console.log(err);
-
-    console.dir(recordset);
-    // alert(recordset[0].number);
-});
+React.render(React.createElement(SqlStatement), document.getElementById("SqlStatement"));

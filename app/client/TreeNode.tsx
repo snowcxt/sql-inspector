@@ -1,9 +1,9 @@
 import React = require("react");
 import Addons = require("react/addons");
 import TypedReact = require("typed-react");
-var Codemirror = require('react-codemirror');
+
+var CodeMirror = require('codemirror');
 require('codemirror/mode/sql/sql');
-var CodeMirror = require("codemirror")
 
 class TreeNode extends TypedReact.Component<{ node: ITreeNode }, {
     visible: boolean;
@@ -18,7 +18,7 @@ class TreeNode extends TypedReact.Component<{ node: ITreeNode }, {
 
     componentDidMount () {
         var mirror:any = this.refs["codemirror"];
-        if(mirror){
+        if(mirror) {
             CodeMirror.fromTextArea(mirror.getDOMNode(), {
                 viewportMargin: 0,
                 readOnly: true,

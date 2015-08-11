@@ -1,4 +1,5 @@
 var sql = require('mssql');
+import _ = require("lodash");
 interface IDbConfig {
 
 }
@@ -14,7 +15,9 @@ var config = {
 }
 
 export var exec = function(dbName: string, statement: string, cb: (err, recordset?) => void) {
-    var connection = new sql.Connection(config, function(err) {
+    var con = _.cloneDeep(config);
+    con.database = dbName;
+    var connection = new sql.Connection(con, function(err) {
         if (err) return cb(err);
 
         var request = new sql.Request(connection); // or: var request = connection.request();
