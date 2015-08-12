@@ -9,6 +9,7 @@ var AuditSpecificationName = AuditName + "_specification";
 
 function getAuditFileLocation() {
     return __dirname + "\\";
+    // return "C:\\tSQLtFaker\\";
 }
 
 function getAuditFile() {

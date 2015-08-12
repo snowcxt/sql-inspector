@@ -3,7 +3,9 @@ import TypedReact = require("typed-react");
 import treeBuilder = require("./tree-builder");
 import Tree = require("./TreeNode");
 
-class Upload extends TypedReact.Component<any, any>{
+class Uploader extends TypedReact.Component<{
+    setLogs: (logs: any[]) => void
+}, number>{
     render(){
         return (
                 <span className="btn btn-sm btn-default btn-file">
@@ -15,8 +17,7 @@ class Upload extends TypedReact.Component<any, any>{
                         reader = new FileReader();
                     reader.readAsText(textFile);
                     reader.onload = () => {
-                        var tree = treeBuilder.build(JSON.parse(reader.result).log);
-                        React.render(React.createElement(Tree, { node: tree }), document.getElementById("tree"));
+                        this.props.setLogs(JSON.parse(reader.result).log);
                     };
                 }
                     }} file-on-change="upload" />
@@ -25,4 +26,4 @@ class Upload extends TypedReact.Component<any, any>{
     }
 }
 
-export = TypedReact.createClass(Upload);
+export = TypedReact.createClass(Uploader);

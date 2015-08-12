@@ -34,9 +34,11 @@
         "./typings/react/react.d.ts",
         "./typings/tsd.d.ts",
         "./client/DbPicker.tsx",
-        "./client/SqlStatement.tsx",
+        "./client/SqlExecTree.tsx",
+        "./client/SqlRunner.tsx",
         "./client/TreeNode.tsx",
-        "./client/UploadHistory.tsx",
+        "./client/Uploader.tsx",
+        "./client/app.tsx",
         "./client/index.tsx"
     ]
 }

@@ -7,15 +7,13 @@ require('codemirror/mode/sql/sql');
 import DbLogs = require("../server/DbLogs");
 import async = require('async');
 
-import Tree = require("./TreeNode");
-import treeBuilder = require("./tree-builder");
-
-class SqlStatement extends TypedReact.Component<any, any>{
+class SqlRunner extends TypedReact.Component<{
+    setLogs: (logs: any[]) => void
+}, number>{
     private editor: CodeMirror.EditorFromTextArea;
     getInitialState() {
         return {
-            visible: true,
-            showDetails: true
+            setLogs: () => { }
         };
     }
 
@@ -46,12 +44,8 @@ class SqlStatement extends TypedReact.Component<any, any>{
             },
             (callback) => {
                 DbLogs.getNewLogs((err, logs: any[]) => {
-                    var node = treeBuilder.build(logs);
-
                     if (err) return callback(err, null);
-                    React.render(React.createElement(Tree, {
-                        node: node
-                    }), document.getElementById("tree"));
+                    this.props.setLogs(logs);
                     callback(null, null);
                 });
             },
@@ -78,4 +72,4 @@ class SqlStatement extends TypedReact.Component<any, any>{
 
 }
 
-export = TypedReact.createClass(SqlStatement);
+export = TypedReact.createClass(SqlRunner);
