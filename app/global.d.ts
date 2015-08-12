@@ -1,6 +1,8 @@
 declare var require: any;
 declare var global: any;
 declare var __dirname: string;
+declare var download: any;
+
 interface ILog {
     event_time: string;
     action_id: string;

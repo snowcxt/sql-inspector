@@ -1,10 +1,9 @@
 node_modules
 npm-debug.log
 
-SqlInspector-win*
-
 client/**/*.js
 client/**/*.js.map
+!client/download.min.js
 
 server/**/*.js
 server/**/*.js.map

@@ -26,6 +26,13 @@ class App extends TypedReact.Component<any, {
         this.databases = databases;
     }
 
+    saveLogs() {
+        download(new Blob([JSON.stringify({
+            log: this.state.logs,
+            query: ""
+        })]), "log.json", "text/plain");
+    }
+
     render() {
         return (
             <div>
@@ -36,6 +43,12 @@ class App extends TypedReact.Component<any, {
                 <SqlRunner setLogs={this.setLogs}></SqlRunner>
                 <p className="well">
                     <SqlExecTree logs={this.state.logs}></SqlExecTree>
+                </p>
+                <p>
+                    <button className="btn btn-sm btn-default" onClick={this.saveLogs}>
+                        <i className="glyphicon glyphicon-save"></i>
+                        Save
+                    </button>
                 </p>
             </div>);
     }
