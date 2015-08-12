@@ -1,19 +1,23 @@
 import React = require("react");
 import TypedReact = require("typed-react");
 
+import DbPicker = require("./DbPicker");
 var CodeMirror = require('codemirror');
 require('codemirror/mode/sql/sql');
-
+var Select = require('react-select');
 import DbLogs = require("../server/DbLogs");
 import async = require('async');
 
 class SqlRunner extends TypedReact.Component<{
-    setLogs: (logs: any[]) => void
-}, number>{
+    setLogs: (logs: any[]) => void;
+}, {
+        monioredDatabases: Array<{ value: string; label: string; }>
+    }>{
     private editor: CodeMirror.EditorFromTextArea;
+
     getInitialState() {
         return {
-            setLogs: () => { }
+            monioredDatabases: []
         };
     }
 
@@ -56,22 +60,35 @@ class SqlRunner extends TypedReact.Component<{
             if (err) return console.log("err", err);
         });
     }
+
+    onDefaultDbChange(dbname: string) {
+
+    }
+
     render() {
         return (
             <p>
-                <p className="sql-editor">
-                    <textarea ref="statement"></textarea>
-                </p>
-                <p>
-                    <button className="btn btn-sm btn-primary" onClick={this.runStatement}>
-                        <i className="glyphicon glyphicon-play"></i>
-                        Run
-                    </button>
-                </p>
+            <DbPicker setDatabases={(databases: string[]) => {
+                this.setState({
+                    monioredDatabases: databases.map((db) => {
+                        return { value: db, label: db }
+                    })
+                });
+            } }></DbPicker>
+            <p className= "sql-editor" >
+            <textarea ref="statement"></textarea>
+            </p >
+            <p>
+                <Select searchable={true} placeholder="Select default database ..." onChange={this.onDefaultDbChange} options={this.state.monioredDatabases}></Select>
+
+                <button className="btn btn-sm btn-primary" onClick={this.runStatement}>
+                    <i className="glyphicon glyphicon-play"></i>
+                    Run
+                </button>
             </p>
+            </p >
         );
     }
-
 }
 
 export = TypedReact.createClass(SqlRunner);
