@@ -14,6 +14,7 @@ class SqlRunner extends TypedReact.Component<{
         monioredDatabases: Array<{ value: string; label: string; }>
     }>{
     private editor: CodeMirror.EditorFromTextArea;
+    private defaultDb: string;
 
     getInitialState() {
         return {
@@ -41,10 +42,10 @@ class SqlRunner extends TypedReact.Component<{
         var statment = this.editor.getDoc().getValue();
         async.series([
             (callback) => {
-                DbLogs.setup(["longford"], callback);
+                DbLogs.setup([this.defaultDb], callback);
             },
             (callback) => {
-                DbLogs.runQuery("longford", statment, false, callback);
+                DbLogs.runQuery(this.defaultDb, statment, false, callback);
             },
             (callback) => {
                 DbLogs.getNewLogs((err, logs: any[]) => {
@@ -54,7 +55,7 @@ class SqlRunner extends TypedReact.Component<{
                 });
             },
             (callback) => {
-                DbLogs.cleanLog(["longford"], callback);
+                DbLogs.cleanLog([this.defaultDb], callback);
             }
         ], (err, recordset) => {
             if (err) return console.log("err", err);
@@ -62,7 +63,7 @@ class SqlRunner extends TypedReact.Component<{
     }
 
     onDefaultDbChange(dbname: string) {
-
+        this.defaultDb = dbname;
     }
 
     render() {
@@ -79,7 +80,7 @@ class SqlRunner extends TypedReact.Component<{
             <textarea ref="statement"></textarea>
             </p >
             <p>
-                <Select searchable={true} placeholder="Select default database ..." onChange={this.onDefaultDbChange} options={this.state.monioredDatabases}></Select>
+                <Select searchable={true} placeholder="Select default database ..." value={this.defaultDb} onChange={this.onDefaultDbChange} options={this.state.monioredDatabases}></Select>
 
                 <button className="btn btn-sm btn-primary" onClick={this.runStatement}>
                     <i className="glyphicon glyphicon-play"></i>
