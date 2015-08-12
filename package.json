@@ -1,6 +1,4 @@
 {
-  "name": "sql-inspector",
-  "version": "0.1.0",
   "scripts": {
     "dev": "electron ./app",
 
@@ -15,12 +13,5 @@
     "pack": "npm run pack:osx && npm run pack:win",
     "pack:osx": "npm run build:osx && electron-builder \"dist/osx/sql-inspector.app\" --platform=osx --out=\"dist/osx\" --config=config.json",
     "pack:win": "npm run build:win && electron-builder \"dist/win/Sql Inspector-win32-ia32\" --platform=win --out=\"dist/win\" --config=config.json"
-  },
-  "dependencies": {
-    "bootstrap": "^3.3.5",
-    "jquery": "^2.1.4",
-    "mssql": "^2.1.6",
-    "react": "^0.13.3",
-    "typed-react": "^3.4.1"
   }
 }
