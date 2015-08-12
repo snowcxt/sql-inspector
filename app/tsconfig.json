@@ -23,6 +23,7 @@
     "files": [
         "./client/tree-builder.ts",
         "./global.d.ts",
+        "./server/DbHelper.ts",
         "./server/DbLogs.ts",
         "./server/database.ts",
         "./typings/async.d.ts",
@@ -32,6 +33,7 @@
         "./typings/react/react-addons.d.ts",
         "./typings/react/react.d.ts",
         "./typings/tsd.d.ts",
+        "./client/DbPicker.tsx",
         "./client/SqlStatement.tsx",
         "./client/TreeNode.tsx",
         "./client/UploadHistory.tsx",

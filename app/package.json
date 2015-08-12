@@ -5,6 +5,7 @@
   "dependencies": {
     "async": "^1.4.0",
     "bootstrap": "^3.3.5",
+    "bootstrap-multiselect": "^0.9.13-1",
     "codemirror": "^5.5.0",
     "delete": "^0.2.1",
     "glob": "^5.0.14",

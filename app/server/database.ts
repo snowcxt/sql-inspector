@@ -14,7 +14,7 @@ var config = {
     }
 }
 
-export var exec = function(dbName: string, statement: string, cb: (err, recordset?) => void) {
+export function exec(dbName: string, statement: string, cb: (err, recordset?) => void) {
     var con = _.cloneDeep(config);
     con.database = dbName;
     var connection = new sql.Connection(con, function(err) {
