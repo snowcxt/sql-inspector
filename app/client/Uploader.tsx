@@ -1,7 +1,7 @@
 import React = require("react");
 import TypedReact = require("typed-react");
 import treeBuilder = require("./tree-builder");
-import Tree = require("./TreeNode");
+import Tree = require("./Tree");
 
 class Uploader extends TypedReact.Component<{
     setLogs: (logs: any[]) => void

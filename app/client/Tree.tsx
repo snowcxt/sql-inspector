@@ -1,11 +1,12 @@
 import React = require("react");
-import Addons = require("react/addons");
 import TypedReact = require("typed-react");
+
+var classNames = require('classnames');
 
 var CodeMirror = require('codemirror');
 require('codemirror/mode/sql/sql');
 
-class TreeNode extends TypedReact.Component<{ node: ITreeNode }, {
+class Tree extends TypedReact.Component<{ node: ITreeNode }, {
     visible: boolean;
     showDetails:boolean;
 }>{
@@ -107,7 +108,7 @@ class TreeNode extends TypedReact.Component<{ node: ITreeNode }, {
                     <div className={"tree-node panel " + this.getActionColor('panel', node.log)}>
                         <div className={"panel-heading"} onClick={this.toggle}>
                             <a className="text-muted">
-                                <span className={Addons.addons.classSet(classObj)}></span>
+                                <span className={classNames(classObj)}></span>
                             </a>
                             <span className="text-danger" ng-if="!node.failToGetParent">
                                 <i className="glyphicon glyphicon-warning-sign"></i>
@@ -119,11 +120,11 @@ class TreeNode extends TypedReact.Component<{ node: ITreeNode }, {
                             <b>{ node.log.object_name}</b>
 
                             <a className="btn btn-xs btn-default pull-right" onClick={this.showDetails}>
-                                <span className={Addons.addons.classSet(showDetailsClassObj)}></span>
+                                <span className={classNames(showDetailsClassObj)}></span>
                             </a>
                         </div>
                         <div className="panel-body" style={detailsStyle}>
-                            <textarea ref="codemirror" value={node.log.statement}></textarea>
+                            <textarea ref="codemirror" value={node.log.statement} readOnly={true}></textarea>
                         </div>
                     </div>
                     <ul className="tree-nodes" style={style}>{childNodes}</ul>
@@ -136,5 +137,5 @@ class TreeNode extends TypedReact.Component<{ node: ITreeNode }, {
     }
 }
 
-var Node = TypedReact.createClass(TreeNode);
+var Node = TypedReact.createClass(Tree);
 export = Node;

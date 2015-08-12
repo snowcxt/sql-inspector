@@ -58,15 +58,17 @@ class SqlRunner extends TypedReact.Component<{
     }
     render() {
         return (
-            <div>
-                <div className="sql-editor">
+            <p>
+                <p className="sql-editor">
                     <textarea ref="statement"></textarea>
-                </div>
-                <button className="btn btn-sm btn-primary" onClick={this.runStatement}>
-                    <i className="glyphicon glyphicon-play"></i>
-                    Run
-                </button>
-            </div>
+                </p>
+                <p>
+                    <button className="btn btn-sm btn-primary" onClick={this.runStatement}>
+                        <i className="glyphicon glyphicon-play"></i>
+                        Run
+                    </button>
+                </p>
+            </p>
         );
     }
 

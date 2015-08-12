@@ -31,15 +31,15 @@ class DbPicker extends TypedReact.Component<{
 
     render() {
         return (
-            <div>
+            <p>
                 <select ref="db-dropdown" multiple={true}>
                 {
                 this.state.databases.map((db) => {
-                    return (<option value={db}>{db}</option>);
+                    return (<option key={db} value={db}>{db}</option>);
                 })
                 }
                 </select>
-            </div >);
+            </p>);
     }
 }
 

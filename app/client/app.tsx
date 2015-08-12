@@ -29,10 +29,14 @@ class App extends TypedReact.Component<any, {
     render() {
         return (
             <div>
-                <Uploader setLogs={this.setLogs}></Uploader>
+                <p>
+                    <Uploader setLogs={this.setLogs}></Uploader>
+                </p>
                 <DbPicker setDatabases={this.setDatabases}></DbPicker>
                 <SqlRunner setLogs={this.setLogs}></SqlRunner>
-                <SqlExecTree logs={this.state.logs}></SqlExecTree>
+                <p className="well">
+                    <SqlExecTree logs={this.state.logs}></SqlExecTree>
+                </p>
             </div>);
     }
 }
