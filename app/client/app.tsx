@@ -41,9 +41,9 @@ class App extends TypedReact.Component<any, {
                 </p>
                 <DbPicker setDatabases={this.setDatabases}></DbPicker>
                 <SqlRunner setLogs={this.setLogs}></SqlRunner>
-                <p className="well">
+                <div className="well">
                     <SqlExecTree logs={this.state.logs}></SqlExecTree>
-                </p>
+                </div>
                 <p>
                     <button className="btn btn-sm btn-default" onClick={this.saveLogs}>
                         <i className="glyphicon glyphicon-save"></i>
