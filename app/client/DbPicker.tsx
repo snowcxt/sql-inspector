@@ -1,44 +1,34 @@
 import React = require("react");
 import TypedReact = require("typed-react");
-import $ = require("jquery");
 
 import DbHelper = require("../server/DbHelper");
 
-var multiselect = require("bootstrap-multiselect");
+var Select = require('react-select');
 
 class DbPicker extends TypedReact.Component<{
     setDatabases: (databases: string[]) => void;
-}, {
-    databases: string[]
-}>{
+}, { databases: Array<{ value: string; label: string; }> }>{
     getInitialState() {
         return { databases: [] };
     }
 
     componentDidMount() {
-        var dropdown: any = $(React.findDOMNode(this.refs["db-dropdown"]));
-        dropdown.hide();
         DbHelper.getDatases((err, databases) => {
             if (err) return console.log(err);
+            var options = databases.map((db) => {
+                return { value: db, label: db };
+            });
             this.setState({
-                databases: databases
+                databases: options
             });
             this.props.setDatabases(databases);
-            dropdown.show();
-            dropdown.multiselect();
         });
     }
 
     render() {
         return (
             <p>
-                <select ref="db-dropdown" multiple={true}>
-                {
-                this.state.databases.map((db) => {
-                    return (<option key={db} value={db}>{db}</option>);
-                })
-                }
-                </select>
+            <Select multi={true} searchable={true} placeholder="Select monior database(s) ..." options={this.state.databases}></Select>
             </p>);
     }
 }

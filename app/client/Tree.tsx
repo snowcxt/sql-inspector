@@ -18,18 +18,14 @@ class Tree extends TypedReact.Component<{ node: ITreeNode }, {
     }
 
     componentDidMount () {
-        var mirror:any = this.refs["codemirror"];
+        var mirror = this.refs["codemirror"];
         if(mirror) {
-            CodeMirror.fromTextArea(mirror.getDOMNode(), {
+            CodeMirror.fromTextArea(React.findDOMNode(mirror), {
                 viewportMargin: 0,
                 readOnly: true,
                 mode: 'text/x-mssql'
             });
         }
-    		// this.codeMirror.on('change', this.codemirrorValueChanged);
-    		// this.codeMirror.on('focus', this.focusChanged.bind(this, true));
-    		// this.codeMirror.on('blur', this.focusChanged.bind(this, false));
-    		// this._currentCodemirrorValue = this.props.value;
 	}
 
     toggle(){

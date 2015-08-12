@@ -1,4 +1,4 @@
-import db = require("./database");
+import db = require("./DbHelper");
 import _ = require('lodash');
 import async = require('async');
 var glob = require("glob");
