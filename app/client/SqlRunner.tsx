@@ -11,15 +11,16 @@ import async = require('async');
 class SqlRunner extends TypedReact.Component<{
     setLogs: (logs: any[]) => void;
 }, {
+        defaultDb?: string;
         monioredDatabases?: Array<{ value: string; label: string; }>;
         defaultDbDisabled?: boolean;
         runnerDisabled?: boolean;
     }>{
     private editor: CodeMirror.EditorFromTextArea;
-    private defaultDb: string;
 
     getInitialState() {
         return {
+            defaultDb: false,
             monioredDatabases: [],
             defaultDbDisabled: true,
             runnerDisabled: true
@@ -46,10 +47,10 @@ class SqlRunner extends TypedReact.Component<{
         var statment = this.editor.getDoc().getValue();
         async.series([
             (callback) => {
-                DbLogs.setup([this.defaultDb], callback);
+                DbLogs.setup([this.state.defaultDb], callback);
             },
             (callback) => {
-                DbLogs.runQuery(this.defaultDb, statment, false, callback);
+                DbLogs.runQuery(this.state.defaultDb, statment, false, callback);
             },
             (callback) => {
                 DbLogs.getNewLogs((err, logs: any[]) => {
@@ -59,7 +60,7 @@ class SqlRunner extends TypedReact.Component<{
                 });
             },
             (callback) => {
-                DbLogs.cleanLog([this.defaultDb], callback);
+                DbLogs.cleanLog([this.state.defaultDb], callback);
             }
         ], (err, recordset) => {
             if (err) return console.log("err", err);
@@ -72,18 +73,16 @@ class SqlRunner extends TypedReact.Component<{
                 return { value: db, label: db }
             }),
             defaultDbDisabled: databases.length <= 0,
-            runnerDisabled: databases.length !== 1
+            runnerDisabled: databases.length !== 1,
+            defaultDb: databases.length === 1 ? databases[0] : ""
         });
-        if (databases.length === 1) {
-            this.defaultDb = databases[0];
-        } else {
-            this.defaultDb = "";
-        }
     }
 
     onDefaultDbChange(dbname: string) {
-        this.defaultDb = dbname;
-        this.state.runnerDisabled = !this.defaultDb;
+        this.setState({
+            defaultDb: dbname,
+            runnerDisabled: !dbname
+        });
     }
 
     render() {
@@ -91,7 +90,7 @@ class SqlRunner extends TypedReact.Component<{
             <p>
                 <DbPicker setDatabases={this.setDatabases}></DbPicker>
                 <p>
-                    <Select disabled={this.state.defaultDbDisabled} searchable={true} placeholder="Select default database ..." value={this.defaultDb} onChange={this.onDefaultDbChange} options={this.state.monioredDatabases}></Select>
+                    <Select disabled={this.state.defaultDbDisabled} searchable={true} placeholder="Select default database ..." value={this.state.defaultDb} onChange={this.onDefaultDbChange} options={this.state.monioredDatabases}></Select>
                 </p>
                 <p className="sql-editor" >
                     <textarea ref="statement"></textarea>
