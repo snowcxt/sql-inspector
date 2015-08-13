@@ -15,5 +15,4 @@ class SqlExecTree extends TypedReact.Component<{
     }
 }
 
-
 export = TypedReact.createClass(SqlExecTree);

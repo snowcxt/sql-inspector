@@ -34,7 +34,7 @@ class App extends TypedReact.Component<any, {
                     <Uploader setLogs={this.setLogs}></Uploader>
                 </p>
                 <SqlRunner setLogs={this.setLogs}></SqlRunner>
-                <div className="well">
+                <div className="well tree">
                     <SqlExecTree logs={this.state.logs}></SqlExecTree>
                 </div>
                 <p>

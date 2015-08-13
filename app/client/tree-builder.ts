@@ -4,7 +4,7 @@ function createTreeNode(index: number, log: ILog, failToGetParent: boolean, pare
     var node: ITreeNode = {
         index: index,
         log: log,
-        failToGetParent: failToGetParent,
+        getParent: failToGetParent,
         parent: parent,
         nodes: []
     };
@@ -47,7 +47,7 @@ export function build(logs: ILog[]): ITreeNode {
     var root: ITreeNode = {
         index: -1,
         log: null,
-        failToGetParent: true,
+        getParent: true,
         parent: null,
         nodes: []
     },

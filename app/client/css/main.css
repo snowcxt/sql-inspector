@@ -1,8 +1,3 @@
-.tree-nodes {
-    display: block;
-    position: relative;
-    list-style: none
-}
 .btn-file {
     position: relative;
     overflow: hidden;
@@ -22,17 +17,13 @@
     cursor: inherit;
     display: block;
 }
-.tree-root > ol {
-    margin-left: 0;
+.tree > .tree-nodes {
+    margin-left: -40px;
 }
-.hide-toggle {
-    display: none;
-}
-.angular-ui-tree-nodes .angular-ui-tree-nodes {
-    padding-left: 40px;
-}
-.tree-node {
-    margin-bottom: 10px;
+.tree-nodes {
+    display: block;
+    position: relative;
+    list-style: none
 }
 .CodeMirror {
     height: auto;

@@ -19,7 +19,7 @@ interface ILog {
 interface ITreeNode {
     index: number;
     log: ILog;
-    failToGetParent: boolean;
+    getParent: boolean;
     parent: ITreeNode;
     nodes: ITreeNode[];
 }
