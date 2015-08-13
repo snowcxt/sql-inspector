@@ -3,7 +3,7 @@ npm-debug.log
 
 client/**/*.js
 client/**/*.js.map
-!client/lib/
+!client/lib/**
 
 server/**/*.js
 server/**/*.js.map
