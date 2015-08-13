@@ -5,7 +5,7 @@ import DbPicker = require("./DbPicker");
 var CodeMirror = require('codemirror');
 require('codemirror/mode/sql/sql');
 var Select = require('react-select');
-import DbLogs = require("../server/DbLogs");
+import DbLogs = require("../../server/DbLogs");
 import async = require('async');
 
 class SqlRunner extends TypedReact.Component<{
