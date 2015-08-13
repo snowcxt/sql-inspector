@@ -35,7 +35,8 @@
         "./client/DbPicker.tsx",
         "./client/SqlExecTree.tsx",
         "./client/SqlRunner.tsx",
-        "./client/Tree.tsx",
+        "./client/Tree/TreeNode.tsx",
+        "./client/Tree/index.tsx",
         "./client/Uploader.tsx",
         "./client/app.tsx",
         "./client/index.tsx"

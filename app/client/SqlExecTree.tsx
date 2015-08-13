@@ -1,7 +1,7 @@
 import React = require("react");
 import TypedReact = require("typed-react");
 
-import Tree = require("./Tree");
+import Tree = require("./Tree/index");
 import treeBuilder = require("./tree-builder");
 
 class SqlExecTree extends TypedReact.Component<{
