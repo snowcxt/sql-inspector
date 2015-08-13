@@ -32,7 +32,11 @@ class DbPicker extends TypedReact.Component<{
 
     onChange(newValue: string) {
         this.setState({ selectValue: newValue });
-        this.props.setDatabases(newValue.split(","));
+        if (newValue) {
+            this.props.setDatabases(newValue.split(","));
+        } else {
+            this.props.setDatabases([]);
+        }
     }
 
     render() {

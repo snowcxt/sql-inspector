@@ -11,14 +11,18 @@ import async = require('async');
 class SqlRunner extends TypedReact.Component<{
     setLogs: (logs: any[]) => void;
 }, {
-        monioredDatabases: Array<{ value: string; label: string; }>
+        monioredDatabases?: Array<{ value: string; label: string; }>;
+        defaultDbDisabled?: boolean;
+        runnerDisabled?: boolean;
     }>{
     private editor: CodeMirror.EditorFromTextArea;
     private defaultDb: string;
 
     getInitialState() {
         return {
-            monioredDatabases: []
+            monioredDatabases: [],
+            defaultDbDisabled: true,
+            runnerDisabled: true
         };
     }
 
@@ -62,32 +66,41 @@ class SqlRunner extends TypedReact.Component<{
         });
     }
 
+    setDatabases(databases: string[]) {
+        this.setState({
+            monioredDatabases: databases.map((db) => {
+                return { value: db, label: db }
+            }),
+            defaultDbDisabled: databases.length <= 0,
+            runnerDisabled: databases.length !== 1
+        });
+        if (databases.length === 1) {
+            this.defaultDb = databases[0];
+        } else {
+            this.defaultDb = "";
+        }
+    }
+
     onDefaultDbChange(dbname: string) {
         this.defaultDb = dbname;
+        this.state.runnerDisabled = !this.defaultDb;
     }
 
     render() {
         return (
             <p>
-            <DbPicker setDatabases={(databases: string[]) => {
-                this.setState({
-                    monioredDatabases: databases.map((db) => {
-                        return { value: db, label: db }
-                    })
-                });
-            } }></DbPicker>
-            <p className= "sql-editor" >
-            <textarea ref="statement"></textarea>
-            </p >
-            <p>
-                <Select searchable={true} placeholder="Select default database ..." value={this.defaultDb} onChange={this.onDefaultDbChange} options={this.state.monioredDatabases}></Select>
-
-                <button className="btn btn-sm btn-primary" onClick={this.runStatement}>
+                <DbPicker setDatabases={this.setDatabases}></DbPicker>
+                <p>
+                    <Select disabled={this.state.defaultDbDisabled} searchable={true} placeholder="Select default database ..." value={this.defaultDb} onChange={this.onDefaultDbChange} options={this.state.monioredDatabases}></Select>
+                </p>
+                <p className="sql-editor" >
+                    <textarea ref="statement"></textarea>
+                </p >
+                <button className="btn btn-sm btn-primary" disabled={this.state.runnerDisabled} onClick={this.runStatement}>
                     <i className="glyphicon glyphicon-play"></i>
                     Run
                 </button>
             </p>
-            </p >
         );
     }
 }
