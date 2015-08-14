@@ -7,3 +7,4 @@ client/**/*.js.map
 
 server/**/*.js
 server/**/*.js.map
+server/settings.json

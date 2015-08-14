@@ -1,5 +1,6 @@
 var sql = require('mssql');
 import _ = require("lodash");
+import Settings = require("./Settings");
 
 var defaultConfig: IDbConnection = {
     user: 'sa',
@@ -23,7 +24,7 @@ export function exec(dbName: string, statement: string, cb: (err, recordset?) =>
     });
 }
 
-export function setConfig(config: IDbConnection, rememberMe: boolean, cb: (err: any, databases?: string[]) => void) {
+export function setConfig(config: IDbConnection, rememberPassword: boolean, cb: (err: any, databases?: string[]) => void) {
     config.database = "master";
 
     var connection = new sql.Connection(config, function(err) {
@@ -33,9 +34,13 @@ export function setConfig(config: IDbConnection, rememberMe: boolean, cb: (err: 
         request.query("SELECT name FROM sys.databases", function(err, recordset) {
             if (err) return cb(err);
             defaultConfig = config;
-            cb(null, recordset.map((result) => {
-                return result.name;
-            }));
+            Settings.saveDb(config, rememberPassword, () => {
+                if (err) return cb(err);
+
+                cb(null, recordset.map((result) => {
+                    return result.name;
+                }));
+            });
         });
     });
 }
