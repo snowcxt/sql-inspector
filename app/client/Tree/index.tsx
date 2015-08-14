@@ -42,7 +42,7 @@ class Tree extends TypedReact.Component<{ node: ITreeNode }, {
         if (this.props.node.log) {
             return (
                 <div>
-                    <TreeNode node={node} childNodes={childNodes} toggle={this.toggle}></TreeNode>
+                    <TreeNode node={node} toggle={this.toggle}></TreeNode>
                     <ul className="tree-nodes" style={toggleStyle}>{childNodes}</ul>
                 </div>
             );

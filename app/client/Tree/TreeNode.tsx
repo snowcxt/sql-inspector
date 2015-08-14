@@ -6,9 +6,8 @@ var classNames = require('classnames');
 var CodeMirror = require('codemirror');
 
 class TreeNode extends TypedReact.Component<{
-    node: ITreeNode; childNodes:
-    JSX.Element[]; toggle:
-    (visible: boolean) => void;
+    node: ITreeNode;
+    toggle: (visible: boolean) => void;
 }, {
         visible?: boolean;
         showDetails?: boolean;
@@ -66,7 +65,6 @@ class TreeNode extends TypedReact.Component<{
 
     render() {
         var node = this.props.node;
-        var childNodes;
         var classObj;
         var showDetailsClassObj;
 
@@ -100,13 +98,13 @@ class TreeNode extends TypedReact.Component<{
             <div className={"tree-node panel " + this.getActionColor('panel', node.log) }>
                 <div className={"panel-heading"} onClick={this.toggle}>
                     {
-                    childNodes && childNodes.length > 0 ? (
+                    node.nodes.length > 0 ? (
                         <a className="text-muted">
                             <span className={classNames(classObj) }></span>
-                        </a>) : ""
+                        </a>) : null
                     }
                     {
-                    this.props.node.getParent ? "" : (
+                    this.props.node.getParent ? null : (
                         <span className="text-danger">
                         <i className="glyphicon glyphicon-warning-sign"></i>
                         </span>)
