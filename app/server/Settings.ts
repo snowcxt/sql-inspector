@@ -30,23 +30,17 @@ export function saveDb(database: IDbConnection, rememberPassword: boolean, cb) {
     getSettings((err, settings) => {
         if (err) return cb(err);
         var dbConfig: IDbConnection = {
-            id: database.id,
             user: database.user,
             server: database.server,
             password: rememberPassword ? database.password : null
         };
-        if (settings.databases) {
-            settings.databases = [];
-        }
-        if (dbConfig.id) {
-            var index = _.findIndex(settings.databases, (db) => {
-                db.id === dbConfig.id;
-            });
-            if (index > -1) {
-                settings.databases[1] = dbConfig;
-            }
+
+        var index = _.findIndex(settings.databases, (db) => {
+            return db.server === dbConfig.server;
+        });
+        if (index > -1) {
+            settings.databases[index] = dbConfig;
         } else {
-            dbConfig.id = Date.now().toString();
             settings.databases.push(dbConfig);
         }
 

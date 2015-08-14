@@ -1,15 +1,13 @@
 import React = require("react");
 import TypedReact = require("typed-react");
 
-import DbHelper = require("../server/DbHelper");
-
 var Select = require('react-select');
 
 class DbPicker extends TypedReact.Component<{
     setDatabases: (databases: string[]) => void;
     databases: string[];
 }, {
-        selectValue?: string
+        selectValue?: string;
     }>{
     getInitialState() {
         return {

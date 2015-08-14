@@ -8,7 +8,6 @@ interface ISettings {
 }
 
 interface IDbConnection {
-    id?: string,
     user: string;
     password: string;
     server: string;
