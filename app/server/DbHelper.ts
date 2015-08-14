@@ -10,17 +10,17 @@ var defaultConfig: IDbConnection = {
 }
 
 export function exec(dbName: string, statement: string, cb: (err, recordset?) => void) {
-    var con = _.cloneDeep(defaultConfig);
-    con.database = dbName;
-    var connection = new sql.Connection(con, function(err) {
+    defaultConfig.database = dbName;
+    var connection = new sql.Connection({
+        user: defaultConfig.user,
+        password: defaultConfig.password,
+        server: defaultConfig.server,
+        database: dbName
+    }, function(err) {
         if (err) return cb(err);
 
         var request = new sql.Request(connection); // or: var request = connection.request();
-        request.query(statement, function(err, recordset) {
-            if (err) return cb(err);
-
-            cb(null, recordset);
-        });
+        request.query(statement, cb);
     });
 }
 
