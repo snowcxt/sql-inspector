@@ -1,7 +1,7 @@
 import React = require("react");
 import TypedReact = require("typed-react");
 
-import DbHelper = require("../../server/DbHelper");
+import DbHelper = require("../server/DbHelper");
 
 var Select = require('react-select');
 

@@ -21,7 +21,7 @@
         "!./node_modules/**/*"
     ],
     "files": [
-        "./client/js/tree-builder.ts",
+        "./client/tree-builder.ts",
         "./global.d.ts",
         "./server/DbHelper.ts",
         "./server/DbLogs.ts",
@@ -32,13 +32,14 @@
         "./typings/react/react-addons.d.ts",
         "./typings/react/react.d.ts",
         "./typings/tsd.d.ts",
-        "./client/js/DbPicker.tsx",
-        "./client/js/SqlExecTree.tsx",
-        "./client/js/SqlRunner.tsx",
-        "./client/js/Tree/TreeNode.tsx",
-        "./client/js/Tree/index.tsx",
-        "./client/js/Uploader.tsx",
-        "./client/js/app.tsx",
-        "./client/js/index.tsx"
+        "./client/DbConnector.tsx",
+        "./client/DbPicker.tsx",
+        "./client/SqlExecTree.tsx",
+        "./client/SqlRunner.tsx",
+        "./client/Tree/TreeNode.tsx",
+        "./client/Tree/index.tsx",
+        "./client/Uploader.tsx",
+        "./client/app.tsx",
+        "./client/index.tsx"
     ]
 }

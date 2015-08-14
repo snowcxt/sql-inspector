@@ -2,15 +2,21 @@ import React = require("react");
 import TypedReact = require("typed-react");
 
 import DbPicker = require("./DbPicker");
+import DbConnector = require("./DbConnector");
 var CodeMirror = require('codemirror');
 require('codemirror/mode/sql/sql');
 var Select = require('react-select');
-import DbLogs = require("../../server/DbLogs");
+
+import DbHelper = require("../server/DbHelper");
+import DbLogs = require("../server/DbLogs");
+
 import async = require('async');
 
 class SqlRunner extends TypedReact.Component<{
     setLogs: (logs: any[]) => void;
 }, {
+        showConnector?: boolean;
+        dbConnection?: IDbConnection;
         defaultDb?: string;
         monioredDatabases?: Array<{ value: string; label: string; }>;
         defaultDbDisabled?: boolean;
@@ -20,6 +26,8 @@ class SqlRunner extends TypedReact.Component<{
 
     getInitialState() {
         return {
+            showConnector: true,
+            dbConnection: null,
             defaultDb: false,
             monioredDatabases: [],
             defaultDbDisabled: true,
@@ -85,22 +93,34 @@ class SqlRunner extends TypedReact.Component<{
         });
     }
 
+    setConnection(config: IDbConnection, rememberPassword: boolean) {
+        this.setState({
+            showConnector: false,
+            DbConnection: config
+        });
+        this.setDatabases([]);
+
+        if (config) {
+            DbHelper.setDefaultConfig(config);
+        }
+    }
+
     render() {
-        return (
-            <p>
+        return this.state.showConnector ?
+            (<DbConnector setConnection={this.setConnection}></DbConnector>) :
+            (<div>
                 <DbPicker setDatabases={this.setDatabases}></DbPicker>
                 <p>
                     <Select disabled={this.state.defaultDbDisabled} searchable={true} placeholder="Select default database ..." value={this.state.defaultDb} onChange={this.onDefaultDbChange} options={this.state.monioredDatabases}></Select>
                 </p>
-                <p className="sql-editor" >
+                <p className= "sql-editor" >
                     <textarea ref="statement"></textarea>
                 </p >
                 <button className="btn btn-sm btn-primary" disabled={this.state.runnerDisabled} onClick={this.runStatement}>
                     <i className="glyphicon glyphicon-play"></i>
                     Run
                 </button>
-            </p>
-        );
+            </div>);
     }
 }
 

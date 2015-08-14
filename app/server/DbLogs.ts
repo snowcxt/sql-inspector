@@ -8,8 +8,8 @@ var AuditName = "AuditTableQuery_129831091";
 var AuditSpecificationName = AuditName + "_specification";
 
 function getAuditFileLocation() {
-    return __dirname + "\\";
-    // return "C:\\tSQLtFaker\\";
+    // return __dirname + "\\";
+    return "C:\\tSQLtFaker\\";
 }
 
 function getAuditFile() {

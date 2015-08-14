@@ -1,19 +1,19 @@
 var sql = require('mssql');
 import _ = require("lodash");
 
-var config = {
+var defaultConfig: IDbConnection = {
     user: 'admin',
     password: 'password',
     server: 'localhost', // You can use 'localhost\\instance' to connect to named instance
-    database: 'longford',
+    database: 'longford'
+}
 
-    options: {
-        // encrypt: true // Use this if you're on Windows Azure
-    }
+export function setDefaultConfig(config: IDbConnection) {
+    defaultConfig = config;
 }
 
 export function exec(dbName: string, statement: string, cb: (err, recordset?) => void) {
-    var con = _.cloneDeep(config);
+    var con = _.cloneDeep(defaultConfig);
     con.database = dbName;
     var connection = new sql.Connection(con, function(err) {
         if (err) return cb(err);
