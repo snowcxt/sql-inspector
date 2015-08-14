@@ -8,7 +8,7 @@ class Uploader extends TypedReact.Component<{
 }, number>{
     render(){
         return (
-                <span className="btn btn-sm btn-default btn-file">
+                <span className="btn btn-default btn-file">
                     <i className="glyphicon glyphicon-open"></i>
                     Upload <input type="file" onChange={(e)=>{
                 var element:any = e.target;

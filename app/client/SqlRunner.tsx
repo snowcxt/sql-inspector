@@ -2,7 +2,6 @@ import React = require("react");
 import TypedReact = require("typed-react");
 
 import DbPicker = require("./DbPicker");
-import DbConnector = require("./DbConnector");
 var CodeMirror = require('codemirror');
 require('codemirror/mode/sql/sql');
 var Select = require('react-select');
@@ -13,10 +12,9 @@ import DbLogs = require("../server/DbLogs");
 import async = require('async');
 
 class SqlRunner extends TypedReact.Component<{
+    databases: string[];
     setLogs: (logs: any[]) => void;
 }, {
-        showConnector?: boolean;
-        dbConnection?: IDbConnection;
         defaultDb?: string;
         monioredDatabases?: Array<{ value: string; label: string; }>;
         defaultDbDisabled?: boolean;
@@ -35,19 +33,21 @@ class SqlRunner extends TypedReact.Component<{
         };
     }
 
-    componentDidMount() {
-        var mirror: any = this.refs["statement"];
-        if (mirror) {
-            this.editor = CodeMirror.fromTextArea(mirror.getDOMNode(), {
-                mode: "text/x-mssql",
-                lineNumbers: true,
-                smartIndent: true,
-                viewportMargin: Infinity,
-                extraKeys: {
-                    "Ctrl-Space": "autocomplete",
-                    "Ctrl-J": "autocomplete"
-                }
-            });
+    componentDidUpdate() {
+        if (!this.editor) {
+            var mirror: any = this.refs["statement"];
+            if (mirror) {
+                this.editor = CodeMirror.fromTextArea(mirror.getDOMNode(), {
+                    mode: "text/x-mssql",
+                    lineNumbers: true,
+                    smartIndent: true,
+                    viewportMargin: Infinity,
+                    extraKeys: {
+                        "Ctrl-Space": "autocomplete",
+                        "Ctrl-J": "autocomplete"
+                    }
+                });
+            }
         }
     }
 
@@ -93,23 +93,15 @@ class SqlRunner extends TypedReact.Component<{
         });
     }
 
-    setConnection(config: IDbConnection, rememberPassword: boolean) {
-        this.setState({
-            showConnector: false,
-            DbConnection: config
-        });
-        this.setDatabases([]);
-
-        if (config) {
-            DbHelper.setDefaultConfig(config);
-        }
-    }
-
     render() {
-        return this.state.showConnector ?
-            (<DbConnector setConnection={this.setConnection}></DbConnector>) :
-            (<div>
-                <DbPicker setDatabases={this.setDatabases}></DbPicker>
+        var style;
+        if (!this.props.databases || this.props.databases.length <= 0) {
+            style = { display: "none" };
+        }
+
+        return this.props.databases && this.props.databases.length > 0 ? (
+            <div>
+                <DbPicker databases={this.props.databases} setDatabases={this.setDatabases}></DbPicker>
                 <p>
                     <Select disabled={this.state.defaultDbDisabled} searchable={true} placeholder="Select default database ..." value={this.state.defaultDb} onChange={this.onDefaultDbChange} options={this.state.monioredDatabases}></Select>
                 </p>
@@ -120,7 +112,7 @@ class SqlRunner extends TypedReact.Component<{
                     <i className="glyphicon glyphicon-play"></i>
                     Run
                 </button>
-            </div>);
+            </div>) : null;
     }
 }
 

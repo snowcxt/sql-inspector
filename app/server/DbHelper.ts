@@ -2,14 +2,10 @@ var sql = require('mssql');
 import _ = require("lodash");
 
 var defaultConfig: IDbConnection = {
-    user: 'admin',
+    user: 'sa',
     password: 'password',
     server: 'localhost', // You can use 'localhost\\instance' to connect to named instance
-    database: 'longford'
-}
-
-export function setDefaultConfig(config: IDbConnection) {
-    defaultConfig = config;
+    database: 'master'
 }
 
 export function exec(dbName: string, statement: string, cb: (err, recordset?) => void) {
@@ -25,14 +21,21 @@ export function exec(dbName: string, statement: string, cb: (err, recordset?) =>
             cb(null, recordset);
         });
     });
-};
+}
 
-export function getDatases(cb) {
-    exec("master", "SELECT name FROM sys.databases", (err, results: Array<{ name: string }>) => {
+export function setConfig(config: IDbConnection, rememberMe: boolean, cb: (err: any, databases?: string[]) => void) {
+    config.database = "master";
+
+    var connection = new sql.Connection(config, function(err) {
         if (err) return cb(err);
 
-        cb(null, results.map((result) => {
-            return result.name;
-        }));
+        var request = new sql.Request(connection); // or: var request = connection.request();
+        request.query("SELECT name FROM sys.databases", function(err, recordset) {
+            if (err) return cb(err);
+            defaultConfig = config;
+            cb(null, recordset.map((result) => {
+                return result.name;
+            }));
+        });
     });
 }

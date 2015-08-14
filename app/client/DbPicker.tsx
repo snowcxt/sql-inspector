@@ -7,8 +7,8 @@ var Select = require('react-select');
 
 class DbPicker extends TypedReact.Component<{
     setDatabases: (databases: string[]) => void;
+    databases: string[];
 }, {
-        databases?: Array<{ value: string; label: string; }>;
         selectValue?: string
     }>{
     getInitialState() {
@@ -16,18 +16,6 @@ class DbPicker extends TypedReact.Component<{
             databases: [],
             selectValue: ""
         };
-    }
-
-    componentDidMount() {
-        DbHelper.getDatases((err, databases) => {
-            if (err) return console.log(err);
-            var options = databases.map((db) => {
-                return { value: db, label: db };
-            });
-            this.setState({
-                databases: options
-            });
-        });
     }
 
     onChange(newValue: string) {
@@ -40,9 +28,12 @@ class DbPicker extends TypedReact.Component<{
     }
 
     render() {
+        var db = this.props.databases.map((dbname) => {
+            return { value: dbname, label: dbname };
+        });
         return (
             <p>
-            <Select multi={true} searchable={true} placeholder="Select monior database(s) ..." value={this.state.selectValue} onChange={this.onChange} options={this.state.databases}></Select>
+            <Select multi={true} searchable={true} placeholder="Select monior database(s) ..." value={this.state.selectValue} onChange={this.onChange} options={db}></Select>
             </p>);
     }
 }

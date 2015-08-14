@@ -6,14 +6,19 @@ import DbHelper = require("../server/DbHelper");
 var Select = require('react-select');
 
 class DbConnector extends TypedReact.Component<{
-    setConnection: (config: IDbConnection, rememberPassword: boolean) => void
+    setConnection: (databases: string[]) => void
 }, number>{
     onConnect() {
-        this.props.setConnection({
+        var config: IDbConnection = {
             server: (React.findDOMNode(this.refs["server-name"]) as any).value.trim(),
             password: (React.findDOMNode(this.refs["password"]) as any).value.trim(),
             user: (React.findDOMNode(this.refs["login"]) as any).value.trim()
-        }, (React.findDOMNode(this.refs["remember-password"]) as any).checked);
+        };
+        DbHelper.setConfig(config, (React.findDOMNode(this.refs["remember-password"]) as any).checked, (err, databases) => {
+            if (err) throw err;
+            this.props.setConnection(databases);
+        });
+
     }
     render() {
         return (
