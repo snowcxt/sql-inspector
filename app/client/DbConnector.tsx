@@ -66,7 +66,10 @@ selectDb(server:string){
                             <ul className="dropdown-menu dropdown-menu-right">
                             {
                                 this.state.savedDatabases.map((db)=>{
-                                    return (<li><a href="#" onClick={this.selectDb.bind(null, db.server)}>{db.server}</a></li>);
+                                    return (
+                                        <li key={db.server}>
+                                            <a href="#" onClick={this.selectDb.bind(null, db.server)}>{db.server}</a>
+                                        </li>);
                                 })
                             }
                             </ul>
