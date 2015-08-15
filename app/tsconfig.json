@@ -41,6 +41,6 @@
         "./client/Tree/index.tsx",
         "./client/Uploader.tsx",
         "./client/app.tsx",
-        "./client/index.tsx"
+        "./index.tsx"
     ]
 }

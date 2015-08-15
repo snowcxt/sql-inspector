@@ -1,10 +1,8 @@
 node_modules
 npm-debug.log
 
-client/**/*.js
-client/**/*.js.map
-!client/lib/**
-
-server/**/*.js
-server/**/*.js.map
+**/*.js
+**/*.js.map
+!lib/**
+!main.js
 server/settings.json

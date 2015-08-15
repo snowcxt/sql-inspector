@@ -28,7 +28,7 @@ app.on('ready', function () {
     mainWindow.maximize();
 
     // and load the index.html of the app.
-    mainWindow.loadUrl('file://' + __dirname + '/client/index.html');
+    mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
     // Open the devtools.
     mainWindow.openDevTools();
