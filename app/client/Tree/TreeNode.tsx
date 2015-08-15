@@ -72,7 +72,6 @@ class TreeNode extends TypedReact.Component<{
             classObj = {
                 togglable: true,
                 glyphicon: true,
-                "hide-toggle": !(this.props.node.nodes && this.props.node.nodes.length > 0),
                 "glyphicon-chevron-down": this.state.visible,
                 "glyphicon-chevron-right": !this.state.visible
             };
@@ -100,7 +99,7 @@ class TreeNode extends TypedReact.Component<{
                     {
                     node.nodes.length > 0 ? (
                         <a className="text-muted">
-                            <span className={classNames(classObj) }></span>
+                            <span className={classNames(classObj) }></span>{' '}
                         </a>) : null
                     }
                     {
@@ -109,11 +108,11 @@ class TreeNode extends TypedReact.Component<{
                         <i className="glyphicon glyphicon-warning-sign"></i>
                         </span>)
                     }
-                    { node.index }
-                    <span className="badge">{ node.log.action_id }</span>
-                    <span className="badge">{ node.log.database_name }</span>
+                    { node.index }{' '}
+                    <span className="badge">{ node.log.action_id }</span>{' '}
+                    <span className="badge">{ node.log.database_name }</span>{' '}
 
-                    <b>{ node.log.object_name}</b>
+                    <b>{ node.log.object_name}</b>{' '}
 
                     <a className="btn btn-xs btn-default pull-right" onClick={this.showDetails}>
                         <span className={classNames(showDetailsClassObj) }></span>
