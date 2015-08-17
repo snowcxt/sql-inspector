@@ -33,6 +33,7 @@
         "./typings/react/react-addons.d.ts",
         "./typings/react/react.d.ts",
         "./typings/tsd.d.ts",
+        "./client/DataGetter.tsx",
         "./client/DbConnector.tsx",
         "./client/DbPicker.tsx",
         "./client/SqlExecTree.tsx",

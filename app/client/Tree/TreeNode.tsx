@@ -7,6 +7,7 @@ var CodeMirror = require('codemirror');
 
 class TreeNode extends TypedReact.Component<{
     node: ITreeNode;
+    getData: (statement:string) => void;
     toggle: (visible: boolean) => void;
 }, {
         visible?: boolean;
@@ -61,6 +62,10 @@ class TreeNode extends TypedReact.Component<{
                 }
             }
         });
+    }
+
+    getData(){
+        this.props.getData(this.props.node.log.statement);
     }
 
     render() {
@@ -120,6 +125,7 @@ class TreeNode extends TypedReact.Component<{
                 </div>
                 <div className="panel-body" style={detailsStyle}>
                     <textarea ref="codemirror" value={node.log.statement} readOnly={true}></textarea>
+                    <button className="btn btn-default btn-xs pull-right" ng-if="node.log.action_id.trim() === 'SL'" onClick={this.getData}>get data</button>
                 </div>
             </div>)
     }

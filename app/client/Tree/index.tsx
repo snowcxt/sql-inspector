@@ -3,7 +3,7 @@ import TypedReact = require("typed-react");
 
 import TreeNode = require("./TreeNode");
 
-class Tree extends TypedReact.Component<{ node: ITreeNode }, {
+class Tree extends TypedReact.Component<{ node: ITreeNode; getData: (statement:string)=> void; }, {
     visible?: boolean;
 }>{
     getInitialState() {
@@ -25,10 +25,10 @@ class Tree extends TypedReact.Component<{ node: ITreeNode }, {
         var node = this.props.node;
         var childNodes = [];
         if (node.nodes != null) {
-            childNodes = node.nodes.map(function(node, index) {
+            childNodes = node.nodes.map((node, index) => {
                 return (
                     <li key={index}>
-                        <SubTree node={node}></SubTree>
+                        <SubTree node={node} getData={this.props.getData}></SubTree>
                     </li>
                 );
             });
@@ -42,7 +42,7 @@ class Tree extends TypedReact.Component<{ node: ITreeNode }, {
         if (this.props.node.log) {
             return (
                 <div>
-                    <TreeNode node={node} toggle={this.toggle}></TreeNode>
+                    <TreeNode node={node} toggle={this.toggle} getData={this.props.getData}></TreeNode>
                     <ul className="tree-nodes" style={toggleStyle}>{childNodes}</ul>
                 </div>
             );
