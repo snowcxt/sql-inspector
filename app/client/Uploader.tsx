@@ -10,7 +10,7 @@ class Uploader extends TypedReact.Component<{
         return (
                 <span className="btn btn-default btn-file">
                     <i className="glyphicon glyphicon-open"></i>
-                    Upload <input type="file" onChange={(e)=>{
+                    Open <input type="file" accept=".json" onChange={(e)=>{
                 var element:any = e.target;
                 if (element.files && element.files.length > 0) {
                     var textFile = element.files[0],

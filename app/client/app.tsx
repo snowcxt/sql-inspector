@@ -35,16 +35,12 @@ class App extends TypedReact.Component<any, {
         this.setState({
             databases: databases
         });
-
-        // if (config) {
-        //     DbHelper.setDefaultConfig(config);
-        // }
     }
 
     render() {
         return (
             <div>
-                <div className="btn-group btn-group-sm" role="group" aria-label="...">
+                <p className="btn-group btn-group-sm" role="group" aria-label="...">
                     <Uploader setLogs={this.setLogs}></Uploader>
                     <button className="btn btn-default" onClick={this.saveLogs}>
                         <i className="glyphicon glyphicon-save"></i>
@@ -53,9 +49,12 @@ class App extends TypedReact.Component<any, {
                     <button type="button" className="btn btn-default" data-toggle="modal" data-target="#connect-server-model">
                         Connect to db
                     </button>
-                </div>
-                <SqlRunner setLogs={this.setLogs} databases={this.state.databases}></SqlRunner>
-                <div className="well tree">
+                </p>
+                <p>
+                    <SqlRunner setLogs={this.setLogs} databases={this.state.databases}></SqlRunner>
+                </p>
+                <br />
+                <div className="tree">
                     <SqlExecTree logs={this.state.logs}></SqlExecTree>
                 </div>
                 <div className="modal fade" id="connect-server-model" role="dialog" aria-labelledby="myModalLabel">

@@ -81,12 +81,13 @@ class SqlRunner extends TypedReact.Component<{
                 return { value: db, label: db }
             }),
             defaultDbDisabled: databases.length <= 0,
-            runnerDisabled: databases.length !== 1,
-            defaultDb: databases.length === 1 ? databases[0] : ""
+            runnerDisabled: databases.length <= 0,
+            defaultDb: databases.length > 0 ? databases[0] : ""
         });
     }
 
-    onDefaultDbChange(dbname: string) {
+    onDefaultDbChange(e) {
+        var dbname = e.target.value;
         this.setState({
             defaultDb: dbname,
             runnerDisabled: !dbname
@@ -94,24 +95,27 @@ class SqlRunner extends TypedReact.Component<{
     }
 
     render() {
-        var style;
-        if (!this.props.databases || this.props.databases.length <= 0) {
-            style = { display: "none" };
-        }
-
         return this.props.databases && this.props.databases.length > 0 ? (
             <div>
                 <DbPicker databases={this.props.databases} setDatabases={this.setDatabases}></DbPicker>
-                <p>
-                    <Select disabled={this.state.defaultDbDisabled} searchable={true} placeholder="Select default database ..." value={this.state.defaultDb} onChange={this.onDefaultDbChange} options={this.state.monioredDatabases}></Select>
-                </p>
                 <p className= "sql-editor" >
                     <textarea ref="statement"></textarea>
-                </p >
-                <button className="btn btn-sm btn-primary" disabled={this.state.runnerDisabled} onClick={this.runStatement}>
-                    <i className="glyphicon glyphicon-play"></i>
-                    Run
-                </button>
+                </p>
+                <div className="input-group">
+                    <select className="form-control" disabled={this.state.defaultDbDisabled} placeholder="Select default database ..." value={this.state.defaultDb} onChange={this.onDefaultDbChange}>
+                    {
+                        this.state.monioredDatabases.map((db)=>{
+                            return (<option key={db.value}>{db.value}</option>);
+                        })
+                    }
+                    </select>
+                    <span className="input-group-btn">
+                        <button className="btn btn-primary" disabled={this.state.runnerDisabled} onClick={this.runStatement}>
+                            <i className="glyphicon glyphicon-play"></i>
+                            Run
+                        </button>
+                    </span>
+                </div>
             </div>) : null;
     }
 }
