@@ -12,26 +12,12 @@ class TreeNode extends TypedReact.Component<{
         visible?: boolean;
         showDetails?: boolean;
     }>{
+    editor: CodeMirror.EditorFromTextArea = null;
     getInitialState() {
         return {
             visible: true,
-            showDetails: true
+            showDetails: false
         };
-    }
-
-    componentDidMount() {
-        var mirror = this.refs["codemirror"];
-        if (mirror) {
-            CodeMirror.fromTextArea(React.findDOMNode(mirror), {
-                viewportMargin: 0,
-                readOnly: true,
-                mode: 'text/x-mssql'
-            });
-
-            this.setState({
-                showDetails: false
-            });
-        }
     }
 
     getActionColor(prefix: string, row: ILog): string {
@@ -58,9 +44,23 @@ class TreeNode extends TypedReact.Component<{
         });
     }
 
-    showDetails(e) {
+    toggleDetails(e) {
         e.stopPropagation();
-        this.setState({ visible: this.state.visible, showDetails: !this.state.showDetails });
+
+        this.setState({
+            showDetails: !this.state.showDetails
+        }, () => {
+            if (!this.editor && this.state.showDetails) {
+                var mirror = this.refs["codemirror"];
+                if (mirror) {
+                    this.editor = CodeMirror.fromTextArea(React.findDOMNode(mirror), {
+                        viewportMargin: 0,
+                        readOnly: true,
+                        mode: 'text/x-mssql'
+                    });
+                }
+            }
+        });
     }
 
     render() {
@@ -114,7 +114,7 @@ class TreeNode extends TypedReact.Component<{
 
                     <b>{ node.log.object_name}</b>{' '}
 
-                    <a className="btn btn-xs btn-default pull-right" onClick={this.showDetails}>
+                    <a className="btn btn-xs btn-default pull-right" onClick={this.toggleDetails}>
                         <span className={classNames(showDetailsClassObj) }></span>
                     </a>
                 </div>
