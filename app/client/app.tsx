@@ -69,17 +69,7 @@ class App extends TypedReact.Component<any, {
                     <SqlExecTree logs={this.state.logs}></SqlExecTree>
                 </div>
                 <div className="modal fade" id="connect-server-model" role="dialog" aria-labelledby="myModalLabel">
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" dangerouslySetInnerHTML={{__html: '&times;'}} /></button>
-                            <h4 className="modal-title">Connect to Server</h4>
-                          </div>
-                          <div className="modal-body">
-                            <DbConnector setConnection={this.setConnection}></DbConnector>
-                          </div>
-                        </div>
-                  </div>
+                    <DbConnector setConnection={this.setConnection}></DbConnector>
                 </div>
             </div>);
     }
