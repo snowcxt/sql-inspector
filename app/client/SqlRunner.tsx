@@ -18,7 +18,7 @@ class SqlRunner extends TypedReact.Component<{
     setLogs: (logs: any[]) => void;
 }, {
         defaultDb?: string;
-        monioredDatabases?: Array<{ value: string; label: string; }>;
+        monioredDatabases?: string[];
         defaultDbDisabled?: boolean;
         runnerDisabled?: boolean;
     }>{
@@ -65,9 +65,10 @@ class SqlRunner extends TypedReact.Component<{
 
     runStatement() {
         var statment = this.getStatement();
+
         async.series([
             (callback) => {
-                DbLogs.setup([this.state.defaultDb], callback);
+                DbLogs.setup(this.state.monioredDatabases, callback);
             },
             (callback) => {
                 DbLogs.runQuery(this.state.defaultDb, statment, false, callback);
@@ -80,7 +81,7 @@ class SqlRunner extends TypedReact.Component<{
                 });
             },
             (callback) => {
-                DbLogs.cleanLog([this.state.defaultDb], callback);
+                DbLogs.cleanLog(this.state.monioredDatabases, callback);
             }
         ], (err, recordset) => {
             if (err) return console.log("err", err);
@@ -89,9 +90,7 @@ class SqlRunner extends TypedReact.Component<{
 
     setDatabases(databases: string[]) {
         this.setState({
-            monioredDatabases: databases.map((db) => {
-                return { value: db, label: db }
-            }),
+            monioredDatabases: databases,
             defaultDbDisabled: databases.length <= 0,
             runnerDisabled: databases.length <= 0,
             defaultDb: databases.length > 0 ? databases[0] : ""
@@ -117,7 +116,7 @@ class SqlRunner extends TypedReact.Component<{
                     <select className="form-control" disabled={this.state.defaultDbDisabled} placeholder="Select default database ..." value={this.state.defaultDb} onChange={this.onDefaultDbChange}>
                     {
                     this.state.monioredDatabases.map((db) => {
-                        return (<option key={db.value}>{db.value}</option>);
+                        return (<option key={db}>{db}</option>);
                     })
                     }
                     </select>
