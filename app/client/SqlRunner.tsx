@@ -110,7 +110,7 @@ class SqlRunner extends TypedReact.Component<{
             <div>
                 <DbPicker databases={this.props.databases} setDatabases={this.setDatabases}></DbPicker>
                 <p className= "sql-editor" >
-                    <textarea ref="statement">{this.props.statement}</textarea>
+                    <textarea ref="statement" defaultValue={this.props.statement}></textarea>
                 </p>
                 <div className="input-group">
                     <select className="form-control" disabled={this.state.defaultDbDisabled} placeholder="Select default database ..." value={this.state.defaultDb} onChange={this.onDefaultDbChange}>

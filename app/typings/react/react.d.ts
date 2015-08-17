@@ -434,6 +434,7 @@ declare module __React {
         dir?: string;
         disabled?: boolean;
         download?: any;
+        defaultValue?: string;
         draggable?: boolean;
         encType?: string;
         form?: string;
