@@ -1,15 +1,16 @@
 import db = require("./DbHelper");
 import _ = require('lodash');
 import async = require('async');
-var glob = require("glob");
-var del = require('delete');
 
-var AuditName = "AuditTableQuery_129831091";
+var mkdirp = require('mkdirp');
+var rimraf = require('rimraf');
+
+var AuditName = "AuditTableQuery_" + Date.now();
 var AuditSpecificationName = AuditName + "_specification";
 
 function getAuditFileLocation() {
-    return __dirname + "\\";
-    //return "C:\\tSQLtFaker\\";
+    // return __dirname + "\\";
+    return "C:\\" + AuditName + "\\";
 }
 
 function getAuditFile() {
@@ -68,11 +69,15 @@ var setupServerAuditQuery = _.template(
 });
 
 export function setup(databases: string[], cb) {
-    db.exec("master", setupServerAuditQuery, (err) => {
+    mkdirp(getAuditFileLocation(), function(err) {
         if (err) return cb(err);
-        async.each(databases, (db, callback) => {
-            setupDb(db, callback);
-        }, cb);
+
+        db.exec("master", setupServerAuditQuery, (err) => {
+            if (err) return cb(err);
+            async.each(databases, (db, callback) => {
+                setupDb(db, callback);
+            }, cb);
+        });
     });
 }
 
@@ -125,17 +130,7 @@ export function cleanLog(databases: string[], cb) {
             db.exec("master", dropServerAudit, callback);
         },
         (callback) => {
-            glob(getAuditFileLocation() + AuditName + "*.sqlaudit", null, function(err, files: string[]) {
-                if (err) return callback(err, null);
-                // files is an array of filenames.
-                // If the `nonull` option is set, and nothing
-                // was found, then files is ["**/*.js"]
-                // er is an error object or null.
-                _.each(files, (file) => {
-                    del.sync(file, { force: true });
-                });
-                callback(null, null);
-            });
+            rimraf(getAuditFileLocation(), callback);
         }
     ], cb);
 }
