@@ -12,6 +12,7 @@ import DbLogs = require("../server/DbLogs");
 import async = require('async');
 
 class SqlRunner extends TypedReact.Component<{
+    ref: string;
     statement: string;
     databases: string[];
     setLogs: (logs: any[]) => void;
@@ -23,6 +24,10 @@ class SqlRunner extends TypedReact.Component<{
     }>{
     private editor: CodeMirror.EditorFromTextArea;
 
+    getStatement(): string {
+        return this.editor.getDoc().getValue();
+    }
+    
     getInitialState() {
         return {
             showConnector: true,
@@ -59,7 +64,7 @@ class SqlRunner extends TypedReact.Component<{
     }
 
     runStatement() {
-        var statment = this.editor.getDoc().getValue();
+        var statment = this.getStatement();
         async.series([
             (callback) => {
                 DbLogs.setup([this.state.defaultDb], callback);
