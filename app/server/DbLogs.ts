@@ -27,7 +27,7 @@ function generateUUID() {
 };
 
 var createAuditSpecTemplate = _.template(
-    "if NOT EXISTS  (SELECT TOP 1 1 FROM sys.database_audit_specifications where name='<%= spec %>') BEGIN " +
+    "IF NOT EXISTS  (SELECT TOP 1 1 FROM sys.database_audit_specifications where name='<%= spec %>') BEGIN " +
     "CREATE DATABASE AUDIT SPECIFICATION [<%= spec %>]" +
     "FOR SERVER AUDIT [<%= audit %>] " +
     "ADD(DELETE ON DATABASE::<%= db %> BY [public])," +
@@ -94,8 +94,9 @@ export function getNewLogs(cb) {
 }
 
 var cleanAuditSpecificationQuery = _.template(
+    "IF EXISTS (SELECT TOP 1 1 FROM sys.database_audit_specifications where name='<%= auditSpec %>') BEGIN " +
     "ALTER DATABASE AUDIT SPECIFICATION [<%= auditSpec %>]  WITH (STATE = OFF) " +
-    "DROP DATABASE AUDIT SPECIFICATION [<%= auditSpec %>]")({
+    "DROP DATABASE AUDIT SPECIFICATION [<%= auditSpec %>] END")({
         auditSpec: AuditSpecificationName
     });
 
@@ -104,8 +105,10 @@ function cleanAuditSpecification(dbName: string, cb) {
 }
 
 var dropServerAudit = _.template(
+    "IF EXISTS  (SELECT TOP 1 1 FROM sys.server_audits where name='<%= audit %>')" +
+    "BEGIN " +
     "ALTER SERVER AUDIT [<%= audit %>] WITH (STATE = OFF) " +
-    "DROP SERVER AUDIT [<%= audit %>]")({
+    "DROP SERVER AUDIT [<%= audit %>] END")({
         audit: AuditName
     });
 

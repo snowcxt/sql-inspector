@@ -39,9 +39,9 @@ class SqlRunner extends TypedReact.Component<{
         };
     }
 
-    componentWillReceiveProps(props) {
-        if (this.editor) {
-            this.editor.getDoc().setValue(props.statement);
+    componentWillReceiveProps(nextProps) {
+        if (this.editor && nextProps.statement !== this.props.statement) {
+            this.editor.getDoc().setValue(nextProps.statement);
         }
     }
 
@@ -79,12 +79,12 @@ class SqlRunner extends TypedReact.Component<{
                     this.props.setLogs(logs);
                     callback(null, null);
                 });
-            },
-            (callback) => {
-                DbLogs.cleanLog(this.state.monioredDatabases, callback);
             }
         ], (err, recordset) => {
-            if (err) return console.log("err", err);
+            DbLogs.cleanLog(this.state.monioredDatabases, (cleanErr)=>{
+                if (err)  console.log("err", err);
+                if (cleanErr)  console.log("cleanErr", cleanErr);
+            });
         });
     }
 
