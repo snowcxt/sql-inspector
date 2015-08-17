@@ -9,12 +9,21 @@ import DbConnector = require("./DbConnector");
 class App extends TypedReact.Component<any, {
     logs?: any[];
     databases?: string[];
+    statement?: string;
 }>{
     getInitialState() {
         return {
+            statement:"",
             logs: [],
             databases:[]
         };
+    }
+
+    setRecord(logs:any[], statement:string){
+        this.setState({
+            logs: logs,
+            statement:statement
+        });
     }
 
     setLogs(logs: any[]) {
@@ -41,7 +50,7 @@ class App extends TypedReact.Component<any, {
         return (
             <div>
                 <p className="btn-group btn-group-sm" role="group" aria-label="...">
-                    <Uploader setLogs={this.setLogs}></Uploader>
+                    <Uploader onUploaded={this.setRecord}></Uploader>
                     <button className="btn btn-default" onClick={this.saveLogs}>
                         <i className="glyphicon glyphicon-save"></i>
                         Save
@@ -51,7 +60,7 @@ class App extends TypedReact.Component<any, {
                     </button>
                 </p>
                 <p>
-                    <SqlRunner setLogs={this.setLogs} databases={this.state.databases}></SqlRunner>
+                    <SqlRunner statement={this.state.statement} setLogs={this.setLogs} databases={this.state.databases}></SqlRunner>
                 </p>
                 <br />
                 <div className="tree">

@@ -4,7 +4,7 @@ import treeBuilder = require("./tree-builder");
 import Tree = require("./Tree/index");
 
 class Uploader extends TypedReact.Component<{
-    setLogs: (logs: any[]) => void
+    onUploaded: (logs: any[], query:string) => void
 }, number>{
     onChange(e){
         var element = e.target;
@@ -13,7 +13,8 @@ class Uploader extends TypedReact.Component<{
                 reader = new FileReader();
             reader.readAsText(textFile);
             reader.onload = () => {
-                this.props.setLogs(JSON.parse(reader.result).log);
+                var record = JSON.parse(reader.result);
+                this.props.onUploaded(record.log, record.query);
             };
         }
     }

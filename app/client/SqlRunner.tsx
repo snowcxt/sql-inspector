@@ -12,6 +12,7 @@ import DbLogs = require("../server/DbLogs");
 import async = require('async');
 
 class SqlRunner extends TypedReact.Component<{
+    statement: string;
     databases: string[];
     setLogs: (logs: any[]) => void;
 }, {
@@ -31,6 +32,12 @@ class SqlRunner extends TypedReact.Component<{
             defaultDbDisabled: true,
             runnerDisabled: true
         };
+    }
+
+    componentWillReceiveProps(props) {
+        if (this.editor) {
+            this.editor.getDoc().setValue(props.statement);
+        }
     }
 
     componentDidUpdate() {
@@ -99,14 +106,14 @@ class SqlRunner extends TypedReact.Component<{
             <div>
                 <DbPicker databases={this.props.databases} setDatabases={this.setDatabases}></DbPicker>
                 <p className= "sql-editor" >
-                    <textarea ref="statement"></textarea>
+                    <textarea ref="statement">{this.props.statement}</textarea>
                 </p>
                 <div className="input-group">
                     <select className="form-control" disabled={this.state.defaultDbDisabled} placeholder="Select default database ..." value={this.state.defaultDb} onChange={this.onDefaultDbChange}>
                     {
-                        this.state.monioredDatabases.map((db)=>{
-                            return (<option key={db.value}>{db.value}</option>);
-                        })
+                    this.state.monioredDatabases.map((db) => {
+                        return (<option key={db.value}>{db.value}</option>);
+                    })
                     }
                     </select>
                     <span className="input-group-btn">
