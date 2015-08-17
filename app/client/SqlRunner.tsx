@@ -25,9 +25,9 @@ class SqlRunner extends TypedReact.Component<{
     private editor: CodeMirror.EditorFromTextArea;
 
     getStatement(): string {
-        return this.editor.getDoc().getValue();
+        return this.editor ? this.editor.getDoc().getValue() : "";
     }
-    
+
     getInitialState() {
         return {
             showConnector: true,
