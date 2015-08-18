@@ -6,8 +6,9 @@ var classNames = require('classnames');
 var CodeMirror = require('codemirror');
 
 class TreeNode extends TypedReact.Component<{
+    isConnected: boolean;
     node: ITreeNode;
-    getData: (database: string, statement:string) => void;
+    getData: (database: string, statement: string) => void;
     toggle: (visible: boolean) => void;
 }, {
         visible?: boolean;
@@ -64,7 +65,7 @@ class TreeNode extends TypedReact.Component<{
         });
     }
 
-    getData(){
+    getData() {
         this.props.getData(this.props.node.log.object_name, this.props.node.log.statement);
     }
 
@@ -97,6 +98,10 @@ class TreeNode extends TypedReact.Component<{
         if (!this.state.showDetails) {
             detailsStyle = { display: "none" };
         }
+        var dataGetterStyle;
+        if (!this.props.isConnected || node.log.action_id.trim() !== 'SL') {
+            dataGetterStyle = { display: "none" };
+        }
 
         return (
             <div className={"tree-node panel " + this.getActionColor('panel', node.log) }>
@@ -125,7 +130,7 @@ class TreeNode extends TypedReact.Component<{
                 </div>
                 <div className="panel-body" style={detailsStyle}>
                     <textarea ref="codemirror" value={node.log.statement} readOnly={true}></textarea>
-                    <button className="btn btn-default btn-xs pull-right" ng-if="node.log.action_id.trim() === 'SL'" onClick={this.getData}>get data</button>
+                    <button className="btn btn-default btn-xs pull-right" style={dataGetterStyle} onClick={this.getData}>get data</button>
                 </div>
             </div>)
     }

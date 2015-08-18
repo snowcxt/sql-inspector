@@ -4,6 +4,7 @@ import $ = require("jquery");
 var CodeMirror = require('codemirror');
 
 class DataGetter extends TypedReact.Component<{
+    isConnected: boolean;
     statement: string;
     ref: string;
 }, number>{

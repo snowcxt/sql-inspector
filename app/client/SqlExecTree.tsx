@@ -6,8 +6,9 @@ import DataGetter = require("./DataGetter");
 import treeBuilder = require("./tree-builder");
 
 class SqlExecTree extends TypedReact.Component<{
-    logs: any[]
-}, any>{
+    isConnected:boolean;
+    logs: any[];
+}, number>{
     getData(database: string, statement: string) {
         (this.refs["data-getter"] as any).show(database, statement);
     }
@@ -16,8 +17,8 @@ class SqlExecTree extends TypedReact.Component<{
         var node = treeBuilder.build(this.props.logs);
         return (
             <div>
-                <Tree node={node} getData={this.getData}></Tree>
-                <DataGetter ref="data-getter" statement="string"></DataGetter>
+                <Tree isConnected={this.props.isConnected} node={node} getData={this.getData}></Tree>
+                <DataGetter isConnected={this.props.isConnected} ref="data-getter" statement="string"></DataGetter>
             </div>
         )
     }
