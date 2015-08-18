@@ -3,7 +3,7 @@ import TypedReact = require("typed-react");
 
 import TreeNode = require("./TreeNode");
 
-class Tree extends TypedReact.Component<{ node: ITreeNode; getData: (statement:string)=> void; }, {
+class Tree extends TypedReact.Component<{ node: ITreeNode; getData: (database: string, statement:string)=> void; }, {
     visible?: boolean;
 }>{
     getInitialState() {

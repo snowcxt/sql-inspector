@@ -8,8 +8,8 @@ import treeBuilder = require("./tree-builder");
 class SqlExecTree extends TypedReact.Component<{
     logs: any[]
 }, any>{
-    getData(statement: string) {
-        (this.refs["data-getter"] as any).show();
+    getData(database: string, statement: string) {
+        (this.refs["data-getter"] as any).show(database, statement);
     }
 
     render() {

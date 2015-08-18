@@ -7,7 +7,7 @@ var CodeMirror = require('codemirror');
 
 class TreeNode extends TypedReact.Component<{
     node: ITreeNode;
-    getData: (statement:string) => void;
+    getData: (database: string, statement:string) => void;
     toggle: (visible: boolean) => void;
 }, {
         visible?: boolean;
@@ -65,7 +65,7 @@ class TreeNode extends TypedReact.Component<{
     }
 
     getData(){
-        this.props.getData(this.props.node.log.statement);
+        this.props.getData(this.props.node.log.object_name, this.props.node.log.statement);
     }
 
     render() {
