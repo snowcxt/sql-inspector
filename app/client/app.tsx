@@ -54,18 +54,19 @@ class App extends TypedReact.Component<any, {
                 <p className="btn-group btn-group-sm" role="group" aria-label="...">
                     <Uploader onUploaded={this.setRecord}></Uploader>
                     <button className="btn btn-default" onClick={this.saveLogs}>
-                        <i className="glyphicon glyphicon-save"></i>
+                        <i className="glyphicon glyphicon-save"></i>{" "}
                         Save
                     </button>
                     <button type="button" className="btn btn-default" data-toggle="modal" data-target="#connect-server-model">
-                        Connect to db
+                        <i className="glyphicon glyphicon-transfer"></i>{" "}
+                        Connect to Server
                     </button>
                 </p>
                 <p>
                     <SqlRunner ref="sql-runner" statement={this.state.statement} setLogs={this.setLogs} databases={this.state.databases}></SqlRunner>
                 </p>
                 <br />
-                <div className="tree">
+                <div className="tree well">
                     <SqlExecTree isConnected={this.state.databases.length > 0} logs={this.state.logs}></SqlExecTree>
                 </div>
                 <div className="modal fade" id="connect-server-model" role="dialog" aria-labelledby="myModalLabel">

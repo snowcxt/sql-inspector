@@ -17,13 +17,17 @@
     cursor: inherit;
     display: block;
 }
-.tree > .tree-nodes {
+.tree > div {
     margin-left: -40px;
 }
 .tree-nodes {
     display: block;
     position: relative;
     list-style: none
+}
+
+.tree-nodes .tree-node{
+    margin-bottom: 15px;
 }
 .CodeMirror {
     height: auto;
