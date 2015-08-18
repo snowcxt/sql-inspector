@@ -44,3 +44,7 @@ export function setConfig(config: IDbConnection, rememberPassword: boolean, cb: 
         });
     });
 }
+
+export function getTableData(database: string, statement: string, cb: (err, results: string) => void) {
+    cb(null, "INSERT INTO")
+}

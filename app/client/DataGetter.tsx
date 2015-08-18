@@ -1,5 +1,6 @@
 import React = require("react");
 import TypedReact = require("typed-react");
+import DbHelper = require("../server/DbHelper");
 import $ = require("jquery");
 var CodeMirror = require('codemirror');
 
@@ -7,10 +8,18 @@ class DataGetter extends TypedReact.Component<{
     isConnected: boolean;
     statement: string;
     ref: string;
-}, number>{
+}, {
+    insertStatement:string;
+}>{
     currentDatabase: string;
     currentStatement: string;
     editor: CodeMirror.EditorFromTextArea = null;
+
+    getInitialState(){
+        return {
+            insertStatement:""
+        }
+    }
 
     componentDidMount(){
         var mirror = this.refs["codemirror"];
@@ -31,6 +40,14 @@ class DataGetter extends TypedReact.Component<{
         ($('#data-getter') as any).modal('show')
     }
 
+    getData(){
+        if(this.props.isConnected){
+            DbHelper.getTableData(this.currentDatabase, this.currentStatement, (err, result)=>{
+                this.setState({insertStatement: result});
+            });
+        }
+    }
+
     render(){
         return (
             <div className="modal fade" id="data-getter">
@@ -45,11 +62,11 @@ class DataGetter extends TypedReact.Component<{
                     <div className="modal-body">
                     <textarea ref="codemirror"></textarea>
                     <div className="form-group">
-                        <button className="btn btn-default" ng-click="getFakeTable()">get data</button>
+                        <button className="btn btn-default" onClick={this.getData}>get data</button>
                     </div>
 
                     <div className="form-group">
-                        <textarea className="form-control" ng-model="fakeTable" readOnly={true}></textarea>
+                        <textarea className="form-control" value={this.state.insertStatement} readOnly={true}></textarea>
                     </div>
                 </div>
             </div>
