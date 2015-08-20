@@ -67,7 +67,7 @@ class App extends TypedReact.Component<any, {
                 </p>
                 <br />
                 <div className="tree well">
-                    <SqlExecTree isConnected={this.state.databases.length > 0} logs={this.state.logs}></SqlExecTree>
+                    <SqlExecTree logs={this.state.logs}></SqlExecTree>
                 </div>
                 <div className="modal fade" id="connect-server-model" role="dialog" aria-labelledby="myModalLabel">
                     <DbConnector setConnection={this.setConnection}></DbConnector>
