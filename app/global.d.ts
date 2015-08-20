@@ -1,5 +1,3 @@
-declare var require: any;
-declare var global: any;
 declare var __dirname: string;
 declare var download: any;
 

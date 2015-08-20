@@ -6,7 +6,7 @@ import DataGetter = require("./DataGetter");
 import treeBuilder = require("./tree-builder");
 
 class SqlExecTree extends TypedReact.Component<{
-    isConnected:boolean;
+    isConnected: boolean;
     logs: any[];
 }, number>{
     getData(database: string, statement: string) {

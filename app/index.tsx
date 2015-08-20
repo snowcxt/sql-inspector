@@ -1,4 +1,4 @@
-global.jQuery = require('jquery');
+(global as any).jQuery = require('jquery');
 require('bootstrap');
 
 import React = require("react");

@@ -6,6 +6,8 @@ import _ = require("lodash");
 import DbHelper = require("../server/DbHelper");
 import Settings = require("../server/Settings");
 
+import EventEmitter = require("./EventEmitter");
+
 var Select = require('react-select');
 
 class DbConnector extends TypedReact.Component<{
@@ -28,6 +30,7 @@ class DbConnector extends TypedReact.Component<{
         DbHelper.setConfig(config, (React.findDOMNode(this.refs["remember-password"]) as any).checked, (err, databases) => {
             if (err) throw err;
             this.props.setConnection(databases);
+            EventEmitter.emit("DB_CONNCTED", databases);
         });
     }
 

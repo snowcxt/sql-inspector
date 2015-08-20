@@ -9,14 +9,17 @@ var Select = require('react-select');
 import DbHelper = require("../server/DbHelper");
 import DbLogs = require("../server/DbLogs");
 
+import EventEmitter = require("./EventEmitter");
+
 import async = require('async');
 
 class SqlRunner extends TypedReact.Component<{
     ref: string;
     statement: string;
-    databases: string[];
+    // databases: string[];
     setLogs: (logs: any[]) => void;
 }, {
+        databases?: string[];
         defaultDb?: string;
         monioredDatabases?: string[];
         defaultDbDisabled?: boolean;
@@ -30,6 +33,7 @@ class SqlRunner extends TypedReact.Component<{
 
     getInitialState() {
         return {
+            databases: [],
             showConnector: true,
             dbConnection: null,
             defaultDb: false,
@@ -37,6 +41,12 @@ class SqlRunner extends TypedReact.Component<{
             defaultDbDisabled: true,
             runnerDisabled: true
         };
+    }
+
+    componentDidMount() {
+        EventEmitter.addListener("DB_CONNCTED", (databases) => {
+            this.setState({ databases: databases });
+        });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -106,9 +116,9 @@ class SqlRunner extends TypedReact.Component<{
     }
 
     render() {
-        return this.props.databases && this.props.databases.length > 0 ? (
+        return this.state.databases && this.state.databases.length > 0 ? (
             <div>
-                <DbPicker databases={this.props.databases} setDatabases={this.setDatabases}></DbPicker>
+                <DbPicker databases={this.state.databases} setDatabases={this.setDatabases}></DbPicker>
                 <p className= "sql-editor" >
                     <textarea ref="statement" defaultValue={this.props.statement}></textarea>
                 </p>

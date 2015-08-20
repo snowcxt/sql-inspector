@@ -63,7 +63,7 @@ class App extends TypedReact.Component<any, {
                     </button>
                 </p>
                 <p>
-                    <SqlRunner ref="sql-runner" statement={this.state.statement} setLogs={this.setLogs} databases={this.state.databases}></SqlRunner>
+                    <SqlRunner ref="sql-runner" statement={this.state.statement} setLogs={this.setLogs}></SqlRunner>
                 </p>
                 <br />
                 <div className="tree well">
