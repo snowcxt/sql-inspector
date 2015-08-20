@@ -6,7 +6,7 @@ import Uploader = require("./Uploader");
 import SqlExecTree = require("./SqlExecTree");
 import DbConnector = require("./DbConnector");
 
-class App extends TypedReact.Component<any, {
+class App extends TypedReact.Component<void, {
     logs?: any[];
     databases?: string[];
     statement?: string;
@@ -52,7 +52,7 @@ class App extends TypedReact.Component<any, {
         return (
             <div>
                 <p className="btn-group btn-group-sm" role="group" aria-label="...">
-                    <Uploader onUploaded={this.setRecord}></Uploader>
+                    <Uploader onUploaded={this.setRecord} />
                     <button className="btn btn-default" onClick={this.saveLogs}>
                         <i className="glyphicon glyphicon-save"></i>{" "}
                         Save
@@ -63,14 +63,14 @@ class App extends TypedReact.Component<any, {
                     </button>
                 </p>
                 <p>
-                    <SqlRunner ref="sql-runner" statement={this.state.statement} setLogs={this.setLogs}></SqlRunner>
+                    <SqlRunner ref="sql-runner" statement={this.state.statement} setLogs={this.setLogs} />
                 </p>
                 <br />
                 <div className="tree well">
-                    <SqlExecTree logs={this.state.logs}></SqlExecTree>
+                    <SqlExecTree logs={this.state.logs} />
                 </div>
                 <div className="modal fade" id="connect-server-model" role="dialog" aria-labelledby="myModalLabel">
-                    <DbConnector setConnection={this.setConnection}></DbConnector>
+                    <DbConnector setConnection={this.setConnection} />
                 </div>
             </div>);
     }

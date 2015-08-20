@@ -16,7 +16,6 @@ import async = require('async');
 class SqlRunner extends TypedReact.Component<{
     ref: string;
     statement: string;
-    // databases: string[];
     setLogs: (logs: any[]) => void;
 }, {
         databases?: string[];
@@ -118,7 +117,7 @@ class SqlRunner extends TypedReact.Component<{
     render() {
         return this.state.databases && this.state.databases.length > 0 ? (
             <div>
-                <DbPicker databases={this.state.databases} setDatabases={this.setDatabases}></DbPicker>
+                <DbPicker databases={this.state.databases} setDatabases={this.setDatabases} />
                 <p className= "sql-editor" >
                     <textarea ref="statement" defaultValue={this.props.statement}></textarea>
                 </p>

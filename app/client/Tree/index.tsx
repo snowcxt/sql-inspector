@@ -32,7 +32,7 @@ class Tree extends TypedReact.Component<{
             childNodes = node.nodes.map((node, index) => {
                 return (
                     <li key={index}>
-                        <SubTree isConnected={this.props.isConnected} node={node} getData={this.props.getData}></SubTree>
+                        <SubTree isConnected={this.props.isConnected} node={node} getData={this.props.getData} />
                     </li>
                 );
             });
@@ -46,7 +46,7 @@ class Tree extends TypedReact.Component<{
         if (this.props.node.log) {
             return (
                 <div>
-                    <TreeNode isConnected={this.props.isConnected} node={node} toggle={this.toggle} getData={this.props.getData}></TreeNode>
+                    <TreeNode isConnected={this.props.isConnected} node={node} toggle={this.toggle} getData={this.props.getData} />
                     <ul className="tree-nodes" style={toggleStyle}>{childNodes}</ul>
                 </div>
             );

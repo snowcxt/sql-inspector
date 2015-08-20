@@ -32,8 +32,8 @@ class SqlExecTree extends TypedReact.Component<{
         var node = treeBuilder.build(this.props.logs);
         return (
             <div>
-                <Tree isConnected={this.state.isConnected} node={node} getData={this.getData}></Tree>
-                <DataGetter ref="data-getter" statement="string"></DataGetter>
+                <Tree isConnected={this.state.isConnected} node={node} getData={this.getData} />
+                <DataGetter ref="data-getter" statement="string" />
                 </div>
         )
     }

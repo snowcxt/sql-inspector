@@ -5,7 +5,7 @@ import Tree = require("./Tree/index");
 
 class Uploader extends TypedReact.Component<{
     onUploaded: (logs: any[], query:string) => void
-}, number>{
+}, void>{
     onChange(e){
         var element = e.target;
         if (element.files && element.files.length > 0) {
@@ -23,7 +23,7 @@ class Uploader extends TypedReact.Component<{
         return (
                 <span className="btn btn-default btn-file">
                     <i className="glyphicon glyphicon-open"></i>{" "}
-                    Open <input type="file" accept=".json" onChange={this.onChange} file-on-change="upload" />
+                    Open <input type="file" accept=".json" onChange={this.onChange} />
                 </span>
         );
     }
