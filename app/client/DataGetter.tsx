@@ -2,14 +2,15 @@ import React = require("react");
 import TypedReact = require("typed-react");
 import DbHelper = require("../server/DbHelper");
 import $ = require("jquery");
+import EventEmitter = require("./EventEmitter");
 var CodeMirror = require('codemirror');
 
 class DataGetter extends TypedReact.Component<{
-    isConnected: boolean;
     statement: string;
     ref: string;
 }, {
-    insertStatement:string;
+    isConnected?: boolean;
+    insertStatement?: string;
 }>{
     currentDatabase: string;
     currentStatement: string;
@@ -22,6 +23,10 @@ class DataGetter extends TypedReact.Component<{
     }
 
     componentDidMount(){
+        EventEmitter.addListener("DB_CONNCTED", (databases) => {
+            this.setState({ isConnected: databases && databases.length > 0 });
+        });
+
         var mirror = this.refs["codemirror"];
         this.editor = CodeMirror.fromTextArea(React.findDOMNode(mirror), {
             viewportMargin: 0,
@@ -37,11 +42,11 @@ class DataGetter extends TypedReact.Component<{
     show(database: string, statement: string){
         this.currentDatabase = database;
         this.currentStatement = statement;
-        ($('#data-getter') as any).modal('show')
+        $('#data-getter').modal('show')
     }
 
     getData(){
-        if(this.props.isConnected){
+        if(this.state.isConnected){
             DbHelper.getTableData(this.currentDatabase, this.currentStatement, (err, result)=>{
                 this.setState({insertStatement: result});
             });

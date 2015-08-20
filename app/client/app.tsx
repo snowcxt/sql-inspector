@@ -42,7 +42,7 @@ class App extends TypedReact.Component<any, {
     }
 
     setConnection(databases:string[]) {
-        ($("#connect-server-model") as any).modal('hide');
+        $("#connect-server-model").modal('hide');
         this.setState({
             databases: databases
         });
