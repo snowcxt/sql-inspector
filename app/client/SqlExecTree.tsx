@@ -22,11 +22,11 @@ class SqlExecTree extends TypedReact.Component<{}, {
     }
 
     componentDidMount() {
-        EventEmitter.addListener("DB_CONNCTED", (databases) => {
+        EventEmitter.Emitter.addListener(EventEmitter.Types.DB_CONNCTED, (databases) => {
             this.setState({ isConnected: databases && databases.length > 0 });
         });
 
-        EventEmitter.addListener("LOG_CHANGED", (logs) => {
+        EventEmitter.Emitter.addListener(EventEmitter.Types.LOG_CHANGED, (logs) => {
             this.setState({ node: treeBuilder.build(logs) });
         });
     }

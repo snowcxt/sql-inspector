@@ -16,7 +16,7 @@ class Uploader extends TypedReact.Component<{
             reader.readAsText(textFile);
             reader.onload = () => {
                 var record = JSON.parse(reader.result);
-                EventEmitter.emit("LOG_CHANGED", record.log);
+                EventEmitter.Emitter.emit(EventEmitter.Types.LOG_CHANGED, record.log);
                 this.props.onUploaded(record.log, record.query);
             };
         }

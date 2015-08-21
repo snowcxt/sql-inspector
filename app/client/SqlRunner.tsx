@@ -42,7 +42,7 @@ class SqlRunner extends TypedReact.Component<{
     }
 
     componentDidMount() {
-        EventEmitter.addListener("DB_CONNCTED", (databases) => {
+        EventEmitter.Emitter.addListener(EventEmitter.Types.DB_CONNCTED, (databases) => {
             this.setState({ databases: databases });
         });
     }
@@ -84,14 +84,14 @@ class SqlRunner extends TypedReact.Component<{
             (callback) => {
                 DbLogs.getNewLogs((err, logs: any[]) => {
                     if (err) return callback(err, null);
-                    EventEmitter.emit("LOG_CHANGED", logs);
+                    EventEmitter.Emitter.emit(EventEmitter.Types.LOG_CHANGED, logs);
                     callback(null, null);
                 });
             }
         ], (err, recordset) => {
-            DbLogs.cleanLog(this.state.monioredDatabases, (cleanErr)=>{
-                if (err)  console.log("err", err);
-                if (cleanErr)  console.log("cleanErr", cleanErr);
+            DbLogs.cleanLog(this.state.monioredDatabases, (cleanErr) => {
+                if (err) console.log("err", err);
+                if (cleanErr) console.log("cleanErr", cleanErr);
             });
         });
     }
@@ -119,7 +119,7 @@ class SqlRunner extends TypedReact.Component<{
                 <DbPicker databases={this.state.databases} setDatabases={this.setDatabases} />
                 <p className= "sql-editor" >
                     <textarea ref="statement" defaultValue={this.props.statement}></textarea>
-                </p>
+                    </p>
                 <div className="input-group">
                     <select className="form-control" disabled={this.state.defaultDbDisabled} placeholder="Select default database ..." value={this.state.defaultDb} onChange={this.onDefaultDbChange}>
                     {
@@ -127,15 +127,15 @@ class SqlRunner extends TypedReact.Component<{
                         return (<option key={db}>{db}</option>);
                     })
                     }
-                    </select>
+                        </select>
                     <span className="input-group-btn">
                         <button className="btn btn-primary" disabled={this.state.runnerDisabled} onClick={this.runStatement}>
                             <i className="glyphicon glyphicon-play"></i>
                             Run
-                        </button>
-                    </span>
-                </div>
-            </div>) : null;
+                            </button>
+                        </span>
+                    </div>
+                </div>) : null;
     }
 }
 

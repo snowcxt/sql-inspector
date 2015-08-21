@@ -27,7 +27,7 @@ class DbConnector extends TypedReact.Component<{}, {
         };
         DbHelper.setConfig(config, (React.findDOMNode(this.refs["remember-password"]) as any).checked, (err, databases) => {
             if (err) throw err;
-            EventEmitter.emit("DB_CONNCTED", databases);
+            EventEmitter.Emitter.emit(EventEmitter.Types.DB_CONNCTED, databases);
         });
     }
 

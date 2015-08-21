@@ -21,7 +21,7 @@ class App extends TypedReact.Component<{}, {
     }
 
     componentDidMount() {
-        EventEmitter.addListener("DB_CONNCTED", (databases) => {
+        EventEmitter.Emitter.addListener(EventEmitter.Types.DB_CONNCTED, (databases) => {
             $("#connect-server-model").modal('hide');
             this.setState({
                 databases: databases

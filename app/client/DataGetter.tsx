@@ -23,7 +23,7 @@ class DataGetter extends TypedReact.Component<{
     }
 
     componentDidMount(){
-        EventEmitter.addListener("DB_CONNCTED", (databases) => {
+        EventEmitter.Emitter.addListener(EventEmitter.Types.DB_CONNCTED, (databases) => {
             this.setState({ isConnected: databases && databases.length > 0 });
         });
 
