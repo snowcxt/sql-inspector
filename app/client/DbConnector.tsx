@@ -10,9 +10,7 @@ import EventEmitter = require("./EventEmitter");
 
 var Select = require('react-select');
 
-class DbConnector extends TypedReact.Component<{
-    setConnection: (databases: string[]) => void
-}, {
+class DbConnector extends TypedReact.Component<{}, {
         savedDatabases?: IDbConnection[]
     }>{
     getInitialState() {
@@ -29,7 +27,6 @@ class DbConnector extends TypedReact.Component<{
         };
         DbHelper.setConfig(config, (React.findDOMNode(this.refs["remember-password"]) as any).checked, (err, databases) => {
             if (err) throw err;
-            this.props.setConnection(databases);
             EventEmitter.emit("DB_CONNCTED", databases);
         });
     }

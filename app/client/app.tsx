@@ -5,8 +5,9 @@ import SqlRunner = require("./SqlRunner");
 import Uploader = require("./Uploader");
 import SqlExecTree = require("./SqlExecTree");
 import DbConnector = require("./DbConnector");
+import EventEmitter = require("./EventEmitter");
 
-class App extends TypedReact.Component<Object, {
+class App extends TypedReact.Component<{}, {
     logs?: any[];
     databases?: string[];
     statement?: string;
@@ -17,6 +18,15 @@ class App extends TypedReact.Component<Object, {
             logs: [],
             databases:[]
         };
+    }
+
+    componentDidMount() {
+        EventEmitter.addListener("DB_CONNCTED", (databases) => {
+            $("#connect-server-model").modal('hide');
+            this.setState({
+                databases: databases
+            });
+        });
     }
 
     setRecord(logs:any[], statement:string){
@@ -33,13 +43,6 @@ class App extends TypedReact.Component<Object, {
             log: this.state.logs,
             query: query
         })]), "log.json", "text/plain");
-    }
-
-    setConnection(databases:string[]) {
-        $("#connect-server-model").modal('hide');
-        this.setState({
-            databases: databases
-        });
     }
 
     render() {
@@ -64,7 +67,7 @@ class App extends TypedReact.Component<Object, {
                     <SqlExecTree />
                 </div>
                 <div className="modal fade" id="connect-server-model" role="dialog">
-                    <DbConnector setConnection={this.setConnection} />
+                    <DbConnector />
                 </div>
             </div>);
     }
