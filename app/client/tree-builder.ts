@@ -44,6 +44,8 @@ function parseAdditionalInfo(information) {
 }
 
 export function build(logs: ILog[]): ITreeNode {
+    if(!logs) return;
+    
     var root: ITreeNode = {
         index: -1,
         log: null,

@@ -16,7 +16,6 @@ import async = require('async');
 class SqlRunner extends TypedReact.Component<{
     ref: string;
     statement: string;
-    setLogs: (logs: any[]) => void;
 }, {
         databases?: string[];
         defaultDb?: string;
@@ -85,7 +84,7 @@ class SqlRunner extends TypedReact.Component<{
             (callback) => {
                 DbLogs.getNewLogs((err, logs: any[]) => {
                     if (err) return callback(err, null);
-                    this.props.setLogs(logs);
+                    EventEmitter.emit("LOG_CHANGED", logs);
                     callback(null, null);
                 });
             }

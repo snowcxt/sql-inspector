@@ -3,10 +3,12 @@ import TypedReact = require("typed-react");
 import treeBuilder = require("./tree-builder");
 import Tree = require("./Tree/index");
 
+import EventEmitter = require("./EventEmitter");
+
 class Uploader extends TypedReact.Component<{
-    onUploaded: (logs: any[], query:string) => void
+    onUploaded: (logs: any[], query: string) => void
 }, void>{
-    onChange(e){
+    onChange(e) {
         var element = e.target;
         if (element.files && element.files.length > 0) {
             var textFile = element.files[0],
@@ -14,14 +16,15 @@ class Uploader extends TypedReact.Component<{
             reader.readAsText(textFile);
             reader.onload = () => {
                 var record = JSON.parse(reader.result);
+                EventEmitter.emit("LOG_CHANGED", record.log);
                 this.props.onUploaded(record.log, record.query);
             };
         }
     }
 
-    render(){
+    render() {
         return (
-                <span className="btn btn-default btn-file">
+            <span className="btn btn-default btn-file">
                     <i className="glyphicon glyphicon-open"></i>{" "}
                     Open <input type="file" accept=".json" onChange={this.onChange} />
                 </span>

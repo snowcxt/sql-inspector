@@ -26,12 +26,6 @@ class App extends TypedReact.Component<Object, {
         });
     }
 
-    setLogs(logs: any[]) {
-        this.setState({
-            logs: logs
-        });
-    }
-
     saveLogs() {
         var query = (this.refs["sql-runner"] as any).getStatement();
 
@@ -63,13 +57,13 @@ class App extends TypedReact.Component<Object, {
                     </button>
                 </p>
                 <p>
-                    <SqlRunner ref="sql-runner" statement={this.state.statement} setLogs={this.setLogs} />
+                    <SqlRunner ref="sql-runner" statement={this.state.statement} />
                 </p>
                 <br />
                 <div className="tree well">
-                    <SqlExecTree logs={this.state.logs} />
+                    <SqlExecTree />
                 </div>
-                <div className="modal fade" id="connect-server-model" role="dialog" aria-labelledby="myModalLabel">
+                <div className="modal fade" id="connect-server-model" role="dialog">
                     <DbConnector setConnection={this.setConnection} />
                 </div>
             </div>);

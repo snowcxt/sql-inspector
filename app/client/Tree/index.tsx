@@ -6,16 +6,21 @@ import TreeNode = require("./TreeNode");
 class Tree extends TypedReact.Component<{
     isConnected: boolean;
     node: ITreeNode;
-    getData: (database: string, statement:string)=> void;
- }, {
-    visible?: boolean;
-}>{
+    getData: (database: string, statement: string) => void;
+}, {
+        visible?: boolean;
+    }>{
     getInitialState() {
         return {
+            isConnected: false,
             visible: true
         };
     }
-
+    getDefaultProps() {
+        return {
+            node: {}
+        };
+    }
     hasChildren() {
         return this.props.node.nodes && this.props.node.nodes.length > 0;
     }
