@@ -11,10 +11,12 @@ import EventEmitter = require("./EventEmitter");
 var Select = require('react-select');
 
 class DbConnector extends TypedReact.Component<{}, {
-        savedDatabases?: IDbConnection[]
+        savedDatabases?: IDbConnection[];
+        error?: string;
     }>{
     getInitialState() {
         return {
+            error: "",
             savedDatabases: []
         };
     }
@@ -26,14 +28,14 @@ class DbConnector extends TypedReact.Component<{}, {
             user: (React.findDOMNode(this.refs["login"]) as any).value.trim()
         };
         DbHelper.setConfig(config, (React.findDOMNode(this.refs["remember-password"]) as any).checked, (err, databases) => {
-            if (err) throw err;
+            if (err) return this.setState({error: err});
             EventEmitter.Emitter.emit(EventEmitter.Types.DB_CONNCTED, databases);
         });
     }
 
     componentWillMount() {
         Settings.getDb((err, databases) => {
-            if (err) return;
+            if (err) return this.setState({error: err});
             this.setState({
                 savedDatabases: databases
             });
@@ -61,6 +63,16 @@ selectDb(server:string){
                         <h4 className="modal-title">Connect to Server</h4>
                     </div>
                     <div className="modal-body">
+                    {
+                        this.state.error ? (
+                            <p className="alert alert-danger" role="alert">
+                                <button type="button" className="close" aria-label="Close" onClick={()=>{
+                                    this.setState({error: ""});
+                                }}>
+                                    <span aria-hidden="true" dangerouslySetInnerHTML={{__html: '&times;'}}></span></button>
+                                {this.state.error}
+                            </p>) : null
+                    }
                         <div className="form-group">
                             <label htmlFor="server-name">Server name</label>
                             <div className="input-group">

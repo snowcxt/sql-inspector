@@ -90,8 +90,10 @@ class SqlRunner extends TypedReact.Component<{
             }
         ], (err, recordset) => {
             DbLogs.cleanLog(this.state.monioredDatabases, (cleanErr) => {
-                if (err) console.log("err", err);
-                if (cleanErr) console.log("cleanErr", cleanErr);
+                if (err)
+                    EventEmitter.Emitter.emit(EventEmitter.Types.ERROR, err);
+                if (cleanErr)
+                    EventEmitter.Emitter.emit(EventEmitter.Types.ERROR, cleanErr);
             });
         });
     }
