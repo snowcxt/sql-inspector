@@ -29,6 +29,7 @@ class DbConnector extends TypedReact.Component<{}, {
         };
         DbHelper.setConfig(config, (React.findDOMNode(this.refs["remember-password"]) as any).checked, (err, databases) => {
             if (err) return this.setState({error: err});
+            this.setState({error: ""});
             EventEmitter.Emitter.emit(EventEmitter.Types.DB_CONNCTED, databases);
         });
     }
@@ -36,6 +37,7 @@ class DbConnector extends TypedReact.Component<{}, {
     componentWillMount() {
         Settings.getDb((err, databases) => {
             if (err) return this.setState({error: err});
+            this.setState({error: ""});
             this.setState({
                 savedDatabases: databases
             });
@@ -107,7 +109,6 @@ selectDb(server:string){
                                 <input type="checkbox" ref="remember-password"/> Remember password
                             </label>
                         </div>
-
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>

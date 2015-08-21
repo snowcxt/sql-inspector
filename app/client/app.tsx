@@ -9,14 +9,14 @@ import EventEmitter = require("./EventEmitter");
 
 class App extends TypedReact.Component<{}, {
     logs?: any[];
-    databases?: string[];
+    error?: string;
     statement?: string;
 }>{
     getInitialState() {
         return {
             statement:"",
             logs: [],
-            databases:[]
+            error: ""
         };
     }
 
@@ -25,6 +25,12 @@ class App extends TypedReact.Component<{}, {
             $("#connect-server-model").modal('hide');
             this.setState({
                 databases: databases
+            });
+        });
+
+        EventEmitter.Emitter.addListener(EventEmitter.Types.ERROR, (error) => {
+            this.setState({
+                error: error
             });
         });
     }
@@ -48,6 +54,16 @@ class App extends TypedReact.Component<{}, {
     render() {
         return (
             <div>
+            {
+                this.state.error ? (
+                    <p className="alert alert-danger" role="alert">
+                        <button type="button" className="close" aria-label="Close" onClick={()=>{
+                            this.setState({error: ""});
+                        }}>
+                            <span aria-hidden="true" dangerouslySetInnerHTML={{__html: '&times;'}}></span></button>
+                        {this.state.error}
+                    </p>) : null
+            }
                 <p className="btn-group btn-group-sm" role="group" aria-label="...">
                     <Uploader onUploaded={this.setRecord} />
                     <button className="btn btn-default" onClick={this.saveLogs}>
