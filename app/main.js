@@ -22,10 +22,12 @@ app.on('window-all-closed', function () {
 app.on('ready', function () {
     // Create the browser window.
     mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600
+        title: "Sql Inspector",
+        width: 1000,
+        height: 800,
+        icon: __dirname + '/icon.png'
     });
-    mainWindow.maximize();
+    // mainWindow.maximize();
 
     // and load the index.html of the app.
     mainWindow.loadUrl('file://' + __dirname + '/index.html');
