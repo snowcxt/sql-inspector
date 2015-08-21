@@ -45,6 +45,52 @@ export function setConfig(config: IDbConnection, rememberPassword: boolean, cb: 
     });
 }
 
-export function getTableData(database: string, statement: string, cb: (err, results: string) => void) {
-    cb(null, "INSERT INTO")
+var valuesStatement = _.template("VALUES(<%= values %>)");
+var insertStatement = _.template(
+    "INSERT INTO <%= table %> " +
+    "(<%= columns %>) <%= rows %>");
+
+function formatValue(value): string {
+    if (_.isNull(value)) {
+        return "null"
+    }
+    if (_.isDate(value)) {
+        return "'" + value.toISOString() + "'";
+    }
+    else {
+        return "'" + value + "'";
+    }
+}
+
+export function getTableData(database: string, statement: string, cb: (err, results?: string) => void) {
+    exec(database, statement, (err, resultset: Object[]) => {
+        if (err) return cb(err);
+
+        if (resultset && resultset.length > 0) {
+            var columns: string[] = [];
+            _.forEach(resultset[0], (n, key) => {
+                columns.push(key);
+            });
+
+            var values: string[] = [];
+            _.forEach(resultset, (row) => {
+                var arr = [];
+                _.forEach(columns, (key) => {
+                    arr.push(formatValue(row[key]));
+                });
+                values.push(valuesStatement({
+                    values: arr.join(", ")
+                }))
+            });
+
+            return cb(null, insertStatement({
+                table: "[table]",
+                columns: columns.join(", "),
+                rows: values.join(" ")
+            }));
+        }
+
+        return cb(null, "");
+    });
+
 }

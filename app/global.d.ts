@@ -1,4 +1,3 @@
-declare var __dirname: string;
 declare var download: any;
 
 interface ISettings {

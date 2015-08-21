@@ -66,7 +66,7 @@ class TreeNode extends TypedReact.Component<{
     }
 
     getData() {
-        this.props.getData(this.props.node.log.object_name, this.props.node.log.statement);
+        this.props.getData(this.props.node.log.database_name, this.props.node.log.statement);
     }
 
     render() {

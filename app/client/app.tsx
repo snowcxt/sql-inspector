@@ -6,7 +6,7 @@ import Uploader = require("./Uploader");
 import SqlExecTree = require("./SqlExecTree");
 import DbConnector = require("./DbConnector");
 
-class App extends TypedReact.Component<void, {
+class App extends TypedReact.Component<Object, {
     logs?: any[];
     databases?: string[];
     statement?: string;
