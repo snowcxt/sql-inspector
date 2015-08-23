@@ -1,2 +1,2 @@
-# sql-inspector
+# sql-seer
 coming soon

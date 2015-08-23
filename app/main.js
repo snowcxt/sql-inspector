@@ -22,7 +22,7 @@ app.on('window-all-closed', function () {
 app.on('ready', function () {
     // Create the browser window.
     mainWindow = new BrowserWindow({
-        title: "Sql Inspector",
+        title: "Sql Seer",
         width: 1000,
         height: 800,
         icon: __dirname + '/icon.png'

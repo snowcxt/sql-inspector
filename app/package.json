@@ -1,6 +1,6 @@
 {
-  "name": "sql-inspector",
-  "version": "0.1.0",
+  "name": "sql-seer",
+  "version": "0.0.1",
   "main": "main.js",
   "dependencies": {
     "async": "^1.4.0",
