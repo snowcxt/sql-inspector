@@ -12,6 +12,6 @@
 
     "pack": "npm run pack:osx && npm run pack:win",
     "pack:osx": "npm run build:osx && electron-builder \"dist/osx/sql-seer.app\" --platform=osx --out=\"dist/osx\" --config=config.json",
-    "pack:win": "npm run build:win && electron-builder \"dist/win/Sql Seer-win32-ia32\" --platform=win --out=\"dist/win\" --config=config.json"
+    "pack:win": "npm run build:win && electron-builder \"dist/win/Sql Seer-win32-ia32\" --platform=win --out=\"win\" --config=config.json"
   }
 }
