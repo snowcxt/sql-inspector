@@ -116,10 +116,42 @@ class SqlRunner extends TypedReact.Component<{
         });
     }
 
+    monitorDb() {
+        DbLogs.setup(this.state.monioredDatabases, () => { });
+    }
+
+    stopMonitor() {
+        async.series([
+            // (callback) => {
+            //     DbLogs.setup(this.state.monioredDatabases, callback);
+            // }
+            // (callback) => {
+            //     DbLogs.runQuery(this.state.defaultDb, statment, false, callback);
+            // },
+            (callback) => {
+                DbLogs.getNewLogs((err, logs: any[]) => {
+                    if (err) return callback(err, null);
+                    EventEmitter.Emitter.emit(EventEmitter.Types.LOG_CHANGED, logs);
+                    callback(null, null);
+                });
+            }
+        ], (err, recordset) => {
+            DbLogs.cleanLog(this.state.monioredDatabases, (cleanErr) => {
+                if (err)
+                    return EventEmitter.Emitter.emit(EventEmitter.Types.ERROR, err);
+                if (cleanErr)
+                    return EventEmitter.Emitter.emit(EventEmitter.Types.ERROR, cleanErr);
+                return EventEmitter.Emitter.emit(EventEmitter.Types.ERROR, "");
+            });
+        });
+    }
+
     render() {
         return this.state.databases && this.state.databases.length > 0 ? (
             <div>
                 <DbPicker databases={this.state.databases} setDatabases={this.setDatabases} />
+                <button className="btn btn-primary" onClick={this.monitorDb}>monitor</button>
+                <button className="btn btn-primary" onClick={this.stopMonitor}>stop monitor</button>
                 <p className= "sql-editor" >
                     <textarea ref="statement" defaultValue={this.props.statement}></textarea>
                     </p>
