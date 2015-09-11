@@ -20,8 +20,7 @@ class SqlRunner extends TypedReact.Component<{
         databases?: string[];
         defaultDb?: string;
         monioredDatabases?: string[];
-        defaultDbDisabled?: boolean;
-        runnerDisabled?: boolean;
+        underMonitor?: boolean;
     }>{
     private editor: CodeMirror.EditorFromTextArea;
 
@@ -36,8 +35,7 @@ class SqlRunner extends TypedReact.Component<{
             dbConnection: null,
             defaultDb: false,
             monioredDatabases: [],
-            defaultDbDisabled: true,
-            runnerDisabled: true
+            underMonitor: false
         };
     }
 
@@ -102,8 +100,6 @@ class SqlRunner extends TypedReact.Component<{
     setDatabases(databases: string[]) {
         this.setState({
             monioredDatabases: databases,
-            defaultDbDisabled: databases.length <= 0,
-            runnerDisabled: databases.length <= 0,
             defaultDb: databases.length > 0 ? databases[0] : ""
         });
     }
@@ -117,17 +113,16 @@ class SqlRunner extends TypedReact.Component<{
     }
 
     monitorDb() {
-        DbLogs.setup(this.state.monioredDatabases, () => { });
+        EventEmitter.Emitter.emit(EventEmitter.Types.LOG_CHANGED, []);
+        DbLogs.setup(this.state.monioredDatabases, () => {
+            this.setState({
+                underMonitor: true
+            });
+        });
     }
 
     stopMonitor() {
         async.series([
-            // (callback) => {
-            //     DbLogs.setup(this.state.monioredDatabases, callback);
-            // }
-            // (callback) => {
-            //     DbLogs.runQuery(this.state.defaultDb, statment, false, callback);
-            // },
             (callback) => {
                 DbLogs.getNewLogs((err, logs: any[]) => {
                     if (err) return callback(err, null);
@@ -137,6 +132,10 @@ class SqlRunner extends TypedReact.Component<{
             }
         ], (err, recordset) => {
             DbLogs.cleanLog(this.state.monioredDatabases, (cleanErr) => {
+                this.setState({
+                    underMonitor: false
+                });
+
                 if (err)
                     return EventEmitter.Emitter.emit(EventEmitter.Types.ERROR, err);
                 if (cleanErr)
@@ -150,13 +149,13 @@ class SqlRunner extends TypedReact.Component<{
         return this.state.databases && this.state.databases.length > 0 ? (
             <div>
                 <DbPicker databases={this.state.databases} setDatabases={this.setDatabases} />
-                <button className="btn btn-primary" onClick={this.monitorDb}>monitor</button>
-                <button className="btn btn-primary" onClick={this.stopMonitor}>stop monitor</button>
-                <p className= "sql-editor" >
+                <button className="btn btn-primary" onClick={this.monitorDb} disabled={this.state.monioredDatabases.length <= 0 || this.state.underMonitor}>monitor</button>
+                <button className="btn btn-primary" onClick={this.stopMonitor} disabled={!this.state.underMonitor}>stop monitor</button>
+                <p className="sql-editor">
                     <textarea ref="statement" defaultValue={this.props.statement}></textarea>
                     </p>
                 <div className="input-group">
-                    <select className="form-control" disabled={this.state.defaultDbDisabled} placeholder="Select default database ..." value={this.state.defaultDb} onChange={this.onDefaultDbChange}>
+                    <select className="form-control"  placeholder="Select default database ..." disabled={this.state.monioredDatabases.length <= 0} value={this.state.defaultDb} onChange={this.onDefaultDbChange}>
                     {
                     this.state.monioredDatabases.map((db) => {
                         return (<option key={db}>{db}</option>);
@@ -164,7 +163,7 @@ class SqlRunner extends TypedReact.Component<{
                     }
                         </select>
                     <span className="input-group-btn">
-                        <button className="btn btn-primary" disabled={this.state.runnerDisabled} onClick={this.runStatement}>
+                        <button className="btn btn-primary" disabled={this.state.monioredDatabases.length <= 0} onClick={this.runStatement}>
                             <i className="glyphicon glyphicon-play"></i>
                             Run
                             </button>
