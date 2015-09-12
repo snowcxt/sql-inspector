@@ -162,8 +162,11 @@ class SqlRunner extends TypedReact.Component<{
         return this.state.databases && this.state.databases.length > 0 ? (
             <div>
                 <DbPicker databases={this.state.databases} setDatabases={this.setDatabases} />
-                <button className="btn btn-primary" onClick={this.monitorDb} disabled={this.state.monioredDatabases.length <= 0 || this.state.underMonitor}>monitor</button>
-                <button className="btn btn-primary" onClick={this.stopMonitor} disabled={!this.state.underMonitor}>stop monitor</button>
+                {
+                !this.state.underMonitor ?
+                    <button className="btn btn-sm btn-primary" onClick={this.monitorDb} disabled={this.state.monioredDatabases.length <= 0}>monitor</button> :
+                    <button className="btn btn-sm btn-danger" onClick={this.stopMonitor}>stop monitor</button>
+                }
                 <p className="sql-editor">
                     <textarea ref="statement" defaultValue={this.props.statement}></textarea>
                     </p>
