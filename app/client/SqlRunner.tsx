@@ -165,7 +165,10 @@ class SqlRunner extends TypedReact.Component<{
                 {
                 !this.state.underMonitor ?
                     <button className="btn btn-sm btn-primary" onClick={this.monitorDb} disabled={this.state.monioredDatabases.length <= 0}>monitor</button> :
-                    <button className="btn btn-sm btn-danger" onClick={this.stopMonitor}>stop monitor</button>
+                    <button className="btn btn-sm btn-danger" onClick={this.stopMonitor}>
+                    <i className="blink glyphicon glyphicon-record"/>{' '}
+                    stop monitor
+                    </button>
                 }
                 <p className="sql-editor">
                     <textarea ref="statement" defaultValue={this.props.statement}></textarea>
