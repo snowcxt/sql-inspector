@@ -38,6 +38,7 @@
         "./typings/tsd.d.ts",
         "./client/DataGetter.tsx",
         "./client/DbConnector.tsx",
+        "./client/DbMonitor.tsx",
         "./client/DbPicker.tsx",
         "./client/SqlExecTree.tsx",
         "./client/SqlRunner.tsx",
