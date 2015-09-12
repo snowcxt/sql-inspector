@@ -112,12 +112,25 @@ class SqlRunner extends TypedReact.Component<{
         });
     }
 
+    getNewLogInverval() {
+        setTimeout(() => {
+            if (this.state.underMonitor) {
+                DbLogs.getNewLogs((err, logs: any[]) => {
+                    if (err) return EventEmitter.Emitter.emit(EventEmitter.Types.ERROR, err);
+                    EventEmitter.Emitter.emit(EventEmitter.Types.LOG_CHANGED, logs);
+                });
+                this.getNewLogInverval();
+            }
+        }, 250);
+    }
+
     monitorDb() {
         EventEmitter.Emitter.emit(EventEmitter.Types.LOG_CHANGED, []);
         DbLogs.setup(this.state.monioredDatabases, () => {
             this.setState({
                 underMonitor: true
             });
+            this.getNewLogInverval();
         });
     }
 
