@@ -33,6 +33,12 @@ class App extends TypedReact.Component<{}, {
                 error: error
             });
         });
+
+        EventEmitter.Emitter.addListener(EventEmitter.Types.LOG_CHANGED, (logs) => {
+            this.setState({
+                logs: logs
+            });
+        });
     }
 
     setRecord(logs:any[], statement:string){
