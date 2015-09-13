@@ -64,11 +64,11 @@ class DbMonitor extends TypedReact.Component<{
     }
     render() {
         return !this.state.underMonitor ?
-            <button className="btn btn-sm btn-primary" onClick={this.monitorDb} disabled={this.props.monioredDatabases.length <= 0}>monitor</button> :
+            <button className="btn btn-sm btn-primary" onClick={this.monitorDb} disabled={this.props.monioredDatabases.length <= 0}><i className="glyphicon glyphicon-record"/>{' '}monitor</button> :
             <button className="btn btn-sm btn-danger" onClick={this.stopMonitor}>
             <i className="blink glyphicon glyphicon-record"/>{' '}
             stop monitor
-                </button>
+            </button>
             ;
     }
 }

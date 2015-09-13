@@ -4,6 +4,7 @@ import TypedReact = require("typed-react");
 import DbLogs = require("../server/DbLogs");
 import EventEmitter = require("./EventEmitter");
 import Async = require('async');
+import $ = require("jquery");
 
 var CodeMirror = require('codemirror');
 require('codemirror/mode/sql/sql');
@@ -13,6 +14,7 @@ class StatementRunner extends TypedReact.Component<{
     statement: string;
     monioredDatabases: string[];
 }, {
+        error?:string;
         defaultDb?: string;
         underMonitor?: boolean;
     }>{
@@ -20,6 +22,7 @@ class StatementRunner extends TypedReact.Component<{
 
     getInitialState() {
         return {
+            error:"",
             defaultDb: "",
             underMonitor: false
         };
@@ -35,6 +38,24 @@ class StatementRunner extends TypedReact.Component<{
                 underMonitor: underMonitor
             });
         });
+
+        $('#statement-runner').on('shown.bs.modal',  (e) => {
+            if (!this.editor) {
+                var mirror: any = this.refs["statement"];
+                if (mirror) {
+                    this.editor = CodeMirror.fromTextArea(mirror.getDOMNode(), {
+                        mode: "text/x-mssql",
+                        lineNumbers: true,
+                        smartIndent: true,
+                        viewportMargin: Infinity,
+                        extraKeys: {
+                            "Ctrl-Space": "autocomplete",
+                            "Ctrl-J": "autocomplete"
+                        }
+                    });
+                }
+            }
+        });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -44,24 +65,6 @@ class StatementRunner extends TypedReact.Component<{
 
         if (this.editor && nextProps.statement !== this.props.statement) {
             this.editor.getDoc().setValue(nextProps.statement);
-        }
-    }
-
-    componentDidUpdate() {
-        if (!this.editor) {
-            var mirror: any = this.refs["statement"];
-            if (mirror) {
-                this.editor = CodeMirror.fromTextArea(mirror.getDOMNode(), {
-                    mode: "text/x-mssql",
-                    lineNumbers: true,
-                    smartIndent: true,
-                    viewportMargin: Infinity,
-                    extraKeys: {
-                        "Ctrl-Space": "autocomplete",
-                        "Ctrl-J": "autocomplete"
-                    }
-                });
-            }
         }
     }
 
@@ -84,11 +87,10 @@ class StatementRunner extends TypedReact.Component<{
             }
         ], (err, recordset) => {
             DbLogs.cleanLog(this.props.monioredDatabases, (cleanErr) => {
-                if (err)
-                    return EventEmitter.Emitter.emit(EventEmitter.Types.ERROR, err);
-                if (cleanErr)
-                    return EventEmitter.Emitter.emit(EventEmitter.Types.ERROR, cleanErr);
-                return EventEmitter.Emitter.emit(EventEmitter.Types.ERROR, "");
+                if (err) return this.setState({error: err.message});
+                if (cleanErr) return this.setState({error: cleanErr});
+                this.setState({error: ""});
+                $('#statement-runner').modal('hide');
             });
         });
     }
@@ -101,26 +103,55 @@ class StatementRunner extends TypedReact.Component<{
     }
 
     render() {
-        return (<div>
-        <p className="sql-editor">
-            <textarea ref="statement" defaultValue={this.props.statement}></textarea>
-            </p>
-        <div className="input-group">
-            <select className="form-control"  placeholder="Select default database ..." disabled={this.props.monioredDatabases.length <= 0} value={this.state.defaultDb} onChange={this.onDefaultDbChange}>
-            {
-            this.props.monioredDatabases.map((db) => {
-                return (<option key={db}>{db}</option>);
-            })
-            }
-                </select>
-            <span className="input-group-btn">
-                <button className="btn btn-primary" disabled={this.props.monioredDatabases.length <= 0 || this.state.underMonitor} onClick={this.runStatement}>
-                    <i className="glyphicon glyphicon-play"></i>
-                    Run
-                    </button>
-                </span>
+        var style = {display: "inline"};
+        return (
+        <div style={style}>
+        {
+            this.state.underMonitor ? null :
+            <button className="btn btn-primary btn-sm" disabled={this.props.monioredDatabases.length <= 0} data-toggle="modal" data-target="#statement-runner"><i className="glyphicon glyphicon-play"></i>{' '}Run statement</button>
+        }
+            <div className="modal fade" id="statement-runner" tabIndex={-1} role="dialog">
+                <div className="modal-dialog modal-lg" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <h4 className="modal-title" id="myModalLabel">Run Sql</h4>
+                        </div>
+                        <div className="modal-body">
+                        {
+                            this.state.error ? (
+                                <p className="alert alert-danger" role="alert">
+                                    <button type="button" className="close" aria-label="Close" onClick={()=>{
+                                        this.setState({error: ""});
+                                    }}>
+                                        <span aria-hidden="true" dangerouslySetInnerHTML={{__html: '&times;'}}></span></button>
+                                    {this.state.error}
+                                </p>) : null
+                        }
+                            <p className="sql-editor">
+                                <textarea ref="statement" defaultValue={this.props.statement} />
+                            </p>
+                            <div className="input-group">
+                                <select className="form-control" placeholder="Select default database ..." disabled={this.props.monioredDatabases.length <= 0} value={this.state.defaultDb} onChange={this.onDefaultDbChange}>
+                                    {
+                                    this.props.monioredDatabases.map((db) => {
+                                        return (<option key={db}>{db}</option>);
+                                    })
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                            <button className="btn btn-primary" onClick={this.runStatement}>
+                                <i className="glyphicon glyphicon-play"></i>
+                                Run
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            </div>);
+        </div>);
     }
 }
 

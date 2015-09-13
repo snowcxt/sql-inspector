@@ -40,7 +40,7 @@ class SqlRunner extends TypedReact.Component<{
         return this.state.databases && this.state.databases.length > 0 ? (
             <div>
                 <DbPicker databases={this.state.databases} setDatabases={this.setDatabases} />
-                <DbMonitor monioredDatabases={this.state.monioredDatabases}/>
+                <DbMonitor monioredDatabases={this.state.monioredDatabases}/>{' '}
                 <StatementRunner ref="sql-runner" statement={this.props.statement} monioredDatabases={this.state.monioredDatabases} />
                 </div>) : null;
     }
