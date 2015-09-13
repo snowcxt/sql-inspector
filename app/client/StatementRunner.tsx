@@ -139,14 +139,15 @@ class StatementRunner extends TypedReact.Component<{
                                     })
                                     }
                                 </select>
+                                <span className="input-group-btn">
+                                <button className="btn btn-primary" onClick={this.runStatement}>
+                                    <i className="glyphicon glyphicon-play"></i>
+                                    Run
+                                </button>
+                                </span>
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                            <button className="btn btn-primary" onClick={this.runStatement}>
-                                <i className="glyphicon glyphicon-play"></i>
-                                Run
-                            </button>
                         </div>
                     </div>
                 </div>
