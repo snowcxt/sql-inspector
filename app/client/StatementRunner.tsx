@@ -8,7 +8,7 @@ import Async = require('async');
 var CodeMirror = require('codemirror');
 require('codemirror/mode/sql/sql');
 
-class SqlRunner extends TypedReact.Component<{
+class StatementRunner extends TypedReact.Component<{
     ref: string;
     statement: string;
     monioredDatabases: string[];
@@ -124,4 +124,4 @@ class SqlRunner extends TypedReact.Component<{
     }
 }
 
-export = TypedReact.createClass(SqlRunner);
+export = TypedReact.createClass(StatementRunner);
