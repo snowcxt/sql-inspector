@@ -129,7 +129,7 @@ class StatementRunner extends TypedReact.Component<{
                                 </p>) : null
                         }
                             <p className="sql-editor">
-                                <textarea ref="statement" defaultValue={this.props.statement} />
+                                <textarea ref="statement" value={this.props.statement} readOnly={true}/>
                             </p>
                             <div className="input-group">
                                 <select className="form-control" placeholder="Select default database ..." disabled={this.props.monioredDatabases.length <= 0} value={this.state.defaultDb} onChange={this.onDefaultDbChange}>
