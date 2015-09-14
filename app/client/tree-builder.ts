@@ -45,7 +45,7 @@ function parseAdditionalInfo(information) {
 }
 
 function mergeLog(log: ILog, lastNode: ITreeNode): boolean {
-    if (log.statement === lastNode.log.statement) {
+    if (log.statement.replace(/\s+/g,"") === lastNode.log.statement.replace(/\s+/g,"")) {
         var action = log.action_id.trim();
 
         if (lastNode.actions[0].action === action) {
