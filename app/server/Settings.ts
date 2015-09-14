@@ -1,8 +1,10 @@
 var fs = require('fs');
 import _ = require("lodash");
+var AppDirectory = require('appdirectory');
+var dirs = new AppDirectory('sql-seer');
 
 function getSettings(cb: (err, settings?: ISettings) => void) {
-    fs.readFile(__dirname + "/settings.json", 'utf8', function(err, data) {
+    fs.readFile(dirs.userConfig() + "/settings.json", 'utf8', function(err, data) {
         if (err) {
             return cb(null, { databases: [] });
         }
@@ -16,7 +18,7 @@ function getSettings(cb: (err, settings?: ISettings) => void) {
 
 function setSettings(settings: ISettings, cb) {
     var value = settings ? JSON.stringify(settings) : "";
-    fs.writeFile(__dirname + "/settings.json", value, cb);
+    fs.writeFile(dirs.userConfig() + "/settings.json", value, cb);
 }
 
 export function getDb(cb: (err, databases?: IDbConnection[]) => void) {

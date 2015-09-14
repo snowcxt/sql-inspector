@@ -3,6 +3,7 @@
   "version": "0.0.2",
   "main": "main.js",
   "dependencies": {
+    "appdirectory": "^0.1.0",
     "async": "^1.4.0",
     "bootstrap": "^3.3.5",
     "classnames": "^2.1.3",
