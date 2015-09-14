@@ -29,10 +29,14 @@ app.on('ready', function () {
         mainWindow.loadUrl('file://' + __dirname + '/index.html')
         mainWindow.openDevTools({
             detach: true
-        })
+        });
         mainWindow.on('closed', function () {
             mainWindow = null;
         });
+
+        setTimeout(function () {
+            mainWindow.webContents.send('app-version', app.getVersion());
+        }, 1000);
     });
     updater.on('updateRequired', function () {
         app.quit();
