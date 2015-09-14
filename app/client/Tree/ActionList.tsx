@@ -28,7 +28,7 @@ class ActionList extends TypedReact.Component<{
     render(){
         var action = this.props.action;
 
-        return (<span className="badge" data-content={this.getTemplate()} data-trigger="click" data-html="true" data-toggle="popover" data-placement="right">{this.props.translateAction(action.action) }{ action.number > 1 ? " x " + action.number : "" }
+        return (<span className="badge" data-content={this.getTemplate()} data-trigger="hover" data-html="true" data-toggle="popover" data-placement="right">{this.props.translateAction(action.action) }{ action.number > 1 ? " x " + action.number : "" }
             </span>);
     }
 }
