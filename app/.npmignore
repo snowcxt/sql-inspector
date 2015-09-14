@@ -1,6 +1,6 @@
 node_modules
 npm-debug.log
-
+*.tgz
 !lib/**
 !main.js
 server/settings.json
