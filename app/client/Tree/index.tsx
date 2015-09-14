@@ -13,9 +13,19 @@ class Tree extends TypedReact.Component<{
     getInitialState() {
         return {
             isConnected: false,
-            visible: true
+            visible: false
         };
     }
+
+    componentDidMount() {
+        if (!this.props.node.parent) {
+            this.setState({
+                visible: true
+            });
+        }
+        // $('[data-toggle="popover"]').popover()
+    }
+
     getDefaultProps() {
         return {
             node: {}
@@ -38,7 +48,7 @@ class Tree extends TypedReact.Component<{
                 return (
                     <li key={index}>
                         <SubTree isConnected={this.props.isConnected} node={node} getData={this.props.getData} />
-                    </li>
+                        </li>
                 );
             });
         }
@@ -53,7 +63,7 @@ class Tree extends TypedReact.Component<{
                 <div>
                     <TreeNode isConnected={this.props.isConnected} node={node} toggle={this.toggle} getData={this.props.getData} />
                     <ul className="tree-nodes" style={toggleStyle}>{childNodes}</ul>
-                </div>
+                    </div>
             );
         } else {
             return (<ul className="tree-nodes" style={toggleStyle}>{childNodes}</ul>);

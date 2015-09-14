@@ -21,6 +21,8 @@ class ActionDetails extends TypedReact.Component<{
                 return "CREATE TABLE";
             case "DR":
                 return "DROP TABLE";
+            case "AL":
+                return "ALTER TABLE";
             default:
                 return actionName;
         }

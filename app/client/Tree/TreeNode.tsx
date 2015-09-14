@@ -17,7 +17,7 @@ class TreeNode extends TypedReact.Component<{
     editor: CodeMirror.EditorFromTextArea = null;
     getInitialState() {
         return {
-            visible: true,
+            visible: false,
             showDetails: false
         };
     }
@@ -88,11 +88,6 @@ class TreeNode extends TypedReact.Component<{
             "glyphicon-chevron-right": !this.state.showDetails,
             "glyphicon-chevron-down": this.state.showDetails
         };
-
-        var toggleStyle;
-        if (!this.state.visible) {
-            toggleStyle = { display: "none" };
-        }
 
         var detailsStyle;
         if (!this.state.showDetails) {
