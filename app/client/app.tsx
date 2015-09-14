@@ -6,6 +6,7 @@ import Uploader = require("./Uploader");
 import SqlExecTree = require("./SqlExecTree");
 import DbConnector = require("./DbConnector");
 import EventEmitter = require("./EventEmitter");
+import VersionChecker = require("./VersionChecker");
 
 class App extends TypedReact.Component<{}, {
     logs?: any[];
@@ -70,6 +71,9 @@ class App extends TypedReact.Component<{}, {
                         {this.state.error}
                     </p>) : null
             }
+                <div className="pull-right">
+                <VersionChecker />
+                </div>
                 <p className="btn-group btn-group-sm" role="group" aria-label="...">
                     <Uploader onUploaded={this.setRecord} />
                     <button className="btn btn-default" onClick={this.saveLogs}>

@@ -46,6 +46,7 @@
         "./client/Tree/TreeNode.tsx",
         "./client/Tree/index.tsx",
         "./client/Uploader.tsx",
+        "./client/VersionChecker.tsx",
         "./client/app.tsx",
         "./index.tsx"
     ]
