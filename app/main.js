@@ -26,10 +26,8 @@ app.on('ready', function () {
             width: 1000,
             height: 800,
         });
-        mainWindow.loadUrl('file://' + __dirname + '/index.html')
-        mainWindow.openDevTools({
-            detach: true
-        });
+        mainWindow.loadUrl('file://' + __dirname + '/index.html');
+        
         mainWindow.on('closed', function () {
             mainWindow = null;
         });
