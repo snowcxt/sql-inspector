@@ -98,10 +98,6 @@ class TreeNode extends TypedReact.Component<{
         if (!this.state.showDetails) {
             detailsStyle = { display: "none" };
         }
-        var dataGetterStyle;
-        if (!this.props.isConnected || node.log.action_id.trim() !== 'SL') {
-            dataGetterStyle = { display: "none" };
-        }
 
         return (
             <div className={"tree-node panel " + this.getActionColor('panel', node) }>
@@ -126,7 +122,6 @@ class TreeNode extends TypedReact.Component<{
                     </div>
                 <div className="panel-body" style={detailsStyle}>
                     <textarea ref="codemirror" value={node.log.statement} readOnly={true}></textarea>
-                    <button className="btn btn-default btn-xs pull-right" style={dataGetterStyle} onClick={this.getData}>get data</button>
                     </div>
                 </div>)
     }
