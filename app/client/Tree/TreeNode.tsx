@@ -108,9 +108,9 @@ class TreeNode extends TypedReact.Component<{
                 <div className={"panel-heading"} onClick={this.toggle}>
                     {
                     node.nodes.length > 0 ? (
-                        <a className="text-muted">
-                            <span className={classNames(classObj) }></span>{' '}
-                            </a>) : null
+                        <span><a className="btn btn-xs btn-link">
+                            <span className={classNames(classObj) }></span>
+                        </a>{' '}</span>) : null
                     }
                     {
                     this.props.node.getParent ? null : (
@@ -118,7 +118,6 @@ class TreeNode extends TypedReact.Component<{
                         <i className="glyphicon glyphicon-warning-sign"></i>
                             </span>)
                     }
-                    { node.index }{' '}
                     {
                     node.actions.map((action) => {
                         return (<span>
@@ -130,9 +129,9 @@ class TreeNode extends TypedReact.Component<{
                     }
 
                     <span className="badge">{ node.actions[0].database }</span>{' '}
-
-                    <b>{ node.actions[0].objectName }</b>{' '}
-
+                    {
+                    node.actionNumber > 1 ? "" : (<b>{ node.actions[0].objectName }{' '}</b>)
+                    }
                     <a className="btn btn-xs btn-default pull-right" onClick={this.toggleDetails}>
                         <span className={classNames(showDetailsClassObj) }></span>
                         </a>

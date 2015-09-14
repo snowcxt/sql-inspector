@@ -5,6 +5,7 @@ function createTreeNode(index: number, log: ILog, failToGetParent: boolean, pare
         index: index,
         log: log,
         actions: [{ action: log.action_id.trim(), database: log.database_name, number: 1, objectName: log.object_name }],
+        actionNumber: 1,
         getParent: failToGetParent,
         parent: parent,
         nodes: []
@@ -45,9 +46,9 @@ function parseAdditionalInfo(information) {
 }
 
 function mergeLog(log: ILog, lastNode: ITreeNode): boolean {
-    if (log.statement.replace(/\s+/g,"") === lastNode.log.statement.replace(/\s+/g,"")) {
+    if (log.statement.replace(/\s+/g, "") === lastNode.log.statement.replace(/\s+/g, "")) {
         var action = log.action_id.trim();
-
+        lastNode.actionNumber++;
         if (lastNode.actions[0].action === action) {
             lastNode.actions[0].database = log.database_name;
             lastNode.actions[0].objectName = log.object_name;
@@ -73,6 +74,7 @@ export function build(logs: ILog[]): ITreeNode {
         index: -1,
         log: null,
         actions: [],
+        actionNumber: 0,
         getParent: true,
         parent: null,
         nodes: []
