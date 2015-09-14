@@ -6,9 +6,11 @@ function createTreeNode(index: number, log: ILog, failToGetParent: boolean, pare
         log: log,
         actions: [{
             action: log.action_id.trim(),
-            databases: [log.database_name],
             number: 1,
-            objectNames: [log.object_name]
+            details: [{
+                database: log.database_name,
+                objectName: log.object_name
+            }]
         }],
         actionNumber: 1,
         getParent: failToGetParent,
@@ -55,14 +57,19 @@ function mergeLog(log: ILog, lastNode: ITreeNode): boolean {
         var action = log.action_id.trim();
         lastNode.actionNumber++;
         if (lastNode.actions[0].action === action) {
-            lastNode.actions[0].databases.push(log.database_name);
-            lastNode.actions[0].objectNames.push(log.object_name);
+            lastNode.actions[0].details.push({
+                database: log.database_name,
+                objectName: log.object_name
+            });
             lastNode.actions[0].number++;
         } else {
             lastNode.actions.unshift({
                 action: action,
-                databases: [log.database_name],
-                objectNames: [log.object_name],
+                details: [{
+                    database: log.database_name,
+                    objectName: log.object_name,
+                }],
+
                 number: 1
             });
         }

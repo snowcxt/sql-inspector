@@ -105,7 +105,7 @@ class TreeNode extends TypedReact.Component<{
 
         return (
             <div className={"tree-node panel " + this.getActionColor('panel', node) }>
-                <div className={"panel-heading"} onClick={this.toggle}>
+                <div className="panel-heading action-header" onClick={this.toggle}>
                     {
                     node.nodes.length > 0 ? (
                         <span><a className="btn btn-xs btn-link">

@@ -26,9 +26,11 @@ interface ILog {
 
 interface IAction {
     action: string;
-    databases: string[];
-    objectNames: string[];
     number: number;
+    details: {
+        database: string;
+        objectName: string;
+    }[]
 }
 
 interface ITreeNode {
