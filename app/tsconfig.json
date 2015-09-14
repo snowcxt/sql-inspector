@@ -43,6 +43,7 @@
         "./client/SqlExecTree.tsx",
         "./client/SqlRunner.tsx",
         "./client/StatementRunner.tsx",
+        "./client/Tree/ActionDetails.tsx",
         "./client/Tree/TreeNode.tsx",
         "./client/Tree/index.tsx",
         "./client/Uploader.tsx",

@@ -1,8 +1,8 @@
 import React = require("react");
 import TypedReact = require("typed-react");
+import ActionDetails = require("./ActionDetails");
 
 var classNames = require('classnames');
-
 var CodeMirror = require('codemirror');
 
 class TreeNode extends TypedReact.Component<{
@@ -118,20 +118,8 @@ class TreeNode extends TypedReact.Component<{
                         <i className="glyphicon glyphicon-warning-sign"></i>
                             </span>)
                     }
-                    {
-                    node.actions.map((action) => {
-                        return (<span>
-                            <span className="badge">
-                            {action.action}{ action.number > 1 ? " x " + action.number : ""}
-                                </span>
-                            {' '}</span>);
-                    })
-                    }
+                    <ActionDetails node={this.props.node}/>
 
-                    <span className="badge">{ node.actions[0].database }</span>{' '}
-                    {
-                    node.actionNumber > 1 ? "" : (<b>{ node.actions[0].objectName }{' '}</b>)
-                    }
                     <a className="btn btn-xs btn-default pull-right" onClick={this.toggleDetails}>
                         <span className={classNames(showDetailsClassObj) }></span>
                         </a>
