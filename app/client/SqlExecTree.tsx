@@ -1,7 +1,7 @@
 import React = require("react");
 import TypedReact = require("typed-react");
 
-import Tree = require("./Tree/index");
+import Tree = require("./Tree/Tree");
 import DataGetter = require("./DataGetter");
 import treeBuilder = require("./tree-builder");
 
