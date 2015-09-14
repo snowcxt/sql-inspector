@@ -29,5 +29,6 @@ interface ITreeNode {
     log: ILog;
     getParent: boolean;
     parent: ITreeNode;
+    actions: { action: string; database: string; number: number; }[];
     nodes: ITreeNode[];
 }

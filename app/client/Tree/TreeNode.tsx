@@ -110,29 +110,34 @@ class TreeNode extends TypedReact.Component<{
                     node.nodes.length > 0 ? (
                         <a className="text-muted">
                             <span className={classNames(classObj) }></span>{' '}
-                        </a>) : null
+                            </a>) : null
                     }
                     {
                     this.props.node.getParent ? null : (
                         <span className="text-danger">
                         <i className="glyphicon glyphicon-warning-sign"></i>
-                        </span>)
+                            </span>)
                     }
                     { node.index }{' '}
-                    <span className="badge">{ node.log.action_id }</span>{' '}
+                    {
+                    node.actions.map((action) => {
+                        return (<span><span className="badge">{action.action}</span>{' '}</span>);
+                    })
+                    }
+
                     <span className="badge">{ node.log.database_name }</span>{' '}
 
                     <b>{ node.log.object_name}</b>{' '}
 
                     <a className="btn btn-xs btn-default pull-right" onClick={this.toggleDetails}>
                         <span className={classNames(showDetailsClassObj) }></span>
-                    </a>
-                </div>
+                        </a>
+                    </div>
                 <div className="panel-body" style={detailsStyle}>
                     <textarea ref="codemirror" value={node.log.statement} readOnly={true}></textarea>
                     <button className="btn btn-default btn-xs pull-right" style={dataGetterStyle} onClick={this.getData}>get data</button>
-                </div>
-            </div>)
+                    </div>
+                </div>)
     }
 }
 

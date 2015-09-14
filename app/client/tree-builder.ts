@@ -4,6 +4,7 @@ function createTreeNode(index: number, log: ILog, failToGetParent: boolean, pare
     var node: ITreeNode = {
         index: index,
         log: log,
+        actions: [{ action: log.action_id.trim(), database: log.database_name, number: 1 }],
         getParent: failToGetParent,
         parent: parent,
         nodes: []
@@ -43,19 +44,40 @@ function parseAdditionalInfo(information) {
     };
 }
 
+function mergeLog(log: ILog, currentNode: ITreeNode): boolean {
+    if (log.statement === currentNode.log.statement) {
+        console.log("merge", currentNode.index);
+        currentNode.actions.push({
+            action: log.action_id.trim(),
+            database: log.database_name,
+            number: 1
+        });
+        return true;
+    }
+
+    return false;
+}
+
 export function build(logs: ILog[]): ITreeNode {
-    if(!logs) return;
-    
+    if (!logs) return;
+
     var root: ITreeNode = {
         index: -1,
         log: null,
+        actions: [],
         getParent: true,
         parent: null,
         nodes: []
     },
+        //previousNode: ITreeNode = null,
+        lastNode: ITreeNode = null,
         currentNode: ITreeNode = null;
 
     logs.forEach((log, index) => {
+        if (lastNode && mergeLog(log, lastNode)) {
+            return;
+        }
+
         log.info = parseAdditionalInfo(log.additional_information);
 
         if (currentNode) {
@@ -63,18 +85,20 @@ export function build(logs: ILog[]): ITreeNode {
                 var parent: ITreeNode = getParent(log, currentNode);
 
                 if (parent) {
-                    currentNode = createTreeNode(index, log, true, parent);
+                    lastNode = currentNode = createTreeNode(index, log, true, parent);
                     parent.nodes.push(currentNode);
                 } else {
                     // throw "cannot find parent";
                     console.log("cannot find parent", index);
-                    root.nodes.push(createTreeNode(index, log, false, root));
+                    lastNode = createTreeNode(index, log, false, root)
+                    root.nodes.push(lastNode);
                 }
             } else {
-                root.nodes.push(createTreeNode(index, log, true, root));
+                lastNode = createTreeNode(index, log, true, root);
+                root.nodes.push(lastNode);
             }
         } else {
-            currentNode = createTreeNode(index, log, true, root);
+            lastNode = currentNode = createTreeNode(index, log, true, root);
             root.nodes.push(currentNode);
         }
     });
