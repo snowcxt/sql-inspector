@@ -22,20 +22,24 @@ app.on('window-all-closed', function () {
 // initialization and is ready to create browser windows.
 app.on('ready', function () {
     updater.on('ready', function () {
-       mainWindow = new BrowserWindow({
-           width: 1000,
-       height: 800,})
-       mainWindow.loadUrl('file://' + __dirname + '/index.html')
-       mainWindow.openDevTools({detach:true})
-       mainWindow.on('closed', function() {
-           mainWindow = null;
-       })
-   })
-   updater.on('updateRequired', function () {
-       app.quit();
-   })
-   updater.on('updateAvailable', function () {
-       mainWindow.webContents.send('update-available');
-   })
-   updater.start();
+        mainWindow = new BrowserWindow({
+            width: 1000,
+            height: 800,
+        });
+        mainWindow.loadUrl('file://' + __dirname + '/index.html')
+        mainWindow.openDevTools({
+            detach: true
+        })
+        mainWindow.on('closed', function () {
+            mainWindow = null;
+        });
+    });
+    updater.on('updateRequired', function () {
+        app.quit();
+    });
+    updater.on('updateAvailable', function () {
+        mainWindow.webContents.send('update-available');
+    });
+
+    updater.start();
 });
