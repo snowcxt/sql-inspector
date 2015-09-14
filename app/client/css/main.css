@@ -62,3 +62,6 @@
 .action-header .popover {
   max-width: none;
 }
+.action-header [data-toggle] {
+  cursor: pointer;
+}
