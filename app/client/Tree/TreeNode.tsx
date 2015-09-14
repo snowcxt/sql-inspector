@@ -22,8 +22,8 @@ class TreeNode extends TypedReact.Component<{
         };
     }
 
-    getActionColor(prefix: string, row: ILog): string {
-        switch (row.action_id.trim()) {
+    getActionColor(prefix: string, row: ITreeNode): string {
+        switch (row.actions[0].action) {
             case "EX":
                 return prefix + "-primary";
             case "UP":
@@ -104,7 +104,7 @@ class TreeNode extends TypedReact.Component<{
         }
 
         return (
-            <div className={"tree-node panel " + this.getActionColor('panel', node.log) }>
+            <div className={"tree-node panel " + this.getActionColor('panel', node) }>
                 <div className={"panel-heading"} onClick={this.toggle}>
                     {
                     node.nodes.length > 0 ? (
@@ -121,13 +121,17 @@ class TreeNode extends TypedReact.Component<{
                     { node.index }{' '}
                     {
                     node.actions.map((action) => {
-                        return (<span><span className="badge">{action.action}</span>{' '}</span>);
+                        return (<span>
+                            <span className="badge">
+                            {action.action}{ action.number > 1 ? " x " + action.number : ""}
+                                </span>
+                            {' '}</span>);
                     })
                     }
 
-                    <span className="badge">{ node.log.database_name }</span>{' '}
+                    <span className="badge">{ node.actions[0].database }</span>{' '}
 
-                    <b>{ node.log.object_name}</b>{' '}
+                    <b>{ node.actions[0].objectName }</b>{' '}
 
                     <a className="btn btn-xs btn-default pull-right" onClick={this.toggleDetails}>
                         <span className={classNames(showDetailsClassObj) }></span>

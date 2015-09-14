@@ -4,7 +4,7 @@ function createTreeNode(index: number, log: ILog, failToGetParent: boolean, pare
     var node: ITreeNode = {
         index: index,
         log: log,
-        actions: [{ action: log.action_id.trim(), database: log.database_name, number: 1 }],
+        actions: [{ action: log.action_id.trim(), database: log.database_name, number: 1, objectName: log.object_name }],
         getParent: failToGetParent,
         parent: parent,
         nodes: []
@@ -44,14 +44,22 @@ function parseAdditionalInfo(information) {
     };
 }
 
-function mergeLog(log: ILog, currentNode: ITreeNode): boolean {
-    if (log.statement === currentNode.log.statement) {
-        console.log("merge", currentNode.index);
-        currentNode.actions.push({
-            action: log.action_id.trim(),
-            database: log.database_name,
-            number: 1
-        });
+function mergeLog(log: ILog, lastNode: ITreeNode): boolean {
+    if (log.statement === lastNode.log.statement) {
+        var action = log.action_id.trim();
+
+        if (lastNode.actions[0].action === action) {
+            lastNode.actions[0].database = log.database_name;
+            lastNode.actions[0].objectName = log.object_name;
+            lastNode.actions[0].number++;
+        } else {
+            lastNode.actions.unshift({
+                action: action,
+                database: log.database_name,
+                objectName: log.object_name,
+                number: 1
+            });
+        }
         return true;
     }
 
