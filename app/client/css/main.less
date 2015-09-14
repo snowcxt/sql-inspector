@@ -1,0 +1,72 @@
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter:alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+.tree > div {
+    margin-left: -40px;
+}
+.tree-nodes {
+    display: block;
+    position: relative;
+    list-style: none;
+}
+.tree-nodes .tree-node {
+    margin-bottom: 15px;
+}
+.CodeMirror {
+    height: auto;
+}
+.sql-editor {
+    .CodeMirror-scroll {
+        min-height: 100px;
+    }
+    .CodeMirror {
+        border: 1px solid #ddd;
+    }
+}
+#fadeTableModel .CodeMirror {
+    border: 1px solid #ddd;
+}
+@-webkit-keyframes blinker {from {
+        opacity: 1.0;
+    }
+    to {
+        opacity: 0.0;
+    }
+}
+.blink {
+    text-decoration: blink;
+    -webkit-animation-name: blinker;
+    -webkit-animation-duration: 0.6s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-direction: alternate;
+}
+.action-header {
+    .table {
+        margin-bottom: 0;
+    }
+
+    .popover {
+        max-width: none;
+    }
+
+    [data-toggle] {
+        cursor: pointer;
+    }
+}

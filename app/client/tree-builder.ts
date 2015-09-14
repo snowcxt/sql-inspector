@@ -4,6 +4,15 @@ function createTreeNode(index: number, log: ILog, failToGetParent: boolean, pare
     var node: ITreeNode = {
         index: index,
         log: log,
+        actions: [{
+            action: log.action_id.trim(),
+            number: 1,
+            details: [{
+                database: log.database_name,
+                objectName: log.object_name
+            }]
+        }],
+        actionNumber: 1,
         getParent: failToGetParent,
         parent: parent,
         nodes: []
@@ -43,19 +52,54 @@ function parseAdditionalInfo(information) {
     };
 }
 
+function mergeLog(log: ILog, lastNode: ITreeNode): boolean {
+    if (log.statement.replace(/\s+/g, "") === lastNode.log.statement.replace(/\s+/g, "")) {
+        var action = log.action_id.trim();
+        lastNode.actionNumber++;
+        if (lastNode.actions[0].action === action) {
+            lastNode.actions[0].details.push({
+                database: log.database_name,
+                objectName: log.object_name
+            });
+            lastNode.actions[0].number++;
+        } else {
+            lastNode.actions.unshift({
+                action: action,
+                details: [{
+                    database: log.database_name,
+                    objectName: log.object_name,
+                }],
+
+                number: 1
+            });
+        }
+        return true;
+    }
+
+    return false;
+}
+
 export function build(logs: ILog[]): ITreeNode {
-    if(!logs) return;
-    
+    if (!logs) return;
+
     var root: ITreeNode = {
         index: -1,
         log: null,
+        actions: [],
+        actionNumber: 0,
         getParent: true,
         parent: null,
         nodes: []
     },
+        //previousNode: ITreeNode = null,
+        lastNode: ITreeNode = null,
         currentNode: ITreeNode = null;
 
     logs.forEach((log, index) => {
+        if (lastNode && mergeLog(log, lastNode)) {
+            return;
+        }
+
         log.info = parseAdditionalInfo(log.additional_information);
 
         if (currentNode) {
@@ -63,18 +107,20 @@ export function build(logs: ILog[]): ITreeNode {
                 var parent: ITreeNode = getParent(log, currentNode);
 
                 if (parent) {
-                    currentNode = createTreeNode(index, log, true, parent);
+                    lastNode = currentNode = createTreeNode(index, log, true, parent);
                     parent.nodes.push(currentNode);
                 } else {
                     // throw "cannot find parent";
                     console.log("cannot find parent", index);
-                    root.nodes.push(createTreeNode(index, log, false, root));
+                    lastNode = createTreeNode(index, log, false, root)
+                    root.nodes.push(lastNode);
                 }
             } else {
-                root.nodes.push(createTreeNode(index, log, true, root));
+                lastNode = createTreeNode(index, log, true, root);
+                root.nodes.push(lastNode);
             }
         } else {
-            currentNode = createTreeNode(index, log, true, root);
+            lastNode = currentNode = createTreeNode(index, log, true, root);
             root.nodes.push(currentNode);
         }
     });

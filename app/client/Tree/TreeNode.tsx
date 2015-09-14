@@ -1,8 +1,8 @@
 import React = require("react");
 import TypedReact = require("typed-react");
+import ActionDetails = require("./ActionDetails");
 
 var classNames = require('classnames');
-
 var CodeMirror = require('codemirror');
 
 class TreeNode extends TypedReact.Component<{
@@ -22,8 +22,8 @@ class TreeNode extends TypedReact.Component<{
         };
     }
 
-    getActionColor(prefix: string, row: ILog): string {
-        switch (row.action_id.trim()) {
+    getActionColor(prefix: string, row: ITreeNode): string {
+        switch (row.actions[0].action) {
             case "EX":
                 return prefix + "-primary";
             case "UP":
@@ -104,35 +104,31 @@ class TreeNode extends TypedReact.Component<{
         }
 
         return (
-            <div className={"tree-node panel " + this.getActionColor('panel', node.log) }>
-                <div className={"panel-heading"} onClick={this.toggle}>
+            <div className={"tree-node panel " + this.getActionColor('panel', node) }>
+                <div className="panel-heading action-header" onClick={this.toggle}>
                     {
                     node.nodes.length > 0 ? (
-                        <a className="text-muted">
-                            <span className={classNames(classObj) }></span>{' '}
-                        </a>) : null
+                        <span><a className="btn btn-xs btn-link">
+                            <span className={classNames(classObj) }></span>
+                        </a>{' '}</span>) : null
                     }
                     {
                     this.props.node.getParent ? null : (
                         <span className="text-danger">
                         <i className="glyphicon glyphicon-warning-sign"></i>
-                        </span>)
+                            </span>)
                     }
-                    { node.index }{' '}
-                    <span className="badge">{ node.log.action_id }</span>{' '}
-                    <span className="badge">{ node.log.database_name }</span>{' '}
-
-                    <b>{ node.log.object_name}</b>{' '}
+                    <ActionDetails node={this.props.node}/>
 
                     <a className="btn btn-xs btn-default pull-right" onClick={this.toggleDetails}>
                         <span className={classNames(showDetailsClassObj) }></span>
-                    </a>
-                </div>
+                        </a>
+                    </div>
                 <div className="panel-body" style={detailsStyle}>
                     <textarea ref="codemirror" value={node.log.statement} readOnly={true}></textarea>
                     <button className="btn btn-default btn-xs pull-right" style={dataGetterStyle} onClick={this.getData}>get data</button>
-                </div>
-            </div>)
+                    </div>
+                </div>)
     }
 }
 

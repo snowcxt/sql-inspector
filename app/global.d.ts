@@ -24,10 +24,21 @@ interface ILog {
     }
 }
 
+interface IAction {
+    action: string;
+    number: number;
+    details: {
+        database: string;
+        objectName: string;
+    }[]
+}
+
 interface ITreeNode {
     index: number;
     log: ILog;
     getParent: boolean;
     parent: ITreeNode;
+    actionNumber: number;
+    actions: IAction[];
     nodes: ITreeNode[];
 }
