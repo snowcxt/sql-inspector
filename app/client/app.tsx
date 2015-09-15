@@ -6,7 +6,6 @@ import Uploader = require("./Uploader");
 import SqlExecTree = require("./SqlExecTree");
 import DbConnector = require("./DbConnector");
 import EventEmitter = require("./EventEmitter");
-import VersionChecker = require("./VersionChecker");
 import Footer = require("./Footer");
 
 class App extends TypedReact.Component<{}, {
@@ -73,9 +72,6 @@ class App extends TypedReact.Component<{}, {
                     </p>) : null
             }
             <div id="main">
-                <div className="pull-right">
-                <VersionChecker />
-                </div>
                 <p className="btn-group btn-group-sm" role="group" aria-label="...">
                     <Uploader onUploaded={this.setRecord} />
                     <button className="btn btn-default" onClick={this.saveLogs}>
@@ -90,8 +86,7 @@ class App extends TypedReact.Component<{}, {
                 <p>
                     <SqlRunner ref="sql-runner" statement={this.state.statement} />
                 </p>
-                <br />
-                <div className="tree well">
+                <div className="tree">
                     <SqlExecTree />
                 </div>
                 <div className="modal fade" id="connect-server-model" role="dialog">

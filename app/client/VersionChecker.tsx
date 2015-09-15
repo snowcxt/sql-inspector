@@ -30,7 +30,7 @@ class VersionChecker extends TypedReact.Component<{}, {
     render() {
         return this.state.updateAvailable ?
             (<p className="text-primary"><i className="glyphicon glyphicon-refresh"></i>{' '}<b>Restart the app to apply the update</b></p>) :
-            (<p className="text-mute">v: {this.state.version}</p>);
+            (<p className="label label-default">v 0.0.2{this.state.version}</p>);
     }
 }
 

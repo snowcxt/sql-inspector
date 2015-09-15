@@ -1,4 +1,4 @@
-@footer-height: 50px;
+@footer-height: 40px;
 html,
 body {
     height: 100%;
@@ -9,6 +9,7 @@ body {
         height: 100%;
         #main {
             min-height: 100%;
+            padding: 15px;
             padding-bottom: @footer-height;
         }
         footer {
@@ -16,8 +17,9 @@ body {
             margin-top: -@footer-height;
             /* negative value of footer height */
             height: @footer-height;
-            clear: both;
-            padding-top: 20px;
+            width: 100%;
+            background-color: #f5f5f5;
+            padding: 8px 10px 0px;
         }
     }
 }
