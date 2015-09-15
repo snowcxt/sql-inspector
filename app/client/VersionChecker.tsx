@@ -22,7 +22,7 @@ class VersionChecker extends TypedReact.Component<{}, {
             });
         });
 
-        ipc.on('update-available', function() {
+        ipc.on('update-available', () => {
             this.setState({
                 updateAvailable: true
             });
