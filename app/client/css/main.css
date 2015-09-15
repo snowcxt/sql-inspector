@@ -1,3 +1,27 @@
+html,
+body {
+  height: 100%;
+}
+#app {
+  height: 100%;
+}
+#app > div {
+  height: 100%;
+}
+#app > div #main {
+  min-height: 100%;
+  padding: 15px;
+  padding-bottom: 40px;
+}
+#app > div footer {
+  position: relative;
+  margin-top: -40px;
+  /* negative value of footer height */
+  height: 40px;
+  width: 100%;
+  background-color: #f5f5f5;
+  padding: 8px 10px 0px;
+}
 .btn-file {
   position: relative;
   overflow: hidden;
