@@ -72,6 +72,7 @@ class App extends TypedReact.Component<{}, {
                         {this.state.error}
                     </p>) : null
             }
+            <div id="main">
                 <div className="pull-right">
                 <VersionChecker />
                 </div>
@@ -95,6 +96,7 @@ class App extends TypedReact.Component<{}, {
                 </div>
                 <div className="modal fade" id="connect-server-model" role="dialog">
                     <DbConnector />
+                </div>
                 </div>
                 <Footer />
             </div>);

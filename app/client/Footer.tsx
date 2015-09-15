@@ -8,11 +8,11 @@ class Footer extends TypedReact.Component<{}, {}>{
         shell.openExternal('https://github.com/snowcxt/sql-seer/issues/new');
     }
     render() {
-        return (<div>
+        return (<footer>
             <a target="_blank" onClick={this.reportIssue}>
                 report issue
                 </a>
-            </div>);
+            </footer>);
     }
 }
 
