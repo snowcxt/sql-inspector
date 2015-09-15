@@ -27,7 +27,7 @@ app.on('ready', function () {
             height: 800,
         });
         mainWindow.loadUrl('file://' + __dirname + '/index.html');
-        
+
         mainWindow.on('closed', function () {
             mainWindow = null;
         });
@@ -43,5 +43,8 @@ app.on('ready', function () {
         mainWindow.webContents.send('update-available');
     });
 
+    updater.on('error', function (err) {
+        mainWindow.webContents.send('update-error', err);
+    });
     updater.start();
 });
