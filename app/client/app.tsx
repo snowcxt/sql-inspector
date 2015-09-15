@@ -7,6 +7,7 @@ import SqlExecTree = require("./SqlExecTree");
 import DbConnector = require("./DbConnector");
 import EventEmitter = require("./EventEmitter");
 import VersionChecker = require("./VersionChecker");
+import Footer = require("./Footer");
 
 class App extends TypedReact.Component<{}, {
     logs?: any[];
@@ -95,6 +96,7 @@ class App extends TypedReact.Component<{}, {
                 <div className="modal fade" id="connect-server-model" role="dialog">
                     <DbConnector />
                 </div>
+                <Footer />
             </div>);
     }
 }
