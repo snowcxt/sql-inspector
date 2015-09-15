@@ -1,5 +1,7 @@
 import React = require("react");
 import TypedReact = require("typed-react");
+import $ = require("jquery");
+
 var ipc = require('ipc');
 
 class VersionChecker extends TypedReact.Component<{}, {
@@ -29,7 +31,7 @@ class VersionChecker extends TypedReact.Component<{}, {
 
     render() {
         return this.state.updateAvailable ?
-            (<p className="text-primary"><i className="glyphicon glyphicon-refresh"></i>{' '}<b>Restart the app to apply the update</b></p>) :
+            (<p title="Restart the app to apply the update" className="label label-warning"><i className="glyphicon glyphicon-arrow-up blink"/> v  {this.state.version}</p>) :
             (<p className="label label-default">v {this.state.version}</p>);
     }
 }
