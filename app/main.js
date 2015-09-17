@@ -27,14 +27,18 @@ app.on('ready', function () {
             height: 800,
         });
         mainWindow.loadUrl('file://' + __dirname + '/index.html');
-        
+
         mainWindow.on('closed', function () {
             mainWindow = null;
         });
 
         setTimeout(function () {
             mainWindow.webContents.send('app-version', app.getVersion());
-        }, 1000);
+        }, 2000);
+
+        setTimeout(function () {
+            mainWindow.webContents.send('app-version', app.getVersion());
+        }, 10000);
     });
     updater.on('updateRequired', function () {
         app.quit();
