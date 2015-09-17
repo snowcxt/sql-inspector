@@ -39,11 +39,11 @@ class VersionChecker extends TypedReact.Component<{}, {
 
     render() {
         if (this.state.error) {
-            var errorMessage = "Fail to get the latest version due to: " + this.state.error + ". You could download the installer manully."
-            return (<p title={errorMessage} className="label label-danger"><i className="glyphicon glyphicon-warning-sign"/> v  {this.state.version}</p>);
+            var errorMessage = "Fail to check the latest version due to: " + this.state.error + "."
+            return (<p title={errorMessage} className="label label-warning"><i className="glyphicon glyphicon-warning-sign"/> v  {this.state.version}</p>);
         } else {
             return this.state.updateAvailable ?
-                (<p title="Restart the app to apply the update" className="label label-warning"><i className="glyphicon glyphicon-arrow-up blink"/> v  {this.state.version}</p>) :
+                (<p title="Restart the app to apply the update" className="label label-info"><i className="glyphicon glyphicon-arrow-up blink"/> v  {this.state.version}</p>) :
                 (<p className="label label-default">v {this.state.version}</p>);
         }
     }
