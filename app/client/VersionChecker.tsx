@@ -31,9 +31,11 @@ class VersionChecker extends TypedReact.Component<{}, {
         });
 
         ipc.on('update-error', (error) => {
-            this.setState({
-                error: error.message
-            });
+            if (error) {
+                this.setState({
+                    error: error.message
+                });
+            }
         });
     }
 
