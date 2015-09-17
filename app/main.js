@@ -34,7 +34,11 @@ app.on('ready', function () {
 
         setTimeout(function () {
             mainWindow.webContents.send('app-version', app.getVersion());
-        }, 1000);
+        }, 2000);
+
+        setTimeout(function () {
+            mainWindow.webContents.send('app-version', app.getVersion());
+        }, 10000);
     });
     updater.on('updateRequired', function () {
         app.quit();
