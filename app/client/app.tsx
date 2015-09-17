@@ -78,7 +78,10 @@ class App extends TypedReact.Component<{}, {
                         <i className="glyphicon glyphicon-save"></i>{" "}
                         Save
                     </button>
-                    <button type="button" className="btn btn-default" data-toggle="modal" data-target="#connect-server-model">
+
+                </p>&nbsp;&nbsp;&nbsp;
+                <p className="btn-group btn-group-sm" role="group" aria-label="...">
+                    <button type="button" className="btn btn-sm btn-primary" data-toggle="modal" data-target="#connect-server-model">
                         <i className="glyphicon glyphicon-transfer"></i>{" "}
                         Connect to Server
                     </button>
