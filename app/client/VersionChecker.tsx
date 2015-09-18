@@ -18,10 +18,15 @@ class VersionChecker extends TypedReact.Component<{}, {
     }
 
     componentDidMount() {
-        ipc.on('app-version', (version) => {
-            this.setState({
-                version: version
-            });
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        this.setState({
+            version: getParameterByName("version")
         });
 
         ipc.on('update-available', () => {

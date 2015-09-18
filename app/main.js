@@ -26,19 +26,11 @@ app.on('ready', function () {
             width: 1000,
             height: 800,
         });
-        mainWindow.loadUrl('file://' + __dirname + '/index.html');
+        mainWindow.loadUrl('file://' + __dirname + '/index.html?version=' + app.getVersion());
 
         mainWindow.on('closed', function () {
             mainWindow = null;
         });
-
-        setTimeout(function () {
-            mainWindow.webContents.send('app-version', app.getVersion());
-        }, 2000);
-
-        setTimeout(function () {
-            mainWindow.webContents.send('app-version', app.getVersion());
-        }, 10000);
     });
     updater.on('updateRequired', function () {
         app.quit();
@@ -46,7 +38,6 @@ app.on('ready', function () {
     updater.on('updateAvailable', function () {
         mainWindow.webContents.send('update-available');
     });
-
     updater.start(function (err) {
         mainWindow.webContents.send('update-error', err);
     });
