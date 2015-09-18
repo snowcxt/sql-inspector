@@ -47,5 +47,7 @@ app.on('ready', function () {
         mainWindow.webContents.send('update-available');
     });
 
-    updater.start();
+    updater.start(function (err) {
+        mainWindow.webContents.send('update-error', err);
+    });
 });
