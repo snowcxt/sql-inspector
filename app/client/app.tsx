@@ -7,6 +7,7 @@ import SqlExecTree = require("./SqlExecTree");
 import DbConnector = require("./DbConnector");
 import EventEmitter = require("./EventEmitter");
 import Footer = require("./Footer");
+import Settings = require("./Settings");
 
 class App extends TypedReact.Component<{}, {
     logs?: any[];
@@ -71,7 +72,11 @@ class App extends TypedReact.Component<{}, {
                         {this.state.error}
                     </p>) : null
             }
-            <div id="main">
+
+            <div id="main">            
+                <div className="pull-right">
+                    <Settings />
+                </div>
                 <p className="btn-group btn-group-sm" role="group" aria-label="...">
                     <Uploader onUploaded={this.setRecord} />
                     <button className="btn btn-default" onClick={this.saveLogs}>

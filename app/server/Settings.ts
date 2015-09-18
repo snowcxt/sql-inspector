@@ -1,28 +1,33 @@
-var fs = require('fs');
+import fs = require('fs');
 import _ = require("lodash");
+import $ = require("jquery");
+
 var AppDirectory = require('appdirectory');
 var dirs = new AppDirectory('sql-seer');
+var defaultSettings = {
+    proxy: "",
+    databases: []
+};
+function getSettingFile() {
+   return dirs.userConfig() + "/settings.json";
+}
 
-function getSettings(cb: (err, settings?: ISettings) => void) {
+export function getSettings(cb: (err, settings?: ISettings) => void) {
     fs.readFile(getSettingFile(), 'utf8', function(err, data) {
         if (err) {
-            return cb(null, { databases: [] });
+            return cb(null, defaultSettings);
         }
         if (data) {
-            cb(null, JSON.parse(data));
+            cb(null, $.extend(defaultStatus, JSON.parse(data)));
         } else {
-            cb(null, { databases: [] });
+            cb(null, defaultSettings);
         }
     });
 }
 
-function setSettings(settings: ISettings, cb) {
+export function setSettings(settings: ISettings, cb) {
     var value = settings ? JSON.stringify(settings) : "";
     fs.writeFile(getSettingFile(), value, cb);
-}
-
-export function getSettingFile() {
-    return dirs.userConfig() + "/settings.json";
 }
 
 export function getDb(cb: (err, databases?: IDbConnection[]) => void) {
