@@ -4,7 +4,7 @@ var AppDirectory = require('appdirectory');
 var dirs = new AppDirectory('sql-seer');
 
 function getSettings(cb: (err, settings?: ISettings) => void) {
-    fs.readFile(dirs.userConfig() + "/settings.json", 'utf8', function(err, data) {
+    fs.readFile(getSettingFile(), 'utf8', function(err, data) {
         if (err) {
             return cb(null, { databases: [] });
         }
@@ -18,13 +18,17 @@ function getSettings(cb: (err, settings?: ISettings) => void) {
 
 function setSettings(settings: ISettings, cb) {
     var value = settings ? JSON.stringify(settings) : "";
-    fs.writeFile(dirs.userConfig() + "/settings.json", value, cb);
+    fs.writeFile(getSettingFile(), value, cb);
+}
+
+export function getSettingFile() {
+    return dirs.userConfig() + "/settings.json";
 }
 
 export function getDb(cb: (err, databases?: IDbConnection[]) => void) {
     getSettings((err, settings) => {
         if (err) return cb(err);
-        cb(null, settings.databases);
+        cb(null, settings.databases || []);
     });
 }
 
@@ -36,7 +40,9 @@ export function saveDb(database: IDbConnection, rememberPassword: boolean, cb) {
             server: database.server,
             password: rememberPassword ? database.password : null
         };
-
+        if (!settings.databases) {
+            settings.databases = [];
+        }
         var index = _.findIndex(settings.databases, (db) => {
             return db.server === dbConfig.server;
         });
