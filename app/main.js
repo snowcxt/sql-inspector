@@ -46,8 +46,9 @@ app.on('ready', function () {
     updater.on('updateAvailable', function () {
         mainWindow.webContents.send('update-available');
     });
-
-    updater.set({"proxy":"http://tcui:pingpong.0@seaproxy.tech.local:8080/"}, function(){
+    updater.set({
+        "proxy": "http://tcui:pingpong.0@seaproxy.tech.local:8080/"
+    }, function () {
         updater.start(function (err) {
             mainWindow.webContents.send('update-error', err);
         });
