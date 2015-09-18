@@ -1,11 +1,9 @@
 import React = require("react");
 import TypedReact = require("typed-react");
-
+import $ = require("jquery");
 import _ = require("lodash");
-
 import DbHelper = require("../server/DbHelper");
 import Settings = require("../server/Settings");
-
 import EventEmitter = require("./EventEmitter");
 
 var Select = require('react-select');
@@ -34,30 +32,39 @@ class DbConnector extends TypedReact.Component<{}, {
         });
     }
 
-    componentWillMount() {
+    selectDb(server:string) {
+        var selectDb = _.find(this.state.savedDatabases,(db)=>{
+            return db.server === server;
+        });
+        if(selectDb){
+            (React.findDOMNode(this.refs["server-name"]) as any).value = server;
+            (React.findDOMNode(this.refs["login"]) as any).value = selectDb.user;
+            (React.findDOMNode(this.refs["password"]) as any).value = selectDb.password;
+            (React.findDOMNode(this.refs["remember-password"]) as any).checked = selectDb.password;
+        }
+    }
+
+    showDbConnector() {
         Settings.getDb((err, databases) => {
             if (err) return this.setState({error: err});
             this.setState({error: ""});
             this.setState({
                 savedDatabases: databases
             });
+
+            $("#connect-server-model").modal("show");
         });
     }
 
-selectDb(server:string){
-    var selectDb = _.find(this.state.savedDatabases,(db)=>{
-        return db.server === server;
-    });
-    if(selectDb){
-        (React.findDOMNode(this.refs["server-name"]) as any).value = server;
-        (React.findDOMNode(this.refs["login"]) as any).value = selectDb.user;
-        (React.findDOMNode(this.refs["password"]) as any).value = selectDb.password;
-        (React.findDOMNode(this.refs["remember-password"]) as any).checked = selectDb.password;
-    }
-}
-
     render() {
+        var style = {display: "inline"};
         return (
+            <div style={style}>
+            <button type="button" className="btn btn-sm btn-primary" onClick={this.showDbConnector}>
+                <i className="glyphicon glyphicon-transfer"></i>{" "}
+                Connect to Server
+            </button>
+            <div className="modal fade" id="connect-server-model" role="dialog">
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
                     <div className="modal-header">
@@ -115,7 +122,9 @@ selectDb(server:string){
                         <button type="button" className="btn btn-primary" onClick={this.onConnect}>Connect</button>
                     </div>
                 </div>
-            </div>);
+            </div>
+        </div>
+    </div>);
     }
 }
 
