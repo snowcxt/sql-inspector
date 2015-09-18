@@ -7,6 +7,7 @@ import SqlExecTree = require("./SqlExecTree");
 import DbConnector = require("./DbConnector");
 import EventEmitter = require("./EventEmitter");
 import Footer = require("./Footer");
+import Settings = require("./Settings");
 
 class App extends TypedReact.Component<{}, {
     logs?: any[];
@@ -71,29 +72,25 @@ class App extends TypedReact.Component<{}, {
                         {this.state.error}
                     </p>) : null
             }
+
             <div id="main">
-                <p className="btn-group btn-group-sm" role="group" aria-label="...">
+                <div className="pull-right">
+                    <Settings />
+                </div>
+                <div className="btn-group btn-group-sm" role="group" aria-label="...">
                     <Uploader onUploaded={this.setRecord} />
                     <button className="btn btn-default" onClick={this.saveLogs}>
                         <i className="glyphicon glyphicon-save"></i>{" "}
                         Save
                     </button>
-
-                </p>&nbsp;&nbsp;&nbsp;
-                <p className="btn-group btn-group-sm" role="group" aria-label="...">
-                    <button type="button" className="btn btn-sm btn-primary" data-toggle="modal" data-target="#connect-server-model">
-                        <i className="glyphicon glyphicon-transfer"></i>{" "}
-                        Connect to Server
-                    </button>
-                </p>
+                </div>&nbsp;&nbsp;&nbsp;
+                <DbConnector />
+                <br /><br />
                 <p>
                     <SqlRunner ref="sql-runner" statement={this.state.statement} />
                 </p>
                 <div className="tree">
                     <SqlExecTree />
-                </div>
-                <div className="modal fade" id="connect-server-model" role="dialog">
-                    <DbConnector />
                 </div>
                 </div>
                 <Footer />

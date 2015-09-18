@@ -41,6 +41,7 @@
         "./client/DbMonitor.tsx",
         "./client/DbPicker.tsx",
         "./client/Footer.tsx",
+        "./client/Settings.tsx",
         "./client/SqlExecTree.tsx",
         "./client/SqlRunner.tsx",
         "./client/StatementRunner.tsx",

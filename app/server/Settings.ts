@@ -1,30 +1,39 @@
-var fs = require('fs');
+import fs = require('fs');
 import _ = require("lodash");
+import $ = require("jquery");
+
 var AppDirectory = require('appdirectory');
 var dirs = new AppDirectory('sql-seer');
+var defaultSettings = {
+    proxy: "",
+    databases: []
+};
+function getSettingFile() {
+   return dirs.userConfig() + "/settings.json";
+}
 
-function getSettings(cb: (err, settings?: ISettings) => void) {
-    fs.readFile(dirs.userConfig() + "/settings.json", 'utf8', function(err, data) {
+export function getSettings(cb: (err, settings?: ISettings) => void) {
+    fs.readFile(getSettingFile(), 'utf8', function(err, data) {
         if (err) {
-            return cb(null, { databases: [] });
+            return cb(null, defaultSettings);
         }
         if (data) {
-            cb(null, JSON.parse(data));
+            cb(null, $.extend(defaultStatus, JSON.parse(data)));
         } else {
-            cb(null, { databases: [] });
+            cb(null, defaultSettings);
         }
     });
 }
 
-function setSettings(settings: ISettings, cb) {
+export function setSettings(settings: ISettings, cb) {
     var value = settings ? JSON.stringify(settings) : "";
-    fs.writeFile(dirs.userConfig() + "/settings.json", value, cb);
+    fs.writeFile(getSettingFile(), value, cb);
 }
 
 export function getDb(cb: (err, databases?: IDbConnection[]) => void) {
     getSettings((err, settings) => {
         if (err) return cb(err);
-        cb(null, settings.databases);
+        cb(null, settings.databases || []);
     });
 }
 
@@ -36,7 +45,9 @@ export function saveDb(database: IDbConnection, rememberPassword: boolean, cb) {
             server: database.server,
             password: rememberPassword ? database.password : null
         };
-
+        if (!settings.databases) {
+            settings.databases = [];
+        }
         var index = _.findIndex(settings.databases, (db) => {
             return db.server === dbConfig.server;
         });

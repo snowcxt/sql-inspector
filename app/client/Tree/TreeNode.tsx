@@ -101,7 +101,7 @@ class TreeNode extends TypedReact.Component<{
                     node.nodes.length > 0 ? (
                         <span><a className="btn btn-xs btn-link">
                             <span className={classNames(classObj) }></span>
-                        </a>{' '}</span>) : null
+                            </a>{' '}</span>) : null
                     }
                     {
                     this.props.node.getParent ? null : (
