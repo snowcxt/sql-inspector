@@ -23,8 +23,10 @@ app.on('window-all-closed', function () {
 app.on('ready', function () {
     updater.on('ready', function () {
         mainWindow = new BrowserWindow({
+            title: "Sql Seer",
             width: 1000,
             height: 800,
+            icon: __dirname + '/icon.png'
         });
         mainWindow.loadUrl('file://' + __dirname + '/index.html?version=' + app.getVersion());
 
