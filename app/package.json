@@ -1,7 +1,13 @@
 {
   "name": "sql-seer",
+  "productName": "Sql Seer",
+  "description": "Sql Seer",
   "version": "0.0.5",
   "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snowcxt/sql-seer.git"
+  },
   "dependencies": {
     "appdirectory": "^0.1.0",
     "async": "^1.4.0",
