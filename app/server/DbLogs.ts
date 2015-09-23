@@ -10,7 +10,7 @@ var AuditSpecificationName = AuditName + "_specification";
 var server: string = "";
 
 function getAuditFileLocation() {
-  return ((!server || server === "localhost") ? "c\\" : "\\\\" + server + "\\c$\\") + AuditName + "\\";
+  return ((!server || server === "localhost") ? "c:\\" : "\\\\" + server + "\\c$\\") + AuditName + "\\";
 }
 function getAuditFileLocalLocation() {
   return "c:\\" + AuditName + "\\";
