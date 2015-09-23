@@ -23,10 +23,10 @@ class App extends TypedReact.Component<{}, {
     }
 
     componentDidMount() {
-        EventEmitter.Emitter.addListener(EventEmitter.Types.DB_CONNCTED, (databases) => {
+        EventEmitter.Emitter.addListener(EventEmitter.Types.DB_CONNCTED, (db) => {
             $("#connect-server-model").modal('hide');
             this.setState({
-                databases: databases
+                databases: db.databases
             });
         });
 

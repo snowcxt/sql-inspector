@@ -12,6 +12,7 @@ require('codemirror/mode/sql/sql');
 class StatementRunner extends TypedReact.Component<{
     ref: string;
     statement: string;
+    server: string;
     monioredDatabases: string[];
 }, {
         error?:string;
@@ -73,7 +74,7 @@ class StatementRunner extends TypedReact.Component<{
 
         Async.series([
             (callback) => {
-                DbLogs.setup(this.props.monioredDatabases, callback);
+                DbLogs.setup(this.props.server, this.props.monioredDatabases, callback);
             },
             (callback) => {
                 DbLogs.runQuery(this.state.defaultDb, statment, false, callback);

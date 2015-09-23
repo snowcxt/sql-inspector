@@ -12,6 +12,7 @@ class SqlRunner extends TypedReact.Component<{
 }, {
         databases?: string[];
         monioredDatabases?: string[];
+        server?: string;
     }>{
     getStatement(): string {
         return (this.refs["sql-runner"] as any).getStatement();
@@ -25,8 +26,8 @@ class SqlRunner extends TypedReact.Component<{
     }
 
     componentDidMount() {
-        EventEmitter.Emitter.addListener(EventEmitter.Types.DB_CONNCTED, (databases) => {
-            this.setState({ databases: databases });
+        EventEmitter.Emitter.addListener(EventEmitter.Types.DB_CONNCTED, (db) => {
+            this.setState({ databases: db.databases, server: db.connection.server });
         });
     }
 
@@ -40,8 +41,8 @@ class SqlRunner extends TypedReact.Component<{
         return this.state.databases && this.state.databases.length > 0 ? (
             <div>
                 <DbPicker databases={this.state.databases} setDatabases={this.setDatabases} />
-                <DbMonitor monioredDatabases={this.state.monioredDatabases}/>{' '}
-                <StatementRunner ref="sql-runner" statement={this.props.statement} monioredDatabases={this.state.monioredDatabases} />
+                <DbMonitor server={this.state.server} monioredDatabases={this.state.monioredDatabases}/>{' '}
+                <StatementRunner ref="sql-runner" server={this.state.server} statement={this.props.statement} monioredDatabases={this.state.monioredDatabases} />
                 <hr />
             </div>) : null;
     }
