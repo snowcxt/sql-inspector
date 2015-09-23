@@ -109,14 +109,16 @@ class StatementRunner extends TypedReact.Component<{
         <div style={style}>
         {
             this.state.underMonitor ? null :
-            <button className="btn btn-primary btn-sm" disabled={this.props.monioredDatabases.length <= 0} data-toggle="modal" data-target="#statement-runner"><i className="glyphicon glyphicon-play"></i>{' '}Run statement</button>
+            <button className="btn btn-primary btn-sm" disabled={this.props.monioredDatabases.length <= 0} data-toggle="modal" data-target="#statement-runner">
+            <i className="glyphicon glyphicon-play"></i>{' '}
+            Run sql ...</button>
         }
             <div className="modal fade" id="statement-runner" tabIndex={-1} role="dialog">
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                            <h4 className="modal-title" id="myModalLabel">Run Sql</h4>
+                            <h4 className="modal-title">Run Sql</h4>
                         </div>
                         <div className="modal-body">
                         {
