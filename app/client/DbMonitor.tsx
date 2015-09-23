@@ -6,6 +6,7 @@ import EventEmitter = require("./EventEmitter");
 import Async = require('async');
 
 class DbMonitor extends TypedReact.Component<{
+    server: string;
     monioredDatabases: string[];
 }, {
         underMonitor: boolean;
@@ -31,7 +32,7 @@ class DbMonitor extends TypedReact.Component<{
     monitorDb() {
         EventEmitter.Emitter.emit(EventEmitter.Types.LOG_CHANGED, []);
         EventEmitter.Emitter.emit(EventEmitter.Types.START_MONITOR, true);
-        DbLogs.setup(this.props.monioredDatabases, () => {
+        DbLogs.setup(this.props.server, this.props.monioredDatabases, () => {
             this.setState({
                 underMonitor: true
             });
@@ -68,7 +69,7 @@ class DbMonitor extends TypedReact.Component<{
             <button className="btn btn-sm btn-danger" onClick={this.stopMonitor}>
             <i className="blink glyphicon glyphicon-record"/>{' '}
             stop monitor
-            </button>
+                </button>
             ;
     }
 }

@@ -23,8 +23,9 @@ class DataGetter extends TypedReact.Component<{
     }
 
     componentDidMount(){
-        EventEmitter.Emitter.addListener(EventEmitter.Types.DB_CONNCTED, (databases) => {
-            this.setState({ isConnected: databases && databases.length > 0 });
+        EventEmitter.Emitter.addListener(EventEmitter.Types.DB_CONNCTED, (db) => {
+          var databases = db.databases;
+          this.setState({ isConnected: databases && databases.length > 0 });
         });
 
         var mirror = this.refs["codemirror"];
