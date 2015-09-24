@@ -12,7 +12,7 @@ class Footer extends TypedReact.Component<{}, {}>{
         return (<footer className="panel panel-default">
          <div className="panel-body">
             <a target="_blank" className="btn btn-xs btn-link" onClick={this.reportIssue}>
-                report issue
+                report an issue
                 </a>
                 <div className="pull-right">
                 <VersionChecker />
