@@ -1,6 +1,6 @@
 var app = require('app'); // Module to control application life.
 var BrowserWindow = require('browser-window'); // Module to create native browser window.
-var updater = require('electron-updater-sqlseer');
+var updater = require('electron-updater');
 
 // Report crashes to our server.
 require('crash-reporter').start();
@@ -40,7 +40,5 @@ app.on('ready', function () {
     updater.on('updateAvailable', function () {
         mainWindow.webContents.send('update-available');
     });
-    updater.start(function (err) {
-        mainWindow.webContents.send('update-error', err);
-    });
+    updater.start();
 });
