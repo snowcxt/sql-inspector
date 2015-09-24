@@ -2,7 +2,7 @@
   "name": "sql-seer",
   "productName": "Sql Seer",
   "description": "Sql Seer",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "main": "main.js",
   "repository": {
     "type": "git",
